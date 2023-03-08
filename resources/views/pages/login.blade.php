@@ -1,6 +1,6 @@
 @extends('layouts.default')
 @section('content')
-<div class="main" style="padding-top:30px !important;padding-bottom:30px !important;">
+<div class="main" style="padding-top:30px !important;padding-bottom:30px !important; min-height:100vh;">
 
     <!-- Sing in  Form -->
     <section class="sign-in">
