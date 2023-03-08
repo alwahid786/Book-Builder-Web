@@ -22,3 +22,9 @@ Route::get('/sign-up', function () {
 Route::get('/forgot-password', function () {
     return view('pages.forgot-password');
 });
+Route::get('/verify-otp', function () {
+    return view('pages.otp-code');
+});
+Route::get('/reset-password', function () {
+    return view('pages.reset-password');
+});

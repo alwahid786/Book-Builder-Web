@@ -25,6 +25,10 @@
                             <label for="re-pass"><i class="zmdi zmdi-lock-outline"></i></label>
                             <input type="password" name="re_pass" id="re_pass" placeholder="Repeat your password" />
                         </div>
+                        <input type="file" id="file" />
+                        <label for="file" class="btn-3">
+                            <span>select</span>
+                        </label>
                         <!-- <div class="form-group">
                             <input type="checkbox" name="agree-term" id="agree-term" class="agree-term" />
                             <label for="agree-term" class="label-agree-term"><span><span></span></span>I agree all statements in <a href="#" class="term-service">Terms of service</a></label>
