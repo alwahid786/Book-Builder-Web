@@ -12,14 +12,15 @@
 
                 <div class="signin-form" style="margin-top:auto;margin-bottom:auto;">
                     <h2 class="form-title">Sign In</h2>
-                    <form method="POST" class="register-form" id="login-form">
+                    <form method="POST" class="register-form" action="{{route('signin')}}" id="loginForm">
+                        @csrf
                         <div class="form-group">
                             <label for="your_name"><i class="zmdi zmdi-account material-icons-name"></i></label>
-                            <input type="text" name="your_name" id="your_name" placeholder="Your Name" />
+                            <input type="text" name="email" id="your_name" placeholder="Your Name" />
                         </div>
                         <div class="form-group">
                             <label for="your_pass"><i class="zmdi zmdi-lock"></i></label>
-                            <input type="password" name="your_pass" id="your_pass" placeholder="Password" />
+                            <input type="password" name="password" id="your_pass" placeholder="Password" />
                         </div>
                         <div class="form-group d-flex justify-content-end">
                             <!-- <input type="checkbox" name="remember-me" id="remember-me" class="agree-term" /> -->
@@ -28,7 +29,7 @@
                             </a>
                         </div>
                         <div class="form-group form-button">
-                            <input type="submit" name="signin" id="signin" class="form-submit" value="Log in" />
+                            <input type="submit" name="signin" id="login" class="form-submit" value="Log in" />
                         </div>
                     </form>
                     <a href="{{url('/sign-up')}}" class="signup-image-link pt-5">
@@ -49,4 +50,35 @@
     </section>
 
 </div>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+<script>
+    // Contact Us Form Submission Function
+    $("#loginForm").submit(function(e) {
+        e.preventDefault();
+        validation = validateForm();
+        if (validation) {
+            $("#loginForm")[0].submit();
+        } else {
+            swal({
+                title: "Some Fields Missing",
+                text: "Please fill all fields.",
+                icon: "error",
+            });
+        }
+    })
+
+    function validateForm() {
+        let errorCount = 0;
+        $("form#loginForm :input").each(function() {
+            let val = $(this).val();
+            if (val == '' && $(this).attr('id') !== 'login') {
+                errorCount++
+            }
+        });
+        if (errorCount > 0) {
+            return false;
+        }
+        return true;
+    }
+</script>
 @endsection

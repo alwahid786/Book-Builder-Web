@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\AuthController;
 
 /*
 |--------------------------------------------------------------------------
@@ -28,3 +29,5 @@ Route::get('/verify-otp', function () {
 Route::get('/reset-password', function () {
     return view('pages.reset-password');
 });
+Route::post('/register', [AuthController::class, 'register'])->name('register');
+Route::post('/sign-in', [AuthController::class, 'signin'])->name('signin');
