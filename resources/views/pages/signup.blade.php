@@ -80,11 +80,19 @@
                         @csrf
                         <div class="form-group">
                             <label for="name"><i class="zmdi zmdi-account material-icons-name"></i></label>
-                            <input type="text" name="name" id="name" placeholder="Your Name" />
+                            <input type="text" name="f_name" id="name" placeholder="First Name" />
+                        </div>
+                        <div class="form-group">
+                            <label for="name"><i class="zmdi zmdi-account material-icons-name"></i></label>
+                            <input type="text" name="l_name" id="name" placeholder="Last Name" />
                         </div>
                         <div class="form-group">
                             <label for="email"><i class="zmdi zmdi-email"></i></label>
                             <input type="email" name="email" id="email" placeholder="Your Email" />
+                        </div>
+                        <div class="form-group">
+                            <label for="name"><i class="zmdi zmdi-phone"></i></label>
+                            <input type="text" name="phone" id="name" placeholder="Phone" />
                         </div>
                         <div class="form-group">
                             <label for="pass"><i class="zmdi zmdi-lock"></i></label>
