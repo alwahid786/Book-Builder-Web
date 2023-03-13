@@ -108,7 +108,7 @@
                                 <label for="imageUpload"><i class="fa fa-cloud-upload" aria-hidden="true"></i></label>
                             </div>
                             <div class="avatar-preview">
-                                <div id="imagePreview" style="background-image: url(http://i.pravatar.cc/500?img=7);">
+                                <div id="imagePreview" style="background-image: url(https://png.pngtree.com/png-vector/20190508/ourmid/pngtree-upload-cloud-vector-icon-png-image_1027251.jpg);">
                                 </div>
                             </div>
                         </div>
@@ -171,6 +171,9 @@
             let val = $(this).val();
             if (val == '' && $(this).attr('id') !== 'signup') {
                 errorCount++
+                $(this).css('border-bottom', '1px solid red');
+            } else {
+                $(this).css('border-bottom', '1px solid #999');
             }
         });
         if (errorCount > 0) {
