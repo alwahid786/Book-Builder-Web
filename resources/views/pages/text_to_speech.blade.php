@@ -1,52 +1,95 @@
 @extends('layouts.default')
 @section('content')
-<div class="main" style="padding-top:30px !important;padding-bottom:30px !important;">
+<style>
+  #transcription {
+    height: 100px;
+    font-size: 16px;
+    padding: 10px;
+  }
 
-    <!-- Sing in  Form -->
-    <section class="sign-in">
-        <div class="container">
-            <div class="signin-content">
-                <div class="signin-image">
-                    <figure><img src="{{asset('assets/images/signin-image.jpg')}}" alt="sing up image"></figure>
-                </div>
+  #startBtn, #stopBtn {
+    display: inline-block;
+    padding: 10px;
+    font-size: 16px;
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    cursor: pointer;
+  }
 
-                <div class="signin-form" style="margin-top:auto;margin-bottom:auto;">
-                    <h2 class="form-title">Sign In</h2>
-                    <form method="POST" class="register-form" id="login-form">
-                        <div class="form-group">
-                            <label for="your_name"><i class="zmdi zmdi-account material-icons-name"></i></label>
-                            <input type="text" name="your_name" id="your_name" placeholder="Your Name" />
-                        </div>
-                        <div class="form-group">
-                            <label for="your_pass"><i class="zmdi zmdi-lock"></i></label>
-                            <input type="password" name="your_pass" id="your_pass" placeholder="Password" />
-                        </div>
-                        <div class="form-group d-flex justify-content-end">
-                            <!-- <input type="checkbox" name="remember-me" id="remember-me" class="agree-term" /> -->
-                            <a href="{{url('/forgot-password')}}">
-                                <span>Forgot Password ?</span>
-                            </a>
-                        </div>
-                        <div class="form-group form-button">
-                            <input type="submit" name="signin" id="signin" class="form-submit" value="Log in" />
-                        </div>
-                    </form>
-                    <a href="{{url('/sign-up')}}" class="signup-image-link pt-5">
-                        <p>Create an account</p>
-                    </a>
+  #stopBtn {
+    background-color: #f44336;
+  }
+</style>
 
-                    <!-- <div class="social-login">
-                        <span class="social-label">Or login with</span>
-                        <ul class="socials">
-                            <li><a href="#"><i class="display-flex-center zmdi zmdi-facebook"></i></a></li>
-                            <li><a href="#"><i class="display-flex-center zmdi zmdi-twitter"></i></a></li>
-                            <li><a href="#"><i class="display-flex-center zmdi zmdi-google"></i></a></li>
-                        </ul>
-                    </div> -->
-                </div>
-            </div>
-        </div>
-    </section>
+<button id="startBtn">Start Recording</button>
+<button id="stopBtn" style="display: none;">Stop Recording</button>
 
-</div>
+<!-- create a text area to display the transcribed text -->
+<textarea id="transcription" rows="5"></textarea>
+<script>
+  let recognition;
+  let transcription = '';
+  const startBtn = document.getElementById('startBtn');
+  const stopBtn = document.getElementById('stopBtn');
+  const transcriptionField = document.getElementById('transcription');
+
+  // create a new instance of SpeechRecognition
+  if (window.SpeechRecognition || window.webkitSpeechRecognition) {
+      recognition = new (window.SpeechRecognition || window.webkitSpeechRecognition)();
+  } else {
+      console.log('Speech recognition not supported');
+  }
+
+  // set recognition properties
+  recognition.continuous = true;
+  recognition.interimResults = true;
+  recognition.lang = 'en-US';
+
+  // handle result event
+  recognition.onresult = function(event) {
+      let interimTranscription = '';
+      for (let i = event.resultIndex; i < event.results.length; i++) {
+          let transcript = event.results[i][0].transcript;
+          if (event.results[i].isFinal) {
+              transcription += transcript + ' ';
+          } else {
+              interimTranscription += transcript;
+          }
+      }
+      transcriptionField.value = transcription + interimTranscription;
+  };
+
+  // handle error event
+  recognition.onerror = function(event) {
+      console.log('Error occurred in recognition: ' + event.error);
+  };
+
+  // handle end event
+  recognition.onend = function() {
+      console.log('Recognition ended');
+      startBtn.style.display = 'inline-block';
+      stopBtn.style.display = 'none';
+  };
+
+  // add click event listener to start button
+  startBtn.addEventListener('click', function() {
+    //   if (transcription === '') {
+          recognition.start();
+          console.log('Recognition started');
+          startBtn.style.display = 'none';
+          stopBtn.style.display = 'inline-block';
+    //   }
+  });
+
+  // add click event listener to stop button
+  stopBtn.addEventListener('click', function() {
+    //   transcription = '';
+    //   transcriptionField.value = '';
+      recognition.stop();
+      console.log('Recognition stopped');
+      startBtn.style.display = 'inline-block';
+      stopBtn.style.display = 'none';
+  });
+</script>
 @endsection

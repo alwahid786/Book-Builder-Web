@@ -8,6 +8,8 @@ class SpeechToTextController extends Controller
 {
     public function speechToText()
     {
-
+        return view('pages.text_to_speech');
     }
 }
+
+?>
