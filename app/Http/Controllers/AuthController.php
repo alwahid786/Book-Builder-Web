@@ -40,6 +40,11 @@ class AuthController extends Controller
         ];
         $user = User::create($UserData);
         if ($user) {
+            $UserData = [
+                'email' => $request->email,
+                'password' => $request->password,
+            ];
+            auth()->attempt($UserData);
             $authUser = auth()->user();
             $authUser->token = $authUser->createToken('API Token')->accessToken;
             toastr()->success('Registration Successfull!');

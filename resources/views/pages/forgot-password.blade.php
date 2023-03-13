@@ -48,6 +48,9 @@
             let val = $(this).val();
             if (val == '' && $(this).attr('id') !== 'forget') {
                 errorCount++
+                $(this).css('border-bottom', '1px solid red');
+            } else {
+                $(this).css('border-bottom', '1px solid #999');
             }
         });
         if (errorCount > 0) {
