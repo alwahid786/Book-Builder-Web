@@ -204,8 +204,10 @@
                                 <p>Record audio to convert to text in the editor below.</p>
                                 <div id="controls" class="d-flex align-items-center justify-content-between">
                                     <div>
-                                        <button id="startButton" class="btn-success">Record</button>
-                                        <button id="stopButton" class="btn-danger" disabled>Stop</button>
+                                        <!-- <button id="startButton" class="btn-success">Record</button>
+                                        <button id="stopButton" class="btn-danger" disabled>Stop</button> -->
+                                        <button id="startBtn" class="btn-success">Start Recording</button>
+                                        <button id="stopBtn" class="btn-danger" style="display: none;">Stop Recording</button>
                                     </div>
                                     <div class="d-flex align-items-center">
                                         <i class="zmdi zmdi-circle mr-2"></i>
@@ -213,10 +215,10 @@
                                     </div>
                                     <!-- <button id="pauseButton">Pause</button> -->
                                 </div>
-                                <h3>Recordings</h3>
-                                <ol id="recordingsList"></ol>
                                 <div class="mt-3">
-                                    <div id="editor">This is some sample content.</div>
+                                    <!-- <textarea id="transcription" rows="5"></textarea> -->
+
+                                    <div id="editor"></div>
                                 </div>
                             </div>
                             <div class="col-12 mt-3">
@@ -294,98 +296,182 @@
         });
 
 
-        // Define variables for the audio stream and RecordRTC object
-        let stream;
-        let recordRTC;
-        var startTime;
-        var timerInterval;
-        // Get references to the start and stop buttons
-        const startButton = document.getElementById('startButton');
-        const stopButton = document.getElementById('stopButton');
+        // // Define variables for the audio stream and RecordRTC object
+        // let stream;
+        // let recordRTC;
+        // var startTime;
+        // var timerInterval;
+        // // Get references to the start and stop buttons
+        // const startButton = document.getElementById('startButton');
+        // const stopButton = document.getElementById('stopButton');
 
-        // Add event listeners to the buttons
-        startButton.addEventListener('click', startRecording);
-        stopButton.addEventListener('click', stopRecording);
+        // // Add event listeners to the buttons
+        // startButton.addEventListener('click', startRecording);
+        // stopButton.addEventListener('click', stopRecording);
 
-        // Function to start the recording process
-        function startRecording() {
-            $(".zmdi-circle").addClass('red');
-            startTimer();
-            startButton.disabled = true;
-            stopButton.disabled = false;
-            navigator.mediaDevices.getUserMedia({
-                    audio: true
-                })
-                .then(function(audioStream) {
-                    // Store the audio stream in the stream variable
-                    stream = audioStream;
+        // // Function to start the recording process
+        // function startRecording() {
+        //     $(".zmdi-circle").addClass('red');
+        //     startTimer();
+        //     startButton.disabled = true;
+        //     stopButton.disabled = false;
+        //     navigator.mediaDevices.getUserMedia({
+        //             audio: true
+        //         })
+        //         .then(function(audioStream) {
+        //             // Store the audio stream in the stream variable
+        //             stream = audioStream;
 
-                    // Initialize the RecordRTC object with the audio stream
-                    recordRTC = new RecordRTC(audioStream, {
-                        type: 'audio'
-                    });
+        //             // Initialize the RecordRTC object with the audio stream
+        //             recordRTC = new RecordRTC(audioStream, {
+        //                 type: 'audio'
+        //             });
 
-                    // Start recording
-                    recordRTC.startRecording();
-                })
-                .catch(function(error) {
-                    console.error(error);
-                });
-        }
+        //             // Start recording
+        //             recordRTC.startRecording();
+        //         })
+        //         .catch(function(error) {
+        //             console.error(error);
+        //         });
+        // }
 
-        // Function to stop the recording process
-        function stopRecording() {
-            $(".zmdi-circle").removeClass('red');
-            startButton.disabled = false;
-            stopButton.disabled = true;
-            stopTimer();
-            // Stop recording
-            recordRTC.stopRecording(function() {
-                // Get the recorded audio data as a Blob object
-                const blob = recordRTC.getBlob();
+        // // Function to stop the recording process
+        // function stopRecording() {
+        //     $(".zmdi-circle").removeClass('red');
+        //     startButton.disabled = false;
+        //     stopButton.disabled = true;
+        //     stopTimer();
+        //     // Stop recording
+        //     recordRTC.stopRecording(function() {
+        //         // Get the recorded audio data as a Blob object
+        //         const blob = recordRTC.getBlob();
 
-                // Create a URL for the Blob object
-                const audioURL = URL.createObjectURL(blob);
+        //         // Create a URL for the Blob object
+        //         const audioURL = URL.createObjectURL(blob);
 
-                // Create an audio element to play the recorded audio
-                const audio = document.createElement('audio');
-                audio.controls = true;
-                audio.src = audioURL;
+        //         // Create an audio element to play the recorded audio
+        //         const audio = document.createElement('audio');
+        //         audio.controls = true;
+        //         audio.src = audioURL;
 
-                // Append the audio element to the recordings list
-                const recordingsList = document.getElementById('recordingsList');
-                recordingsList.appendChild(audio);
+        //         // Append the audio element to the recordings list
+        //         const recordingsList = document.getElementById('recordingsList');
+        //         recordingsList.appendChild(audio);
 
-                // Release the resources used by the audio stream and RecordRTC object
-                stream.getTracks().forEach(function(track) {
-                    track.stop();
-                });
-                recordRTC.destroy();
-            });
-        }
+        //         // Release the resources used by the audio stream and RecordRTC object
+        //         stream.getTracks().forEach(function(track) {
+        //             track.stop();
+        //         });
+        //         recordRTC.destroy();
+        //     });
+        // }
 
-        function startTimer() {
-            startTime = new Date().getTime();
-            timerInterval = setInterval(updateTimer, 1000);
-        }
 
-        function stopTimer() {
-            clearInterval(timerInterval);
-            document.getElementById('timer').innerHTML = '00:00:00';
-        }
-
-        function updateTimer() {
-            var elapsedTime = new Date().getTime() - startTime;
-            var seconds = Math.floor(elapsedTime / 1000) % 60;
-            var minutes = Math.floor(elapsedTime / (1000 * 60)) % 60;
-            var hours = Math.floor(elapsedTime / (1000 * 60 * 60)) % 24;
-            document.getElementById('timer').innerHTML = formatTime(hours) + ':' + formatTime(minutes) + ':' + formatTime(seconds);
-        }
-
-        function formatTime(time) {
-            return (time < 10 ? '0' : '') + time;
-        }
 
     })
+
+    let recognition;
+    let transcription = '';
+    const startBtn = document.getElementById('startBtn');
+    const stopBtn = document.getElementById('stopBtn');
+    const transcriptionField = document.getElementById('editor');
+
+    // create a new instance of SpeechRecognition
+    if (window.SpeechRecognition || window.webkitSpeechRecognition) {
+        recognition = new(window.SpeechRecognition || window.webkitSpeechRecognition)();
+    } else {
+        console.log('Speech recognition not supported');
+    }
+
+    // set recognition properties
+    recognition.continuous = true;
+    recognition.interimResults = true;
+    recognition.lang = 'en-US';
+
+    // handle result event
+    recognition.onresult = function(event) {
+        let interimTranscription = '';
+        for (let i = event.resultIndex; i < event.results.length; i++) {
+            let transcript = event.results[i][0].transcript;
+            if (event.results[i].isFinal) {
+                transcription += transcript + ' ';
+            } else {
+                interimTranscription += transcript;
+            }
+        }
+        transcriptionField.innerHTML = transcription + interimTranscription;
+    };
+
+    // handle error event
+    recognition.onerror = function(event) {
+        console.log('Error occurred in recognition: ' + event.error);
+    };
+
+    // handle end event
+    recognition.onend = function() {
+        console.log('Recognition ended');
+        startBtn.style.display = 'inline-block';
+        stopBtn.style.display = 'none';
+    };
+
+    // add click event listener to start button
+    startBtn.addEventListener('click', function() {
+        //   if (transcription === '') {
+        $(".zmdi-circle").addClass('red');
+        startTimer();
+        recognition.start();
+        console.log('Recognition started');
+        startBtn.style.display = 'none';
+        stopBtn.style.display = 'inline-block';
+        //   }
+    });
+
+    // add click event listener to stop button
+    stopBtn.addEventListener('click', function() {
+        //   transcription = '';
+        //   transcriptionField.value = '';
+        $(".zmdi-circle").removeClass('red');
+        stopTimer();
+        recognition.stop();
+        console.log('Recognition stopped');
+        startBtn.style.display = 'inline-block';
+        stopBtn.style.display = 'none';
+    });
+
+    var startTime = 0;
+    var elapsedTime = 0;
+    var timerInterval;
+
+    function startTimer() {
+        if (elapsedTime === 0) {
+            startTime = new Date().getTime();
+        } else {
+            startTime = new Date().getTime() - elapsedTime;
+        }
+        timerInterval = setInterval(updateTimer, 1000);
+    }
+
+    function stopTimer() {
+        clearInterval(timerInterval);
+        elapsedTime = new Date().getTime() - startTime;
+    }
+
+    function resetTimer() {
+        clearInterval(timerInterval);
+        elapsedTime = 0;
+        document.getElementById('timer').innerHTML = '00:00:00';
+    }
+
+    function updateTimer() {
+        var elapsedTime = new Date().getTime() - startTime;
+        var seconds = Math.floor(elapsedTime / 1000) % 60;
+        var minutes = Math.floor(elapsedTime / (1000 * 60)) % 60;
+        var hours = Math.floor(elapsedTime / (1000 * 60 * 60)) % 24;
+        document.getElementById('timer').innerHTML = formatTime(hours) + ':' + formatTime(minutes) + ':' + formatTime(seconds);
+    }
+
+    function formatTime(time) {
+        return (time < 10 ? '0' : '') + time;
+    }
 </script>
 @endsection
