@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\SpeechToTextController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -22,3 +23,5 @@ Route::get('/sign-up', function () {
 Route::get('/forgot-password', function () {
     return view('pages.forgot-password');
 });
+
+Route::get('/speech_to_text', [SpeechToTextController::class, 'speechToText']);
