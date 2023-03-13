@@ -108,7 +108,7 @@
                     </div>
                 </div>
             </div>
-            <div class="col-9" id="welcomeDiv" style="display:none">
+            <div class="col-9" id="welcomeDiv">
                 <div class="rightDiv">
                     <div class="progress mt-3">
                         <div class="progressComplete"></div>
@@ -180,7 +180,7 @@
                     </div>
                 </div>
             </div>
-            <div class="col-9" id="gratitudeDiv">
+            <div class="col-9" id="gratitudeDiv" style="display:none">
                 <div class="rightDiv">
                     <div class="progress mt-3">
                         <div class="progressComplete"></div>
@@ -194,9 +194,10 @@
                     <div class="container px-5 py-3 my-3">
                         <div class="row">
                             <div class="col-12">
-                                <div class="text-center">
-                                    <h2>Gratitude Story</h2>
-                                    <p class="my-3">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Eius fugit sint laborum recusandae eaque voluptatibus sequi nobis dolore eos nesciunt nihil voluptatum nam ea vitae accusamus nisi iste modi odit consequatur nemo, consectetur tenetur aperiam! Error ipsam quisquam exercitationem at incidunt quam consequatur? Numquam voluptatem ea fuga quisquam laborum provident sequi cupiditate qui! Vel, tempora facilis. Maxime, omnis! Temporibus expedita optio libero repellat, tempore illo consectetur perferendis, aut natus cum ab id sapiente asperiores ipsam nam ullam ut perspiciatis harum voluptas facere! Amet, consectetur aperiam? Provident accusantium exercitationem rerum suscipit! Nam inventore sapiente nihil ratione, ducimus ea dolorem vitae dolores!</p>
+                                <div class="text-left">
+                                    <h4 class="mb-0">Gratitude Story</h4>
+                                    <h6>- Sample 1 -</h6>
+                                    <h3 class="text-center" style="color:#6dabe4">My name is Don Williams and I’m Grateful</h3>
                                 </div>
                             </div>
                             <div class="col-12 mt-3">
