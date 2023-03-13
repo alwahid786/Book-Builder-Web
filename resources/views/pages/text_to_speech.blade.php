@@ -1,5 +1,4 @@
-@extends('layouts.default')
-@section('content')
+
 <style>
   #transcription {
     height: 100px;
@@ -7,7 +6,7 @@
     padding: 10px;
   }
 
-  #startBtn, #stopBtn {
+  #startBtn, #stopBtn, #resetBtn {
     display: inline-block;
     padding: 10px;
     font-size: 16px;
@@ -17,21 +16,29 @@
     cursor: pointer;
   }
 
-  #stopBtn {
+  #stopBtn, #resetBtn {
     background-color: #f44336;
   }
 </style>
-
+<script src="https://code.jquery.com/jquery-3.5.1.min.js" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"></script>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
+    <link href="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-bs4.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-bs4.min.js"></script>
 <button id="startBtn">Start Recording</button>
 <button id="stopBtn" style="display: none;">Stop Recording</button>
+<button id="resetBtn" style="display: none;">Reset</button>
 
 <!-- create a text area to display the transcribed text -->
-<textarea id="transcription" rows="5"></textarea>
+<!-- <textarea id="transcription" class="summernote" rows="5"></textarea> -->
+<div id="summernote"></div>
 <script>
   let recognition;
   let transcription = '';
   const startBtn = document.getElementById('startBtn');
   const stopBtn = document.getElementById('stopBtn');
+  const resetBtn = document.getElementById('resetBtn');
   const transcriptionField = document.getElementById('transcription');
 
   // create a new instance of SpeechRecognition
@@ -69,6 +76,7 @@
   recognition.onend = function() {
       console.log('Recognition ended');
       startBtn.style.display = 'inline-block';
+      resetBtn.style.display = 'inline-block';
       stopBtn.style.display = 'none';
   };
 
@@ -78,6 +86,7 @@
           recognition.start();
           console.log('Recognition started');
           startBtn.style.display = 'none';
+          resetBtn.style.display = 'none';
           stopBtn.style.display = 'inline-block';
     //   }
   });
@@ -89,7 +98,23 @@
       recognition.stop();
       console.log('Recognition stopped');
       startBtn.style.display = 'inline-block';
+          resetBtn.style.display = 'inline-block';
       stopBtn.style.display = 'none';
   });
+
+  
+  // add click event listener to reset button
+  resetBtn.addEventListener('click', function() {
+      transcription = '';
+      transcriptionField.value = '';
+      recognition.stop();
+      console.log('Recognition stopped');
+      resetBtn.style.display = 'none';
+  });
 </script>
-@endsection
+
+<script type="text/javascript">
+        $(document).ready(function() {
+          $('#summernote').summernote();
+        });
+    </script>
