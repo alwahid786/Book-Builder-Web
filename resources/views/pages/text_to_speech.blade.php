@@ -1,4 +1,5 @@
-
+@extends('layouts.default')
+@section('content')
 <style>
   #transcription {
     height: 100px;
@@ -20,19 +21,13 @@
     background-color: #f44336;
   }
 </style>
-<script src="https://code.jquery.com/jquery-3.5.1.min.js" crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"></script>
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
-    <link href="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-bs4.min.css" rel="stylesheet">
-    <script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-bs4.min.js"></script>
+
 <button id="startBtn">Start Recording</button>
 <button id="stopBtn" style="display: none;">Stop Recording</button>
 <button id="resetBtn" style="display: none;">Reset</button>
 
 <!-- create a text area to display the transcribed text -->
-<!-- <textarea id="transcription" class="summernote" rows="5"></textarea> -->
-<div id="summernote"></div>
+<textarea id="transcription" rows="5"></textarea>
 <script>
   let recognition;
   let transcription = '';
@@ -112,9 +107,4 @@
       resetBtn.style.display = 'none';
   });
 </script>
-
-<script type="text/javascript">
-        $(document).ready(function() {
-          $('#summernote').summernote();
-        });
-    </script>
+@endsection
