@@ -85,7 +85,8 @@
         background-color: #6dabe4;
         border-radius: 10px;
     }
-    .logout{
+
+    .logout {
         position: absolute;
         bottom: 0;
         left: 0;
@@ -133,7 +134,9 @@
                         <i class="zmdi zmdi-phone"></i>
                         <p class="ml-3">{{auth()->user()->phone ?? '123456'}}</p>
                     </div>
-                    <button class="logout py-2 mb-3 w-100">Logout</button>
+                    <a href="{{url('/logout')}}">
+                        <button class="logout py-2 mb-3 w-100">Logout</button>
+                    </a>
                 </div>
             </div>
             <div class="col-9" id="welcomeDiv" style="display:none">

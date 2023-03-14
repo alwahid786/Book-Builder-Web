@@ -76,7 +76,7 @@ class AuthController extends Controller
         }
         $authUser = auth()->user();
         $authUser->token = $authUser->createToken('API Token')->accessToken;
-        return redirect('/gratitude-story');
+        return redirect('/welcome');
     }
 
     // Forget password Function 
