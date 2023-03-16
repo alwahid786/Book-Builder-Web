@@ -123,24 +123,24 @@
   // add click event listener to reset button
   resetBtn.addEventListener('click', function() {
     Swal.fire({
-  title: 'Are you sure?',
-  text: "You won't be able to revert this!",
-  icon: 'warning',
-  showCancelButton: true,
-  confirmButtonColor: '#3085d6',
-  cancelButtonColor: '#d33',
-  confirmButtonText: 'Yes, reset it!'
-}).then((result) => {
-  if (result.isConfirmed) {
-    // Perform the action here
-   
-    transcription = '';
-    CKEDITOR.instances.transcription.setData('');
-    recognition.stop();
-    console.log('Recognition stopped');
-    resetBtn.style.display = 'none';
-  }
-})
+      title: 'Are you sure?',
+      text: "You won't be able to revert this!",
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Yes, reset it!'
+    }).then((result) => {
+      if (result.isConfirmed) {
+        // Perform the action here
+
+        transcription = '';
+        CKEDITOR.instances.transcription.setData('');
+        recognition.stop();
+        console.log('Recognition stopped');
+        resetBtn.style.display = 'none';
+      }
+    })
   });
 </script>
 @endsection

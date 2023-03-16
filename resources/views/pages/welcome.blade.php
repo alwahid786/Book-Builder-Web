@@ -265,20 +265,16 @@
                                 <p>Record audio to convert to text in the editor below.</p>
                                 <div id="controls" class="d-flex align-items-center justify-content-between">
                                     <div>
-                                        <!-- <button id="startButton" class="btn-success">Record</button>
-                                        <button id="stopButton" class="btn-danger" disabled>Stop</button> -->
-                                        <button id="startBtn" class="btn-success">Start Recording</button>
-                                        <button id="stopBtn" class="btn-danger" style="display: none;">Stop Recording</button>
+                                        <button id="startBtn1" data-sr_no="1" data-editor_name="editor" class="btn-success startBtn">Start Recording</button>
+                                        <button id="stopBtn1" data-sr_no="1" class="btn-danger stopBtn" style="display: none;">Stop Recording</button>
+                                        <button id="resetBtn1" data-sr_no="1" class="btn-danger resetBtn" style="display: none;">Reset Text</button>
                                     </div>
                                     <div class="d-flex align-items-center">
                                         <i class="zmdi zmdi-circle mr-2"></i>
-                                        <div id="timer">00:00:00</div>
+                                        <div id="timer1">00:00:00</div>
                                     </div>
-                                    <!-- <button id="pauseButton">Pause</button> -->
                                 </div>
                                 <div class="mt-3">
-                                    <!-- <textarea id="transcription" rows="5"></textarea> -->
-
                                     <div id="editor"></div>
                                 </div>
                             </div>
@@ -330,20 +326,16 @@
                                 <p>Record audio to convert to text in the editor below.</p>
                                 <div id="controls" class="d-flex align-items-center justify-content-between">
                                     <div>
-                                        <!-- <button id="startButton" class="btn-success">Record</button>
-                                        <button id="stopButton" class="btn-danger" disabled>Stop</button> -->
-                                        <button id="startBtn" class="btn-success">Start Recording</button>
-                                        <button id="stopBtn" class="btn-danger" style="display: none;">Stop Recording</button>
+                                        <button id="startBtn2" data-sr_no="2" data-editor_name="editor2" class="btn-success startBtn">Start Recording</button>
+                                        <button id="stopBtn2" data-sr_no="2" class="btn-danger stopBtn" style="display: none;">Stop Recording</button>
+                                        <button id="resetBtn2" data-sr_no="2" class="btn-danger resetBtn" style="display: none;">Reset Text</button>
                                     </div>
                                     <div class="d-flex align-items-center">
                                         <i class="zmdi zmdi-circle mr-2"></i>
-                                        <div id="timer">00:00:00</div>
+                                        <div id="timer2">00:00:00</div>
                                     </div>
-                                    <!-- <button id="pauseButton">Pause</button> -->
                                 </div>
                                 <div class="mt-3">
-                                    <!-- <textarea id="transcription" rows="5"></textarea> -->
-
                                     <div id="editor2"></div>
                                 </div>
                             </div>
@@ -351,7 +343,7 @@
                                 <div class="text-right">
                                     <button class="px-5 py-2">
                                         <i class="zmdi zmdi-arrow-right mr-2"></i>
-                                        Next
+                                        Start A Book
                                     </button>
                                 </div>
                             </div>
@@ -366,6 +358,7 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
 <script src="https://cdn.WebRTC-Experiment.com/RecordRTC.js"></script>
 <script src="https://cdn.ckeditor.com/4.16.1/standard-all/ckeditor.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
 <script>
     $(document).ready(function() {
@@ -378,6 +371,7 @@
             $('#gratitudeDiv').fadeIn(500);
         })
         $("#romanceBtn").click(function() {
+            resetTimer(1);
             $('#gratitudeDiv').fadeOut(500);
             $('#romanceDiv').fadeIn(500);
         })
@@ -388,87 +382,14 @@
         CKEDITOR.replace('editor2', {
             height: '400px'
         });
-
-
-        // // Define variables for the audio stream and RecordRTC object
-        // let stream;
-        // let recordRTC;
-        // var startTime;
-        // var timerInterval;
-        // // Get references to the start and stop buttons
-        // const startButton = document.getElementById('startButton');
-        // const stopButton = document.getElementById('stopButton');
-
-        // // Add event listeners to the buttons
-        // startButton.addEventListener('click', startRecording);
-        // stopButton.addEventListener('click', stopRecording);
-
-        // // Function to start the recording process
-        // function startRecording() {
-        //     $(".zmdi-circle").addClass('red');
-        //     startTimer();
-        //     startButton.disabled = true;
-        //     stopButton.disabled = false;
-        //     navigator.mediaDevices.getUserMedia({
-        //             audio: true
-        //         })
-        //         .then(function(audioStream) {
-        //             // Store the audio stream in the stream variable
-        //             stream = audioStream;
-
-        //             // Initialize the RecordRTC object with the audio stream
-        //             recordRTC = new RecordRTC(audioStream, {
-        //                 type: 'audio'
-        //             });
-
-        //             // Start recording
-        //             recordRTC.startRecording();
-        //         })
-        //         .catch(function(error) {
-        //             console.error(error);
-        //         });
-        // }
-
-        // // Function to stop the recording process
-        // function stopRecording() {
-        //     $(".zmdi-circle").removeClass('red');
-        //     startButton.disabled = false;
-        //     stopButton.disabled = true;
-        //     stopTimer();
-        //     // Stop recording
-        //     recordRTC.stopRecording(function() {
-        //         // Get the recorded audio data as a Blob object
-        //         const blob = recordRTC.getBlob();
-
-        //         // Create a URL for the Blob object
-        //         const audioURL = URL.createObjectURL(blob);
-
-        //         // Create an audio element to play the recorded audio
-        //         const audio = document.createElement('audio');
-        //         audio.controls = true;
-        //         audio.src = audioURL;
-
-        //         // Append the audio element to the recordings list
-        //         const recordingsList = document.getElementById('recordingsList');
-        //         recordingsList.appendChild(audio);
-
-        //         // Release the resources used by the audio stream and RecordRTC object
-        //         stream.getTracks().forEach(function(track) {
-        //             track.stop();
-        //         });
-        //         recordRTC.destroy();
-        //     });
-        // }
-
-
-
-    })
+    });
 
     let recognition;
     let transcription = '';
-    const startBtn = document.getElementById('startBtn');
-    const stopBtn = document.getElementById('stopBtn');
-    const transcriptionField = document.getElementById('editor');
+    let startBtn = document.getElementById('startBtn');
+    let stopBtn = document.getElementById('stopBtn');
+    let resetBtn = document.getElementById('resetBtn');
+    let editorName = 'editor';
 
     // create a new instance of SpeechRecognition
     if (window.SpeechRecognition || window.webkitSpeechRecognition) {
@@ -488,12 +409,26 @@
         for (let i = event.resultIndex; i < event.results.length; i++) {
             let transcript = event.results[i][0].transcript;
             if (event.results[i].isFinal) {
-                transcription += transcript + ' ';
-            } else {
-                interimTranscription += transcript;
+                var editor = CKEDITOR.instances[editorName];
+
+                // Get the current selection object
+                var selection = editor.getSelection();
+
+                // Get the current element where the cursor is blinking
+                var element = selection.getStartElement();
+
+                // Insert the text at the cursor position
+                // editor.setData('', { selectionStart: element, selectionEnd: element });
+                editor.insertText(transcript, element);
+                // CKEDITOR.instances.transcription.insertHtml(transcript);
+                //   transcription += transcript + ' ';
             }
+            //    else {
+            //       interimTranscription += transcript;
+            //   }
         }
-        transcriptionField.innerHTML = transcription + interimTranscription;
+        //   transcriptionField.value = transcription + interimTranscription;
+
     };
 
     // handle error event
@@ -505,44 +440,83 @@
     recognition.onend = function() {
         console.log('Recognition ended');
         startBtn.style.display = 'inline-block';
+        resetBtn.style.display = 'inline-block';
         stopBtn.style.display = 'none';
     };
 
     // add click event listener to start button
-    startBtn.addEventListener('click', function() {
-        //   if (transcription === '') {
+    $('.startBtn').click(function() {
+        let sr_id = $(this).attr('data-sr_no');
+        startBtn = document.getElementById('startBtn' + sr_id);
+        stopBtn = document.getElementById('stopBtn' + sr_id);
+        resetBtn = document.getElementById('resetBtn' + sr_id);
+        // startBtn.addEventListener('click', function() {
+        editorName = startBtn.getAttribute('data-editor_name');
+        startTimer(sr_id);
         $(".zmdi-circle").addClass('red');
-        startTimer();
         recognition.start();
         console.log('Recognition started');
         startBtn.style.display = 'none';
+        resetBtn.style.display = 'none';
         stopBtn.style.display = 'inline-block';
-        //   }
     });
 
     // add click event listener to stop button
-    stopBtn.addEventListener('click', function() {
-        //   transcription = '';
-        //   transcriptionField.value = '';
-        $(".zmdi-circle").removeClass('red');
+    $('.stopBtn').click(function() {
+        let sr_id = $(this).attr('data-sr_no');
+        startBtn = document.getElementById('startBtn' + sr_id);
+        stopBtn = document.getElementById('stopBtn' + sr_id);
+        resetBtn = document.getElementById('resetBtn' + sr_id);
         stopTimer();
+        $(".zmdi-circle").removeClass('red');
         recognition.stop();
         console.log('Recognition stopped');
         startBtn.style.display = 'inline-block';
+        resetBtn.style.display = 'inline-block';
         stopBtn.style.display = 'none';
     });
 
+
+    // add click event listener to reset button
+    $('.resetBtn').click(function() {
+        let sr_id = $(this).attr('data-sr_no');
+        startBtn = document.getElementById('startBtn' + sr_id);
+        stopBtn = document.getElementById('stopBtn' + sr_id);
+        resetBtn = document.getElementById('resetBtn' + sr_id);
+        Swal.fire({
+            title: 'Are you sure?',
+            text: "You won't be able to revert this!",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Yes, reset it!'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                // Perform the action here
+                resetTimer(sr_id);
+                transcription = '';
+                CKEDITOR.instances[editorName].setData('');
+                recognition.stop();
+                console.log('Recognition stopped');
+                resetBtn.style.display = 'none';
+            }
+        })
+    });
     var startTime = 0;
     var elapsedTime = 0;
     var timerInterval;
 
-    function startTimer() {
+    function startTimer(id) {
         if (elapsedTime === 0) {
             startTime = new Date().getTime();
         } else {
             startTime = new Date().getTime() - elapsedTime;
         }
-        timerInterval = setInterval(updateTimer, 1000);
+        // timerInterval = setInterval(updateTimer, 1000);
+        timerInterval = setInterval(function() {
+            updateTimer(id);
+        }, 1000);
     }
 
     function stopTimer() {
@@ -550,18 +524,18 @@
         elapsedTime = new Date().getTime() - startTime;
     }
 
-    function resetTimer() {
+    function resetTimer(id) {
         clearInterval(timerInterval);
         elapsedTime = 0;
-        document.getElementById('timer').innerHTML = '00:00:00';
+        document.getElementById('timer' + id).innerHTML = '00:00:00';
     }
 
-    function updateTimer() {
+    function updateTimer(id) {
         var elapsedTime = new Date().getTime() - startTime;
         var seconds = Math.floor(elapsedTime / 1000) % 60;
         var minutes = Math.floor(elapsedTime / (1000 * 60)) % 60;
         var hours = Math.floor(elapsedTime / (1000 * 60 * 60)) % 24;
-        document.getElementById('timer').innerHTML = formatTime(hours) + ':' + formatTime(minutes) + ':' + formatTime(seconds);
+        document.getElementById('timer' + id).innerHTML = formatTime(hours) + ':' + formatTime(minutes) + ':' + formatTime(seconds);
     }
 
     function formatTime(time) {

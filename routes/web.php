@@ -3,6 +3,7 @@
 use App\Http\Controllers\SpeechToTextController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\BookController;
 
 /*
 |--------------------------------------------------------------------------
@@ -40,5 +41,12 @@ Route::middleware('auth')->group(function () {
     Route::get('/welcome', function () {
         return view('pages.welcome');
     });
+    Route::get('/avatar', function () {
+        return view('pages.book.avatar');
+    });
+    Route::get('/book-title', function () {
+        return view('pages.book.book-title');
+    });
     Route::get('/logout', [AuthController::class, 'logout']);
+    Route::post('/avatarForm', [BookController::class, 'avatar'])->name('avatarDetail');
 });
