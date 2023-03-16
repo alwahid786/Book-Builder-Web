@@ -139,7 +139,7 @@
                     </a>
                 </div>
             </div>
-            <div class="col-9" id="welcomeDiv" style="display:none">
+            <div class="col-9" id="welcomeDiv">
                 <div class="rightDiv">
                     <div class="progress mt-3">
                         <div class="progressComplete"></div>
@@ -211,7 +211,7 @@
                     </div>
                 </div>
             </div>
-            <div class="col-9" id="gratitudeDiv">
+            <div class="col-9" id="gratitudeDiv" style="display:none">
                 <div class="rightDiv">
                     <div class="progress mt-3">
                         <div class="progressComplete"></div>
@@ -341,10 +341,12 @@
                             </div>
                             <div class="col-12 mt-3">
                                 <div class="text-right">
-                                    <button class="px-5 py-2">
-                                        <i class="zmdi zmdi-arrow-right mr-2"></i>
-                                        Start A Book
-                                    </button>
+                                    <a href="{{url('/avatar')}}">
+                                        <button class="px-5 py-2">
+                                            <i class="zmdi zmdi-arrow-right mr-2"></i>
+                                            Start A Book
+                                        </button>
+                                    </a>
                                 </div>
                             </div>
                         </div>
