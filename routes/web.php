@@ -41,12 +41,10 @@ Route::middleware('auth')->group(function () {
     Route::get('/welcome', function () {
         return view('pages.welcome');
     });
-    Route::get('/avatar', function () {
-        return view('pages.book.avatar');
-    });
     Route::get('/book-title', function () {
         return view('pages.book.book-title');
     });
     Route::get('/logout', [AuthController::class, 'logout']);
-    Route::post('/avatarForm', [BookController::class, 'avatar'])->name('avatarDetail');
+    Route::get('/avatar', [BookController::class, 'avatar']);
+    Route::post('/avatarForm', [BookController::class, 'avatarForm'])->name('avatarDetail');
 });

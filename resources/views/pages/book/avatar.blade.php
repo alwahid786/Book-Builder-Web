@@ -227,17 +227,25 @@
     .active-nav {
         background: #29649ad1;
     }
+
+    .completed {
+        width: 10px;
+        background-color: lawngreen;
+        position: absolute;
+        right: 0;
+    }
 </style>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js" charset="utf-8"></script>
-
 
 
 <div class="side-bar">
 
     <div class="menu">
         <div class="item text-center text-white" style="height: 85px; display:flex; font-size:30px; justify-content:center; align-items:center">LOGO</div>
-        <div class="item"><a href="#" class="active-nav"><i class="fas fa-book"></i>Avatar</a></div>
+        <div class="item position-relative"><a href="#" class="active-nav "><i class="fas fa-book"></i>Avatar </a>
+            <div class="completed"></div>
+        </div>
         <div class="item"><a href="#"><i class="fas fa-heading"></i>Book Title</a></div>
         <div class="item">
             <a class="sub-btn"><i class="fas fa-file-alt"></i>Outline</a>
@@ -265,9 +273,9 @@
     <div class="navBar p-3">
         <div class="progressDiv w-100 pr-5">
             <h4 class="text-white">Your Book Progress</h4>
-            <div class=" progress ">
-                <div class="progress-bar" role="progressbar" aria-valuenow="70" aria-valuemin="0" aria-valuemax="100" style="width:70%; background-color:#29649ad1">
-                    70%
+            <div class=" progress " style="height: 18px;">
+                <div class="progress-bar text-secondary" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" style="width:0%;height: 18px; background-color:green">
+                    0%
                 </div>
             </div>
         </div>
@@ -287,16 +295,16 @@
             <div class="d-flex justify-content-between align-items-center">
                 <div class="input-group w-100 mx-2">
                     <span class="text-secondary mb-2">Avatar First Name</span>
-                    <input type="text" name="av_f_name" id="av_f_name">
+                    <input type="text" value="<?php echo $bookdata['avatar_fname'] ?? '' ?>" name="avatar_fname" id="av_f_name">
                 </div>
                 <div class="input-group w-100 mx-2">
                     <span class="text-secondary mb-2">Avatar First Name</span>
-                    <input type="text" name="av_l_name" id="av_l_name">
+                    <input type="text" value="<?php echo $bookdata['avatar_lname'] ?? '' ?>" name="avatar_lname" id="av_l_name">
                 </div>
             </div>
             <div class="mt-3 mx-2">
                 <span class="text-secondary ">Avatar Description</span><br>
-                <textarea name="av_description" id="" class="w-100 mt-2" rows="5"></textarea>
+                <textarea name="avatar_description" value="<?php echo  $bookdata['avatar_description'] ?? '' ?>" id="" class="w-100 mt-2" rows="5"><?php echo  $bookdata['avatar_description'] ?? '' ?></textarea>
             </div>
             <div class="text-right mx-2 mt-3">
                 <button type="submit" id="avatar" class="px-3 py-1"><i class="fas fa-save mr-2"></i>Save</button>

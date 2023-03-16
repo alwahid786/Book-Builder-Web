@@ -18,5 +18,6 @@ class Book extends Model
         'avatar_fname',
         'avatar_lname',
         'avatar_description',
+        'user_id'
     ];
 }
