@@ -233,75 +233,30 @@
 
 
 
-<div class="side-bar">
-
-    <div class="menu">
-        <div class="item text-center text-white" style="height: 85px; display:flex; font-size:30px; justify-content:center; align-items:center">LOGO</div>
-        <div class="item"><a href="{{url('/avatar')}}"><i class="fas fa-book"></i>Avatar</a></div>
-        <div class="item"><a href="{{url('/book-title')}}" class="active-nav"><i class="fas fa-heading"></i>Book Title</a></div>
-        <div class="item">
-            <a class="sub-btn"><i class="fas fa-file-alt"></i>Outline</a>
-        </div>
-        <div class="item"><a href="#"><i class="fas fa-images"></i>Cover Art</a></div>
-        <div class="item"><a href="#"><i class="fas fa-book-open"></i>Inside Cover</a></div>
-        <div class="item"><a href="#"><i class="fas fa-copyright"></i>Copyright</a></div>
-        <div class="item"><a href="#"><i class="fas fa-thumbs-up"></i>Praise</a></div>
-        <div class="item"><a href="#"><i class="fas fa-heart"></i>Dedication</a></div>
-        <div class="item"><a href="#"><i class="fas fa-question-circle"></i>How To Use</a></div>
-        <div class="item"><a href="#"><i class="fas fa-share"></i>Forward</a></div>
-        <div class="item">
-            <a class="sub-btn"><i class="fas fa-list"></i>Table of Content<i class="fas fa-angle-right dropdown"></i></a>
-            <div class="sub-menu">
-                <a href="#" class="sub-item">Sub Item 01</a>
-                <a href="#" class="sub-item">Sub Item 02</a>
-            </div>
-        </div>
-        <div class="item"><a href="#"><i class="fas fa-flag-checkered"></i>Conclusion</a></div>
-        <div class="item"><a href="#"><i class="fas fa-handshake"></i>Work with Us</a></div>
-        <div class="item"><a href="#"><i class="fas fa-user"></i>About</a></div>
-    </div>
-</div>
+@include('layouts.book-layout.navbar')
 <section class="main">
-    <div class="navBar p-3">
-        <div class="progressDiv w-100 pr-5">
-            <h4 class="text-white">Your Book Progress</h4>
-            <div class=" progress ">
-                <div class="progress-bar" role="progressbar" aria-valuenow="70" aria-valuemin="0" aria-valuemax="100" style="width:70%; background-color:#29649ad1">
-                    70%
-                </div>
-            </div>
-        </div>
-        <div class="dropdown dropdownDiv">
-            <span class="dropdown-toggle text-white" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="cursor:pointer">{{auth()->user()->name}}</span>
-            <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                <a class="dropdown-item" href="{{url('welcome')}}">Welcome Page</a>
-                <a class="dropdown-item" href="{{url('logout')}}">Logout</a>
-            </div>
-        </div>
-
-    </div>
+    @include('layouts.book-layout.progress')
     <div class="content px-5 py-4">
         <h3 class="av_heading text-center">Book Title</h3>
-        <!-- <form action="{{route('avatarDetail')}}" method="post" id="avatarForm" class="pt-3">
+        <form action="{{route('bookTitleDetail')}}" method="post" id="bookTitleForm" class="pt-3">
             @csrf
             <div class="d-flex justify-content-between align-items-center">
                 <div class="input-group w-100 mx-2">
-                    <span class="text-secondary mb-2">Avatar First Name</span>
-                    <input type="text" name="av_f_name" id="av_f_name">
+                    <span class="text-secondary mb-2">Title</span>
+                    <input type="text" name="book_title" id="av_f_name" value="<?php echo  $bookdata['book_title'] ?? '' ?>">
                 </div>
                 <div class="input-group w-100 mx-2">
-                    <span class="text-secondary mb-2">Avatar First Name</span>
-                    <input type="text" name="av_l_name" id="av_l_name">
+                    <span class="text-secondary mb-2">Subtitle</span>
+                    <input type="text" name="book_subtitle" id="av_l_name" value="<?php echo  $bookdata['book_subtitle'] ?? '' ?>">
                 </div>
             </div>
-            <div class="mt-3 mx-2">
-                <span class="text-secondary ">Avatar Description</span><br>
-                <textarea name="av_description" id="" class="w-100 mt-2" rows="5"></textarea>
+            <input type="hidden" name="user_id" data-class="avatar" value="<?php echo  $bookdata['user_id'] ?? '' ?>">
+            <div class=" mx-2 mt-3 d-flex justify-content-between align-items-center">
+                <a href="{{url('/avatar')}}">
+                    <button type="button" data-class="avatar" class="px-3 py-1"><i class="fas fa-arrow-left mr-2"></i>Previous</button></a>
+                <button type="submit" data-class="avatar" class="px-3 py-1"><i class="fas fa-save mr-2"></i>Save</button>
             </div>
-            <div class="text-right mx-2 mt-3">
-                <button type="submit" id="avatar" class="px-3 py-1"><i class="fas fa-save mr-2"></i>Save</button>
-            </div>
-        </form> -->
+        </form>
     </div>
     <button class="p-2 pdfBtn"><i class="fas fa-book"></i></button>
 </section>
@@ -327,11 +282,11 @@
         });
 
         // Contact Us Form Submission Function
-        $("#avatarForm").submit(function(e) {
+        $("#bookTitleForm").submit(function(e) {
             e.preventDefault();
             validation = validateForm();
             if (validation) {
-                $("#avatarForm")[0].submit();
+                $("#bookTitleForm")[0].submit();
             } else {
                 swal({
                     title: "Some Fields Missing",
@@ -343,9 +298,9 @@
 
         function validateForm() {
             let errorCount = 0;
-            $("form#avatarForm :input").each(function() {
+            $("form#bookTitleForm :input").each(function() {
                 let val = $(this).val();
-                if (val == '' && $(this).attr('id') !== 'avatar') {
+                if (val == '' && $(this).attr('data-class') !== 'avatar') {
                     errorCount++
                     $(this).css('border', '1px solid red');
                 } else {
@@ -359,7 +314,7 @@
         }
     });
 </script>
-
-
-
+<script>
+    $('.menu .item:nth-of-type(3) a').addClass('active-nav');
+</script>
 @endsection

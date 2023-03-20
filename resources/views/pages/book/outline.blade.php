@@ -228,49 +228,62 @@
         background: #29649ad1;
     }
 
-    .completed {
-        width: 10px;
-        background-color: lawngreen;
-        position: absolute;
-        right: 0;
+    .outline {
+        background-color: white;
+        border-radius: 20px;
+        padding: 20px;
+        box-shadow: 5px 5px 5px 5px solid gray;
+        margin-top: 20px;
     }
 </style>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js" charset="utf-8"></script>
 
 
+
 @include('layouts.book-layout.navbar')
 <section class="main">
     @include('layouts.book-layout.progress')
     <div class="content px-5 py-4">
-        <h3 class="av_heading text-center">Fill Avatar Details</h3>
-        <form action="{{route('avatarDetail')}}" method="post" id="avatarForm" class="pt-3">
-            @csrf
-            <div class="d-flex justify-content-between align-items-center">
-                <div class="input-group w-100 mx-2">
-                    <span class="text-secondary mb-2">Avatar First Name</span>
-                    <input type="text" value="<?php echo $bookdata['avatar_fname'] ?? '' ?>" name="avatar_fname" id="av_f_name">
-                </div>
-                <div class="input-group w-100 mx-2">
-                    <span class="text-secondary mb-2">Avatar First Name</span>
-                    <input type="text" value="<?php echo $bookdata['avatar_lname'] ?? '' ?>" name="avatar_lname" id="av_l_name">
-                </div>
+        <h3 class="av_heading text-center">Add Outlines</h3>
+        <div class="d-flex justify-content-between align-items-end">
+            <div class="input-group w-100 mx-2">
+                <span class="text-secondary mb-2">Outline Title</span>
+                <input type="text" name="av_f_name" id="outline_input">
+                <input type="hidden" name="user_id" data-class="avatar" value="<?php echo  $bookdata['user_id'] ?? '' ?>">
             </div>
-            <div class="mt-3 mx-2">
-                <span class="text-secondary ">Avatar Description</span><br>
-                <textarea name="avatar_description" value="<?php echo  $bookdata['avatar_description'] ?? '' ?>" id="" class="w-100 mt-2" rows="5"><?php echo  $bookdata['avatar_description'] ?? '' ?></textarea>
+            <button id="addOutline" class="px-3 py-1 w-25"><i class="fas fa-plus mr-2"></i>Add</button>
+        </div>
+        <div class=" mx-2 mt-3 d-flex justify-content-between align-items-center">
+            <a href="{{url('/book-title')}}">
+                <button type="button" class="px-3 py-1"><i class="fas fa-arrow-left mr-2"></i>Previous</button></a>
+            <button id="save" class="px-3 py-1"><i class="fas fa-save mr-2"></i>Save</button>
+        </div>
+        <div class="outline mx-2 d-none">
+            <h4 class="av_heading ">Outline</h4>
+            <hr class="mt-0">
+            <div class="outline-content">
+                <!-- <div class="d-flex justify-content-between align-items-center mb-2">
+                    <h6 class="av_heading ">1</h6>
+                    <h5 class="text-secondary">Start of Book</h5>
+                    <div class="d-flex justify-content-end align-items-center">
+                        <button class="btn-danger px-2 "><i class="fas fa-trash-alt"></i></button>
+                    </div>
+                </div> -->
             </div>
-            <input type="hidden" name="user_id" data-class="avatar" value="<?php echo  $bookdata['user_id'] ?? '' ?>">
-            <div class="text-right mx-2 mt-3">
-                <button type="submit" id="avatar" data-class="avatar" class="px-3 py-1"><i class="fas fa-save mr-2"></i>Save</button>
-            </div>
-        </form>
+        </div>
     </div>
-    <button class="p-2 pdfBtn"><i class="fas fa-book"></i></button>
+    <a href="{{route('createPDF')}}">
+        <button class="p-2 pdfBtn"><i class="fas fa-book"></i></button>
+    </a>
 </section>
+
 
 <script type="text/javascript">
     $(document).ready(function() {
+        var outlines = [];
+        var index = 0;
+        var count = 1;
         //jquery for toggle sub menus
         $('.sub-btn').click(function() {
             $(this).next('.sub-menu').slideToggle();
@@ -288,42 +301,82 @@
             $('.menu-btn').css("visibility", "visible");
         });
 
-        // Contact Us Form Submission Function
-        $("#avatarForm").submit(function(e) {
-            e.preventDefault();
-            validation = validateForm();
-            if (validation) {
-                $("#avatarForm")[0].submit();
-            } else {
+        $('#addOutline').click(function() {
+            var name = $("#outline_input").val();
+            $("#outline_input").css('border', '1px solid red');
+            if ($("#outline_input").val() == '') {
                 swal({
-                    title: "Some Fields Missing",
-                    text: "Please fill all fields.",
+                    title: "Input Error",
+                    text: "You must add outline name to add in book",
                     icon: "error",
                 });
-            }
-        })
+            } else {
+                $("#outline_input").css('border', 'red');
 
-        function validateForm() {
-            let errorCount = 0;
-            $("form#avatarForm :input").each(function() {
-                let val = $(this).val();
-                if (val == '' && $(this).attr('data-class') !== 'avatar') {
-                    errorCount++
-                    $(this).css('border', '1px solid red');
+                let div = `<div class="d-flex justify-content-between align-items-center mb-2">
+                    <h6 class="av_heading ">${count}</h6>
+                    <h5 class="text-secondary">${name}</h5>
+                    <button class="btn-danger px-2 removeOutline" data-id="${index}"><i class="fas fa-trash-alt"></i></button>
+                </div>`;
+                $('.outline-content').append(div);
+                outlines.push($("#outline_input").val());
+                index++;
+                count++;
+                if (outlines.length > 0) {
+                    $(".outline").removeClass('d-none');
                 } else {
-                    $(this).css('border', 'none');
+                    $(".outline").addClass('d-none');
                 }
-            });
-            if (errorCount > 0) {
-                return false;
+                $("#outline_input").val('');
             }
-            return true;
-        }
+        });
+
+        $(document).on('click', '.removeOutline', function() {
+            let indexNo = $(this).attr('data-id');
+            $(this).parent().remove();
+            outlines.splice(indexNo, 1);
+            if (outlines.length > 0) {
+                $(".outline").removeClass('d-none');
+            } else {
+                $(".outline").addClass('d-none');
+            }
+
+        });
+
+        // Ajax Call for Outline 
+        $('#save').on('click', function(e) {
+
+            if (email != "" && password != "") {
+                $.ajax({
+                    headers: {
+                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                    },
+                    url: `{{route('login')}}`,
+                    type: "POST",
+                    data: {
+
+                        email: email,
+                        password: password,
+                    },
+                    cache: false,
+                    success: function(dataResult) {
+                        console.log(dataResult);
+                        window.location.href = `{{url('/dashboard')}}`;
+                    },
+                    error: function(jqXHR, exception) {
+                        $('.loaderDiv').hide();
+                        toastr.error(jqXHR.responseJSON.message);
+                    }
+                });
+            } else {
+                $('.loaderDiv').hide();
+                toastr.error('Please fill all the field !');
+            }
+        });
+
     });
 </script>
 <script>
-    $('.menu .item:nth-of-type(2) a').addClass('active-nav');
+    $('.menu .item:nth-of-type(4) a').addClass('active-nav');
 </script>
-
-
 @endsection
