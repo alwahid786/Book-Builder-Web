@@ -40,7 +40,7 @@
         <p>{{$data['avatar_description']}}</p>
     </div>
     <div class="outlineDiv mx-5">
-        <h2 class="mt-3">Outlines:</h2>
+        <h2 class="mt-3">Table of Content:</h2>
         <hr class="mt-0">
         <?php $count = 1; ?>
         @foreach($data['outlines'] as $outline)

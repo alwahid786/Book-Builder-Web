@@ -58,7 +58,11 @@ class BookController extends Controller
     public function outline()
     {
         $bookdata = Book::where('user_id', auth()->user()->id)->first();
+        $outlines = Outline::where('user_id', auth()->user()->id)->get();
+        $outlines = json_decode($outlines, true);
         $bookdata = json_decode($bookdata, true);
+        $bookdata['outlines'] = $outlines;
+
         return view('pages.book.outline', compact('bookdata'));
     }
 
@@ -71,6 +75,12 @@ class BookController extends Controller
             $outline->save();
         }
         return response()->json(['success' => 'true', 'message' => 'Outlines Added successfully.']);
+    }
+
+    public function deleteOutline(Request $request)
+    {
+        $delete = Outline::where('id', $request->outline_id)->delete();
+        return response()->json(['success' => true]);
     }
 
     public function coverArt()
@@ -108,7 +118,6 @@ class BookController extends Controller
             }
             $imageSpine = url('public/files') . '/' . $fileNames;
             $data['spine_cover'] = $imageSpine;
-
         }
         if ($request->has('back_cover')) {
             try {
@@ -122,12 +131,42 @@ class BookController extends Controller
             }
             $imageBack = url('public/files') . '/' . $fileNames;
             $data['back_cover'] = $imageBack;
-
         }
         $data['img_status'] = 1;
         $book = Book::where('user_id', $request->user_id)->update($data);
         if ($book) {
-            return redirect()->back();
+            return redirect('inside-cover');
+        }
+    }
+
+    public function insideCover()
+    {
+        $bookdata = Book::where('user_id', auth()->user()->id)->first();
+        $bookdata = json_decode($bookdata, true);
+        return view('pages.book.inside-cover', compact('bookdata'));
+    }
+
+    public function frontCoverForm(Request $request)
+    {
+        $data = $request->except('_token');
+        $book = Book::where('user_id', $request->user_id)->update($data);
+        if ($book) {
+            return redirect('/inside-cover');
+        }
+    }
+    public function copyright()
+    {
+        $bookdata = Book::where('user_id', auth()->user()->id)->first();
+        $bookdata = json_decode($bookdata, true);
+        return view('pages.book.copyright', compact('bookdata'));
+    }
+
+    public function copyrightForm(Request $request)
+    {
+        $data = $request->except('_token');
+        $book = Book::where('user_id', $request->user_id)->update($data);
+        if ($book) {
+            return redirect('/inside-cover');
         }
     }
 }

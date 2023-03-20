@@ -228,66 +228,60 @@
         background: #29649ad1;
     }
 
-    .outline {
-        background-color: white;
-        border-radius: 20px;
-        padding: 20px;
-        box-shadow: 5px 5px 5px 5px solid gray;
-        margin-top: 20px;
+    .completed {
+        width: 10px;
+        background-color: lawngreen;
+        position: absolute;
+        right: 0;
     }
 </style>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js" charset="utf-8"></script>
 
 
-
 @include('layouts.book-layout.navbar')
 <section class="main">
     @include('layouts.book-layout.progress')
     <div class="content px-5 py-4">
-        <h3 class="av_heading text-center">Add Outline</h3>
-        <div class="d-flex justify-content-between align-items-end">
-            <div class="input-group w-100 mx-2">
-                <span class="text-secondary mb-2">Outline Title</span>
-                <input type="text" name="av_f_name" id="outline_input">
-                <input type="hidden" name="user_id" data-class="avatar" id="user_id" value="<?php echo  $bookdata['user_id'] ?? '' ?>">
-            </div>
-            <button id="addOutline" class="px-3 py-1 w-25"><i class="fas fa-plus mr-2"></i>Add</button>
-        </div>
-        <div class=" mx-2 mt-3 d-flex justify-content-between align-items-center">
-            <a href="{{url('/book-title')}}">
-                <button type="button" class="px-3 py-1"><i class="fas fa-arrow-left mr-2"></i>Previous</button></a>
-            <button id="save" class="px-3 py-1"><i class="fas fa-save mr-2"></i>Save</button>
-        </div>
-        <div class="outline mx-2">
-            <h4 class="av_heading ">Outline</h4>
-            <hr class="mt-0">
-            <div class="outline-content">
-                @if(isset($bookdata['outlines']) && !empty($bookdata['outlines']))
-                <?php $count = 0; ?>
-                @foreach($bookdata['outlines'] as $outline)
-                <?php $count++ ?>
-                <div class="d-flex justify-content-between align-items-center mb-2">
-                    <h6 class="av_heading ">{{$count}}</h6>
-                    <h5 class="text-secondary">{{$outline['outline_name']}}</h5>
-                    <button class="btn-danger px-2 removeOutlineData" data-id="{{$outline['id']}}"><i class="fas fa-trash-alt"></i></button>
+        <h3 class="av_heading text-center">Front Cover Details</h3>
+        <form action="{{route('frontCoverDetail')}}" method="post" id="frontCoverForm" class="pt-3">
+            @csrf
+            <div class="d-flex justify-content-between align-items-center">
+                <div class="input-group w-100 mx-2">
+                    <span class="text-secondary mb-2">Title</span>
+                    <input type="text" value="<?php echo $bookdata['front_title'] ?? '' ?>" name="front_title" id="av_f_name">
                 </div>
-                @endforeach
-                @endif
+                <div class="input-group w-100 mx-2">
+                    <span class="text-secondary mb-2">Subtitle</span>
+                    <input type="text" value="<?php echo $bookdata['front_subtitle'] ?? '' ?>" name="front_subtitle" id="av_l_name">
+                </div>
             </div>
-        </div>
+            <div class="d-flex justify-content-between align-items-center mt-3">
+                <div class="input-group w-100 mx-2">
+                    <span class="text-secondary mb-2">Author First Name</span>
+                    <input type="text" value="<?php echo $bookdata['author_fname'] ?? '' ?>" name="author_fname" id="av_f_name">
+                </div>
+                <div class="input-group w-100 mx-2">
+                    <span class="text-secondary mb-2">Author Last Name</span>
+                    <input type="text" value="<?php echo $bookdata['author_lname'] ?? '' ?>" name="author_lname" id="av_l_name">
+                </div>
+            </div>
+
+            <input type="hidden" name="user_id" data-class="avatar" value="<?php echo  $bookdata['user_id'] ?? '' ?>">
+            <div class=" mx-2 mt-3 d-flex justify-content-between align-items-center">
+                <a href="{{url('/cover-art')}}">
+                    <button type="button" data-class="avatar" class="px-3 py-1"><i class="fas fa-arrow-left mr-2"></i>Previous</button></a>
+                <button id="save" data-class="avatar" class="px-3 py-1"><i class="fas fa-save mr-2"></i>Save</button>
+            </div>
+        </form>
     </div>
     <a target="_blank" href="{{route('createPDF')}}">
         <button class="p-2 pdfBtn"><i class="fas fa-book"></i></button>
     </a>
 </section>
 
-
 <script type="text/javascript">
     $(document).ready(function() {
-        var outlines = [];
-        var index = 0;
-        var count = 1;
         //jquery for toggle sub menus
         $('.sub-btn').click(function() {
             $(this).next('.sub-menu').slideToggle();
@@ -305,93 +299,42 @@
             $('.menu-btn').css("visibility", "visible");
         });
 
-        $('#addOutline').click(function() {
-            var name = $("#outline_input").val();
-            $("#outline_input").css('border', '1px solid red');
-            if ($("#outline_input").val() == '') {
-                swal({
-                    title: "Input Error",
-                    text: "You must add outline name to add in book",
-                    icon: "error",
-                });
+        // Contact Us Form Submission Function
+        $("#frontCoverForm").submit(function(e) {
+            e.preventDefault();
+            validation = validateForm();
+            if (validation) {
+                $("#frontCoverForm")[0].submit();
             } else {
-                $("#outline_input").css('border', 'red');
-
-                let div = `<div class="d-flex justify-content-between align-items-center mb-2">
-                    <h6 class="av_heading ">${count}</h6>
-                    <h5 class="text-secondary">${name}</h5>
-                    <button class="btn-danger px-2 removeOutline" data-id="${index}"><i class="fas fa-trash-alt"></i></button>
-                </div>`;
-                $('.outline-content').append(div);
-                outlines.push($("#outline_input").val());
-                index++;
-                count++;
-                $("#outline_input").val('');
-            }
-        });
-
-        $(document).on('click', '.removeOutline', function() {
-            let indexNo = $(this).attr('data-id');
-            $(this).parent().remove();
-            outlines.splice(indexNo, 1);
-
-        });
-
-        // Ajax Call for Outline 
-        $('#save').on('click', function(e) {
-            if (outlines.length < 1) {
                 swal({
-                    title: "Input Error",
-                    text: "You must add atleast 1 outline name to add in book",
+                    title: "Some Fields Missing",
+                    text: "Please fill all fields.",
                     icon: "error",
                 });
-                return;
             }
-
-            $.ajax({
-                headers: {
-                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                },
-                url: `{{route('outlineDetail')}}`,
-                type: "POST",
-                data: {
-                    outlines: outlines,
-                    user_id: $("#user_id").val(),
-                },
-                cache: false,
-                success: function(dataResult) {
-                    window.location.href = `{{url('/cover-art')}}`;
-                },
-                error: function(jqXHR, exception) {
-                    console.log(jqXHR.responseJSON.message);
-                }
-            });
-        });
-
-        $(document).on('click', '.removeOutlineData', function() {
-            var id = $(this).attr('data-id');
-            $.ajax({
-                headers: {
-                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                },
-                url: `{{route('deleteOutline')}}`,
-                type: "POST",
-                data: {
-                    outline_id: id,
-                },
-                cache: false,
-                success: function(dataResult) {
-                    window.location.reload();
-                },
-                error: function(jqXHR, exception) {
-                    console.log(jqXHR.responseJSON.message);
-                }
-            });
         })
 
+        function validateForm() {
+            let errorCount = 0;
+            $("form#frontCoverForm :input").each(function() {
+                let val = $(this).val();
+                if (val == '' && $(this).attr('data-class') !== 'avatar') {
+                    errorCount++
+                    $(this).css('border', '1px solid red');
+                } else {
+                    $(this).css('border', 'none');
+                }
+            });
+            if (errorCount > 0) {
+                return false;
+            }
+            return true;
+        }
     });
 </script>
 <script>
-    $('.menu .item:nth-of-type(4) a').addClass('active-nav');
+    $('.menu .item:nth-of-type(6) a').addClass('active-nav');
 </script>
+
+
 @endsection

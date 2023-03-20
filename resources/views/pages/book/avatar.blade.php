@@ -252,7 +252,7 @@
                     <input type="text" value="<?php echo $bookdata['avatar_fname'] ?? '' ?>" name="avatar_fname" id="av_f_name">
                 </div>
                 <div class="input-group w-100 mx-2">
-                    <span class="text-secondary mb-2">Avatar First Name</span>
+                    <span class="text-secondary mb-2">Avatar Last Name</span>
                     <input type="text" value="<?php echo $bookdata['avatar_lname'] ?? '' ?>" name="avatar_lname" id="av_l_name">
                 </div>
             </div>

@@ -51,8 +51,16 @@ Route::middleware('auth')->group(function () {
     Route::post('/bookTitleForm', [BookController::class, 'bookTitleForm'])->name('bookTitleDetail');
     Route::get('/outline', [BookController::class, 'outline']);
     Route::post('/outlineForm', [BookController::class, 'outlineForm'])->name('outlineDetail');
+    Route::post('/deleteOutline', [BookController::class, 'deleteOutline'])->name('deleteOutline');
+
     Route::get('/cover-art', [BookController::class, 'coverArt']);
     Route::post('/coverArtForm', [BookController::class, 'coverArtForm'])->name('coverArtDetail');
+    Route::get('/inside-cover', [BookController::class, 'insideCover']);
+    Route::post('/frontCoverForm', [BookController::class, 'frontCoverForm'])->name('frontCoverDetail');
+    Route::get('/copyright', [BookController::class, 'copyright']);
+    Route::post('/copyrightForm', [BookController::class, 'copyrightForm'])->name('copyrightDetail');
+
+    // PDF Creation Routes 
     Route::get('/create-book', [PDFController::class, 'createPDF'])->name('createPDF');
     Route::get('/pdf', [PDFController::class, 'pdf'])->name('pdf');
 });
