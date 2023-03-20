@@ -42,12 +42,6 @@ Route::middleware('auth')->group(function () {
     Route::get('/welcome', function () {
         return view('pages.welcome');
     });
-    Route::get('/outline', function () {
-        return view('pages.book.outline');
-    });
-    Route::get('/cover-art', function () {
-        return view('pages.book.cover-art');
-    });
     Route::get('/logout', [AuthController::class, 'logout']);
 
     // Book Routes Controller 
@@ -56,5 +50,8 @@ Route::middleware('auth')->group(function () {
     Route::get('/book-title', [BookController::class, 'bookTitle']);
     Route::post('/bookTitleForm', [BookController::class, 'bookTitleForm'])->name('bookTitleDetail');
     Route::get('/outline', [BookController::class, 'outline']);
+    Route::post('/outlineForm', [BookController::class, 'outlineForm'])->name('outlineDetail');
+    Route::get('/cover-art', [BookController::class, 'coverArt']);
+    Route::post('/coverArtForm', [BookController::class, 'coverArtForm'])->name('coverArtDetail');
     Route::get('/create-book', [PDFController::class, 'createPDF'])->name('createPDF');
 });

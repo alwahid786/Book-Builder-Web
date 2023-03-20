@@ -283,48 +283,66 @@
     @include('layouts.book-layout.progress')
     <div class="content px-5 py-4">
         <h3 class="av_heading text-center">Add Cover Art</h3>
-        <div class="row mt-4">
-            <div class="col-4">
-                <div id="img-preview" class="img-preview text-center">
-                    <img src="https://png.pngtree.com/png-vector/20190508/ourmid/pngtree-upload-cloud-vector-icon-png-image_1027251.jpg" alt="image">
+        <form action="{{route('coverArtDetail')}}" id="coverArtForm" method="post" enctype="multipart/form-data">
+            <div class="row mt-4">
+                @csrf
+                <div class="col-4">
+                    <div id="img-preview" class="img-preview text-center">
+                        <img src="<?php if ($bookdata['front_cover'] != '') {
+                                        echo  $bookdata['front_cover'];
+                                    } else {
+                                        echo 'https://png.pngtree.com/png-vector/20190508/ourmid/pngtree-upload-cloud-vector-icon-png-image_1027251.jpg';
+                                    } ?>" alt="image">
+                    </div>
+                    <div class="text-center">
+                        <label class="hero-section-upload my-4 w-75 mx-auto"> Upload Front Cover
+                            <input type="file" name="front_cover" class="d-none" id="profile-img" size="60">
+                        </label>
+                    </div>
                 </div>
-                <div class="text-center">
-                    <label class="hero-section-upload my-4 w-75 mx-auto"> Upload Front Cover
-                        <input type="file" name="profile_img" class="d-none" id="profile-img" size="60">
-                    </label>
+                <div class="col-4">
+                    <div id="img-preview2" class="img-preview text-center">
+                        <img src="<?php if ($bookdata['spine_cover'] != '') {
+                                        echo  $bookdata['spine_cover'];
+                                    } else {
+                                        echo 'https://png.pngtree.com/png-vector/20190508/ourmid/pngtree-upload-cloud-vector-icon-png-image_1027251.jpg';
+                                    } ?>" alt="image">
+                    </div>
+                    <div class="text-center">
+                        <label class="hero-section-upload my-4 w-75 mx-auto"> Upload Spine Cover
+                            <input type="file" name="spine_cover" class="d-none" id="profile-img2" size="60">
+                        </label>
+                    </div>
                 </div>
+                <div class="col-4">
+                    <div id="img-preview3" class="img-preview text-center">
+                        <img src="<?php if ($bookdata['back_cover'] != '') {
+                                        echo  $bookdata['back_cover'];
+                                    } else {
+                                        echo 'https://png.pngtree.com/png-vector/20190508/ourmid/pngtree-upload-cloud-vector-icon-png-image_1027251.jpg';
+                                    } ?>" alt="image">
+                    </div>
+                    <div class="text-center">
+                        <label class="hero-section-upload my-4 w-75 mx-auto"> Upload Back Cover
+                            <input type="file" name="back_cover" class="d-none" id="profile-img3" size="60">
+                        </label>
+                    </div>
+                </div>
+                <input type="hidden" name="user_id" data-class="avatar" id="user_id" value="<?php echo  $bookdata['user_id'] ?? '' ?>">
+                <input type="hidden" name="img_status" data-class="avatar" id="img_status" value="<?php echo  $bookdata['img_status'] ?? 0 ?>">
             </div>
-            <div class="col-4">
-                <div id="img-preview2" class="img-preview text-center">
-                    <img src="https://png.pngtree.com/png-vector/20190508/ourmid/pngtree-upload-cloud-vector-icon-png-image_1027251.jpg" alt="image">
-                </div>
-                <div class="text-center">
-                    <label class="hero-section-upload my-4 w-75 mx-auto"> Upload Spine Cover
-                        <input type="file" name="profile_img" class="d-none" id="profile-img2" size="60">
-                    </label>
-                </div>
-            </div>
-            <div class="col-4">
-                <div id="img-preview3" class="img-preview text-center">
-                    <img src="https://png.pngtree.com/png-vector/20190508/ourmid/pngtree-upload-cloud-vector-icon-png-image_1027251.jpg" alt="image">
-                </div>
-                <div class="text-center">
-                    <label class="hero-section-upload my-4 w-75 mx-auto"> Upload Back Cover
-                        <input type="file" name="profile_img" class="d-none" id="profile-img3" size="60">
-                    </label>
-                </div>
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-12 px-5">
+            <div class="row">
+                <div class="col-12 px-5">
 
-                <div class=" mx-2 mt-3 d-flex justify-content-between align-items-center">
-                    <a href="{{url('/book-title')}}">
-                        <button type="button" class="px-3 py-1"><i class="fas fa-arrow-left mr-2"></i>Previous</button></a>
-                    <button type="submit" id="avatar" class="px-3 py-1"><i class="fas fa-save mr-2"></i>Save</button>
+                    <div class=" mx-2 mt-3 d-flex justify-content-between align-items-center">
+                        <a href="{{url('/outline')}}">
+                            <button type="button" data-class="avatar" class="px-3 py-1"><i class="fas fa-arrow-left mr-2"></i>Previous</button></a>
+                        <button type="submit" data-class="avatar" class="px-3 py-1"><i class="fas fa-save mr-2"></i>Save</button>
+                    </div>
                 </div>
             </div>
-        </div>
+        </form>
+
     </div>
     <button class="p-2 pdfBtn"><i class="fas fa-book"></i></button>
 </section>
@@ -352,45 +370,40 @@
             $('.menu-btn').css("visibility", "visible");
         });
 
-        $('#addOutline').click(function() {
-            var name = $("#outline_input").val();
-            if ($("#outline_input").val() == '') {
+        $("#coverArtForm").submit(function(e) {
+            e.preventDefault();
+            validation = validateForm();
+            if (validation) {
+                $("#coverArtForm")[0].submit();
+            } else {
                 swal({
-                    title: "Input Error",
-                    text: "You must add outline name to add in book",
+                    title: "Some Fields Missing",
+                    text: "Please fill all fields.",
                     icon: "error",
                 });
-            } else {
-                let div = `<div class="d-flex justify-content-between align-items-center mb-2">
-                    <h6 class="av_heading ">${count}</h6>
-                    <h5 class="text-secondary">${name}</h5>
-                    <button class="btn-danger px-2 removeOutline" data-id="${index}"><i class="fas fa-trash-alt"></i></button>
-                </div>`;
-                $('.outline-content').append(div);
-                outlines.push($("#outline_input").val());
-                index++;
-                count++;
-                if (outlines.length > 0) {
-                    $(".outline").removeClass('d-none');
-                } else {
-                    $(".outline").addClass('d-none');
+            }
+        })
+
+        function validateForm() {
+            if ($("#img_status").val() == 0) {
+
+                let errorCount = 0;
+                $("form#coverArtForm :input").each(function() {
+                    let val = $(this).val();
+                    if (val == '' && $(this).attr('data-class') !== 'avatar') {
+                        errorCount++
+                        // $(this).css('border', '1px solid red');
+                    } else {
+                        // $(this).css('border', 'none');
+                    }
+                });
+                if (errorCount > 0) {
+                    return false;
                 }
-                $("#outline_input").val('');
-                console.log(outlines)
+                return true;
             }
-        });
-
-        $(document).on('click', '.removeOutline', function() {
-            let indexNo = $(this).attr('data-id');
-            $(this).parent().remove();
-            outlines.splice(indexNo, 1);
-            if (outlines.length > 0) {
-                $(".outline").removeClass('d-none');
-            } else {
-                $(".outline").addClass('d-none');
-            }
-
-        });
+            return true;
+        }
 
         const chooseFile = document.getElementById("profile-img");
         const imgPreview = document.getElementById("img-preview");

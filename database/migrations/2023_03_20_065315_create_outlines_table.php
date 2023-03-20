@@ -17,7 +17,7 @@ class CreateOutlinesTable extends Migration
             $table->id();
             $table->unsignedBigInteger('user_id');
             $table->string('outline_name');
-            $table->text('content');
+            $table->text('content')->nullable();
             $table->foreign('user_id')->references('id')->on('users')->onUpdate('cascade')->onDelete('cascade');
             $table->timestamps();
         });
