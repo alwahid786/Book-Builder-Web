@@ -54,4 +54,5 @@ Route::middleware('auth')->group(function () {
     Route::get('/cover-art', [BookController::class, 'coverArt']);
     Route::post('/coverArtForm', [BookController::class, 'coverArtForm'])->name('coverArtDetail');
     Route::get('/create-book', [PDFController::class, 'createPDF'])->name('createPDF');
+    Route::get('/pdf', [PDFController::class, 'pdf'])->name('pdf');
 });
