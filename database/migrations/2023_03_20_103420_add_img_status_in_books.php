@@ -14,7 +14,7 @@ class AddImgStatusInBooks extends Migration
     public function up()
     {
         Schema::table('books', function (Blueprint $table) {
-            $table->boolean('img_status');
+            $table->boolean('img_status')->default(0);
         });
     }
 
