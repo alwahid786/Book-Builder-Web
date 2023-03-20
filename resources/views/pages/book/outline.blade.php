@@ -250,7 +250,7 @@
             <div class="input-group w-100 mx-2">
                 <span class="text-secondary mb-2">Outline Title</span>
                 <input type="text" name="av_f_name" id="outline_input">
-                <input type="hidden" name="user_id" data-class="avatar" value="<?php echo  $bookdata['user_id'] ?? '' ?>">
+                <input type="hidden" name="user_id" data-class="avatar" id="user_id" value="<?php echo  $bookdata['user_id'] ?? '' ?>">
             </div>
             <button id="addOutline" class="px-3 py-1 w-25"><i class="fas fa-plus mr-2"></i>Add</button>
         </div>
@@ -345,33 +345,33 @@
 
         // Ajax Call for Outline 
         $('#save').on('click', function(e) {
-
-            if (email != "" && password != "") {
-                $.ajax({
-                    headers: {
-                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                    },
-                    url: `{{route('login')}}`,
-                    type: "POST",
-                    data: {
-
-                        email: email,
-                        password: password,
-                    },
-                    cache: false,
-                    success: function(dataResult) {
-                        console.log(dataResult);
-                        window.location.href = `{{url('/dashboard')}}`;
-                    },
-                    error: function(jqXHR, exception) {
-                        $('.loaderDiv').hide();
-                        toastr.error(jqXHR.responseJSON.message);
-                    }
+            if (outlines.length < 1) {
+                swal({
+                    title: "Input Error",
+                    text: "You must add atleast 1 outline name to add in book",
+                    icon: "error",
                 });
-            } else {
-                $('.loaderDiv').hide();
-                toastr.error('Please fill all the field !');
+                return;
             }
+
+            $.ajax({
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                },
+                url: `{{route('outlineDetail')}}`,
+                type: "POST",
+                data: {
+                    outlines: outlines,
+                    user_id: $("#user_id").val(),
+                },
+                cache: false,
+                success: function(dataResult) {
+                    window.location.href = `{{url('/cover-art')}}`;
+                },
+                error: function(jqXHR, exception) {
+                    console.log(jqXHR.responseJSON.message);
+                }
+            });
         });
 
     });
