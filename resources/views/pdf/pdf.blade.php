@@ -22,7 +22,7 @@
             object-fit: contain;
         }
 
-        .divOutline {
+        .divOutline{
             display: flex;
             align-items: baseline;
         }
@@ -43,22 +43,17 @@
         <h2 class="mt-3">Outlines:</h2>
         <hr class="mt-0">
         <?php $count = 1; ?>
-        <table>
-            <tbody>
-                @foreach($data['outlines'] as $outline)
-                <tr>
-                    <td></td>
-                </tr>
-                        <?php echo $count;
-                        $count++; ?>
-                    </div>
-                    <div class="w-75 text-center">
-                        {{$outline['outline_name']}}
-                    </div>
-                </div>
-                @endforeach
-            </tbody>
-        </table>
+        @foreach($data['outlines'] as $outline)
+        <div class="divOutline">
+            <div class="w-25 pl-3">
+                <?php echo $count;
+                $count++; ?>
+            </div>
+            <div class="w-75 text-center">
+                {{$outline['outline_name']}}
+            </div>
+        </div>
+        @endforeach
     </div>
 
     <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>

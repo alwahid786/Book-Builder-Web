@@ -20,9 +20,18 @@ class PDFController extends Controller
         $outlines = json_decode($outlines, true);
         $data = json_decode($data, true);
         $data['outlines'] = $outlines;
-        $pdf = PDF::loadView('pdf.pdf', compact('data')); // load view and pass data
 
-        return $pdf->download('pdf_file.pdf'); // download PDF file
+        $pdf = PDF::loadView('pdf.pdf', compact('data')); // load view and pass data
+        $pdf->setPaper('a4', 'portrait');
+
+        // Set the response content-type to PDF
+        $headers = [
+                'Content-Type' => 'application/pdf',
+                'Content-Disposition' => 'inline; filename="mypdf.pdf"'
+            ];
+
+        // Return the rendered PDF in a new tab
+        return response($pdf->stream(), 200, $headers);
     }
     public function pdf()
     {

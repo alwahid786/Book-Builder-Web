@@ -266,7 +266,7 @@
             </div>
         </form>
     </div>
-    <a href="{{route('createPDF')}}">
+    <a target="_blank" href="{{route('createPDF')}}">
         <button class="p-2 pdfBtn"><i class="fas fa-book"></i></button>
     </a>
 </section>
