@@ -260,8 +260,9 @@
                 <span class="text-secondary ">Avatar Description</span><br>
                 <textarea name="avatar_description" value="<?php echo  $bookdata['avatar_description'] ?? '' ?>" id="" class="w-100 mt-2" rows="5"><?php echo  $bookdata['avatar_description'] ?? '' ?></textarea>
             </div>
+            <input type="hidden" name="user_id" data-class="avatar" value="<?php echo  $bookdata['user_id'] ?? '' ?>">
             <div class="text-right mx-2 mt-3">
-                <button type="submit" id="avatar" class="px-3 py-1"><i class="fas fa-save mr-2"></i>Save</button>
+                <button type="submit" id="avatar" data-class="avatar" class="px-3 py-1"><i class="fas fa-save mr-2"></i>Save</button>
             </div>
         </form>
     </div>
@@ -306,7 +307,7 @@
             let errorCount = 0;
             $("form#avatarForm :input").each(function() {
                 let val = $(this).val();
-                if (val == '' && $(this).attr('id') !== 'avatar') {
+                if (val == '' && $(this).attr('data-class') !== 'avatar') {
                     errorCount++
                     $(this).css('border', '1px solid red');
                 } else {

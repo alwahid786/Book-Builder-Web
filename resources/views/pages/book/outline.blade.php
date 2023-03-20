@@ -250,13 +250,14 @@
             <div class="input-group w-100 mx-2">
                 <span class="text-secondary mb-2">Outline Title</span>
                 <input type="text" name="av_f_name" id="outline_input">
+                <input type="hidden" name="user_id" data-class="avatar" value="<?php echo  $bookdata['user_id'] ?? '' ?>">
             </div>
             <button id="addOutline" class="px-3 py-1 w-25"><i class="fas fa-plus mr-2"></i>Add</button>
         </div>
         <div class=" mx-2 mt-3 d-flex justify-content-between align-items-center">
             <a href="{{url('/book-title')}}">
                 <button type="button" class="px-3 py-1"><i class="fas fa-arrow-left mr-2"></i>Previous</button></a>
-            <button type="submit" id="avatar" class="px-3 py-1"><i class="fas fa-save mr-2"></i>Save</button>
+            <button id="save" class="px-3 py-1"><i class="fas fa-save mr-2"></i>Save</button>
         </div>
         <div class="outline mx-2 d-none">
             <h4 class="av_heading ">Outline</h4>
@@ -302,6 +303,7 @@
 
         $('#addOutline').click(function() {
             var name = $("#outline_input").val();
+            $("#outline_input").css('border', '1px solid red');
             if ($("#outline_input").val() == '') {
                 swal({
                     title: "Input Error",
@@ -309,6 +311,8 @@
                     icon: "error",
                 });
             } else {
+                $("#outline_input").css('border', 'red');
+
                 let div = `<div class="d-flex justify-content-between align-items-center mb-2">
                     <h6 class="av_heading ">${count}</h6>
                     <h5 class="text-secondary">${name}</h5>
@@ -324,7 +328,6 @@
                     $(".outline").addClass('d-none');
                 }
                 $("#outline_input").val('');
-                console.log(outlines)
             }
         });
 
@@ -338,6 +341,37 @@
                 $(".outline").addClass('d-none');
             }
 
+        });
+
+        // Ajax Call for Outline 
+        $('#save').on('click', function(e) {
+
+            if (email != "" && password != "") {
+                $.ajax({
+                    headers: {
+                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                    },
+                    url: `{{route('login')}}`,
+                    type: "POST",
+                    data: {
+
+                        email: email,
+                        password: password,
+                    },
+                    cache: false,
+                    success: function(dataResult) {
+                        console.log(dataResult);
+                        window.location.href = `{{url('/dashboard')}}`;
+                    },
+                    error: function(jqXHR, exception) {
+                        $('.loaderDiv').hide();
+                        toastr.error(jqXHR.responseJSON.message);
+                    }
+                });
+            } else {
+                $('.loaderDiv').hide();
+                toastr.error('Please fill all the field !');
+            }
         });
 
     });

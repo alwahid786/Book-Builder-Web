@@ -238,22 +238,23 @@
     @include('layouts.book-layout.progress')
     <div class="content px-5 py-4">
         <h3 class="av_heading text-center">Book Title</h3>
-        <form action="{{route('avatarDetail')}}" method="post" id="avatarForm" class="pt-3">
+        <form action="{{route('bookTitleDetail')}}" method="post" id="bookTitleForm" class="pt-3">
             @csrf
             <div class="d-flex justify-content-between align-items-center">
                 <div class="input-group w-100 mx-2">
                     <span class="text-secondary mb-2">Title</span>
-                    <input type="text" name="av_f_name" id="av_f_name">
+                    <input type="text" name="book_title" id="av_f_name" value="<?php echo  $bookdata['book_title'] ?? '' ?>">
                 </div>
                 <div class="input-group w-100 mx-2">
                     <span class="text-secondary mb-2">Subtitle</span>
-                    <input type="text" name="av_l_name" id="av_l_name">
+                    <input type="text" name="book_subtitle" id="av_l_name" value="<?php echo  $bookdata['book_subtitle'] ?? '' ?>">
                 </div>
             </div>
+            <input type="hidden" name="user_id" data-class="avatar" value="<?php echo  $bookdata['user_id'] ?? '' ?>">
             <div class=" mx-2 mt-3 d-flex justify-content-between align-items-center">
                 <a href="{{url('/avatar')}}">
-                    <button type="button" class="px-3 py-1"><i class="fas fa-arrow-left mr-2"></i>Previous</button></a>
-                <button type="submit" id="avatar" class="px-3 py-1"><i class="fas fa-save mr-2"></i>Save</button>
+                    <button type="button" data-class="avatar" class="px-3 py-1"><i class="fas fa-arrow-left mr-2"></i>Previous</button></a>
+                <button type="submit" data-class="avatar" class="px-3 py-1"><i class="fas fa-save mr-2"></i>Save</button>
             </div>
         </form>
     </div>
@@ -281,11 +282,11 @@
         });
 
         // Contact Us Form Submission Function
-        $("#avatarForm").submit(function(e) {
+        $("#bookTitleForm").submit(function(e) {
             e.preventDefault();
             validation = validateForm();
             if (validation) {
-                $("#avatarForm")[0].submit();
+                $("#bookTitleForm")[0].submit();
             } else {
                 swal({
                     title: "Some Fields Missing",
@@ -297,9 +298,9 @@
 
         function validateForm() {
             let errorCount = 0;
-            $("form#avatarForm :input").each(function() {
+            $("form#bookTitleForm :input").each(function() {
                 let val = $(this).val();
-                if (val == '' && $(this).attr('id') !== 'avatar') {
+                if (val == '' && $(this).attr('data-class') !== 'avatar') {
                     errorCount++
                     $(this).css('border', '1px solid red');
                 } else {
