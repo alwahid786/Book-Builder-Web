@@ -1,6 +1,7 @@
 <?php
 
 use App\Models\Book;
+use App\Models\Outline;
 
 function bookProgress()
 {
@@ -20,6 +21,11 @@ function bookProgress()
         'work_with_us' => false,
         'about' => false,
     ];
+
+    $outlines = Outline::where('user_id', auth()->user()->id)->first();
+    if(!empty($outlines)){
+        $sections['outline'] = true;
+    }
     $book_details = Book::where('user_id', auth()->user()->id)->first();
     if (!empty($book_details)) {
         if (!empty($book_details->avatar_fname)) {
