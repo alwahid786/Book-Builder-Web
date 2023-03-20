@@ -4,6 +4,7 @@ use App\Http\Controllers\SpeechToTextController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\BookController;
+use App\Http\Controllers\PDFController;
 
 /*
 |--------------------------------------------------------------------------
@@ -44,7 +45,14 @@ Route::middleware('auth')->group(function () {
     Route::get('/book-title', function () {
         return view('pages.book.book-title');
     });
+    Route::get('/outline', function () {
+        return view('pages.book.outline');
+    });
+    Route::get('/cover-art', function () {
+        return view('pages.book.cover-art');
+    });
     Route::get('/logout', [AuthController::class, 'logout']);
     Route::get('/avatar', [BookController::class, 'avatar']);
     Route::post('/avatarForm', [BookController::class, 'avatarForm'])->name('avatarDetail');
+    Route::get('/create-book', [PDFController::class, 'createPDF'])->name('createPDF');
 });

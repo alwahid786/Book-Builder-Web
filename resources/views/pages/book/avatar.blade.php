@@ -239,55 +239,9 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js" charset="utf-8"></script>
 
 
-<div class="side-bar">
-
-    <div class="menu">
-        <div class="item text-center text-white" style="height: 85px; display:flex; font-size:30px; justify-content:center; align-items:center">LOGO</div>
-        <div class="item position-relative"><a href="#" class="active-nav "><i class="fas fa-book"></i>Avatar </a>
-            <div class="completed"></div>
-        </div>
-        <div class="item"><a href="#"><i class="fas fa-heading"></i>Book Title</a></div>
-        <div class="item">
-            <a class="sub-btn"><i class="fas fa-file-alt"></i>Outline</a>
-        </div>
-        <div class="item"><a href="#"><i class="fas fa-images"></i>Cover Art</a></div>
-        <div class="item"><a href="#"><i class="fas fa-book-open"></i>Inside Cover</a></div>
-        <div class="item"><a href="#"><i class="fas fa-copyright"></i>Copyright</a></div>
-        <div class="item"><a href="#"><i class="fas fa-thumbs-up"></i>Praise</a></div>
-        <div class="item"><a href="#"><i class="fas fa-heart"></i>Dedication</a></div>
-        <div class="item"><a href="#"><i class="fas fa-question-circle"></i>How To Use</a></div>
-        <div class="item"><a href="#"><i class="fas fa-share"></i>Forward</a></div>
-        <div class="item">
-            <a class="sub-btn"><i class="fas fa-list"></i>Table of Content<i class="fas fa-angle-right dropdown"></i></a>
-            <div class="sub-menu">
-                <a href="#" class="sub-item">Sub Item 01</a>
-                <a href="#" class="sub-item">Sub Item 02</a>
-            </div>
-        </div>
-        <div class="item"><a href="#"><i class="fas fa-flag-checkered"></i>Conclusion</a></div>
-        <div class="item"><a href="#"><i class="fas fa-handshake"></i>Work with Us</a></div>
-        <div class="item"><a href="#"><i class="fas fa-user"></i>About</a></div>
-    </div>
-</div>
+@include('layouts.book-layout.navbar')
 <section class="main">
-    <div class="navBar p-3">
-        <div class="progressDiv w-100 pr-5">
-            <h4 class="text-white">Your Book Progress</h4>
-            <div class=" progress " style="height: 18px;">
-                <div class="progress-bar text-secondary" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" style="width:0%;height: 18px; background-color:green">
-                    0%
-                </div>
-            </div>
-        </div>
-        <div class="dropdown dropdownDiv">
-            <span class="dropdown-toggle text-white" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="cursor:pointer">{{auth()->user()->name}}</span>
-            <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                <a class="dropdown-item" href="{{url('welcome')}}">Welcome Page</a>
-                <a class="dropdown-item" href="{{url('logout')}}">Logout</a>
-            </div>
-        </div>
-
-    </div>
+    @include('layouts.book-layout.progress')
     <div class="content px-5 py-4">
         <h3 class="av_heading text-center">Fill Avatar Details</h3>
         <form action="{{route('avatarDetail')}}" method="post" id="avatarForm" class="pt-3">
@@ -313,7 +267,6 @@
     </div>
     <button class="p-2 pdfBtn"><i class="fas fa-book"></i></button>
 </section>
-
 
 <script type="text/javascript">
     $(document).ready(function() {
@@ -367,7 +320,9 @@
         }
     });
 </script>
-
+<script>
+    $('.menu .item:nth-of-type(2) a').addClass('active-nav');
+</script>
 
 
 @endsection
