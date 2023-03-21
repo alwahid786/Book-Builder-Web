@@ -25,7 +25,7 @@
   }
 </style>
 
-<button id="startBtn">Start Recording</button>
+<button id="startBtn" data-editor_name="transcription">Start Recording</button>
 <button id="stopBtn" style="display: none;">Stop Recording</button>
 <button id="resetBtn" style="display: none;">Reset</button>
 
@@ -43,6 +43,7 @@
   const stopBtn = document.getElementById('stopBtn');
   const resetBtn = document.getElementById('resetBtn');
   const transcriptionField = document.getElementById('transcription');
+  var editorName = 'editor';
 
   // create a new instance of SpeechRecognition
   if (window.SpeechRecognition || window.webkitSpeechRecognition) {
@@ -62,7 +63,7 @@
     for (let i = event.resultIndex; i < event.results.length; i++) {
       let transcript = event.results[i][0].transcript;
       if (event.results[i].isFinal) {
-        var editor = CKEDITOR.instances.transcription;
+        var editor = CKEDITOR.instances[editorName];
 
         // Get the current selection object
         var selection = editor.getSelection();
@@ -99,6 +100,8 @@
 
   // add click event listener to start button
   startBtn.addEventListener('click', function() {
+    editorName = startBtn.getAttribute('data-editor_name');
+
     //   if (transcription === '') {
     recognition.start();
     console.log('Recognition started');
@@ -123,24 +126,24 @@
   // add click event listener to reset button
   resetBtn.addEventListener('click', function() {
     Swal.fire({
-      title: 'Are you sure?',
-      text: "You won't be able to revert this!",
-      icon: 'warning',
-      showCancelButton: true,
-      confirmButtonColor: '#3085d6',
-      cancelButtonColor: '#d33',
-      confirmButtonText: 'Yes, reset it!'
-    }).then((result) => {
-      if (result.isConfirmed) {
-        // Perform the action here
-
-        transcription = '';
-        CKEDITOR.instances.transcription.setData('');
-        recognition.stop();
-        console.log('Recognition stopped');
-        resetBtn.style.display = 'none';
-      }
-    })
+  title: 'Are you sure?',
+  text: "You won't be able to revert this!",
+  icon: 'warning',
+  showCancelButton: true,
+  confirmButtonColor: '#3085d6',
+  cancelButtonColor: '#d33',
+  confirmButtonText: 'Yes, reset it!'
+}).then((result) => {
+  if (result.isConfirmed) {
+    // Perform the action here
+   
+    transcription = '';
+    CKEDITOR.instances[editorName].setData('');
+    recognition.stop();
+    console.log('Recognition stopped');
+    resetBtn.style.display = 'none';
+  }
+})
   });
 </script>
 @endsection
