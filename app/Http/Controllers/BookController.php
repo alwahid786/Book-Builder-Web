@@ -169,4 +169,124 @@ class BookController extends Controller
             return redirect('/inside-cover');
         }
     }
+    public function praise()
+    {
+        $bookdata = Book::where('user_id', auth()->user()->id)->first();
+        $bookdata = json_decode($bookdata, true);
+        return view('pages.book.praise', compact('bookdata'));
+    }
+
+    public function praiseForm(Request $request)
+    {
+        $data = $request->except('_token');
+        $book = Book::where('user_id', $request->user_id)->update($data);
+        if ($book) {
+            return redirect('/inside-cover');
+        }
+    }
+    public function dedication()
+    {
+        $bookdata = Book::where('user_id', auth()->user()->id)->first();
+        $bookdata = json_decode($bookdata, true);
+        return view('pages.book.dedication', compact('bookdata'));
+    }
+
+    public function dedicationForm(Request $request)
+    {
+        $data = $request->except('_token');
+        $book = Book::where('user_id', $request->user_id)->update($data);
+        if ($book) {
+            return redirect('/inside-cover');
+        }
+    }
+    public function howToUse()
+    {
+        $bookdata = Book::where('user_id', auth()->user()->id)->first();
+        $bookdata = json_decode($bookdata, true);
+        return view('pages.book.how-to-use', compact('bookdata'));
+    }
+
+    public function howToUseForm(Request $request)
+    {
+        $data = $request->except('_token');
+        $book = Book::where('user_id', $request->user_id)->update($data);
+        if ($book) {
+            return redirect('/inside-cover');
+        }
+    }
+    public function Forward()
+    {
+        $bookdata = Book::where('user_id', auth()->user()->id)->first();
+        $bookdata = json_decode($bookdata, true);
+        return view('pages.book.forward', compact('bookdata'));
+    }
+
+    public function ForwardForm(Request $request)
+    {
+        $data = $request->except('_token');
+        $book = Book::where('user_id', $request->user_id)->update($data);
+        if ($book) {
+            return redirect('/inside-cover');
+        }
+    }
+    public function content($id)
+    {
+        $outline = Outline::where('id', $id)->first();
+        $outline = json_decode($outline, true);
+        return view('pages.book.content', compact('outline'));
+    }
+
+    public function contentForm(Request $request)
+    {
+        $data = $request->except('_token');
+        $book = Book::where('user_id', $request->user_id)->update($data);
+        if ($book) {
+            return redirect('/inside-cover');
+        }
+    }
+    public function conclusion()
+    {
+        $bookdata = Book::where('user_id', auth()->user()->id)->first();
+        $bookdata = json_decode($bookdata, true);
+        return view('pages.book.conclusion', compact('bookdata'));
+    }
+
+    public function conclusionForm(Request $request)
+    {
+        $data = $request->except('_token');
+        $book = Book::where('user_id', $request->user_id)->update($data);
+        if ($book) {
+            return redirect('/inside-cover');
+        }
+    }
+    public function workWithUs()
+    {
+        $bookdata = Book::where('user_id', auth()->user()->id)->first();
+        $bookdata = json_decode($bookdata, true);
+        return view('pages.book.work-with-us', compact('bookdata'));
+    }
+
+    public function workWithUsForm(Request $request)
+    {
+        $data = $request->except('_token');
+        $book = Book::where('user_id', $request->user_id)->update($data);
+        if ($book) {
+            return redirect('/inside-cover');
+        }
+    }
+    public function about()
+    {
+        $bookdata = Book::where('user_id', auth()->user()->id)->first();
+        $bookdata = json_decode($bookdata, true);
+        return view('pages.book.about', compact('bookdata'));
+    }
+
+    public function aboutForm(Request $request)
+    {
+        $data = $request->except('_token');
+        $book = Book::where('user_id', $request->user_id)->update($data);
+        if ($book) {
+            return redirect('/inside-cover');
+        }
+    }
 }

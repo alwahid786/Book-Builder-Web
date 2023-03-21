@@ -59,6 +59,22 @@ Route::middleware('auth')->group(function () {
     Route::post('/frontCoverForm', [BookController::class, 'frontCoverForm'])->name('frontCoverDetail');
     Route::get('/copyright', [BookController::class, 'copyright']);
     Route::post('/copyrightForm', [BookController::class, 'copyrightForm'])->name('copyrightDetail');
+    Route::get('/praise', [BookController::class, 'praise']);
+    Route::post('/praiseForm', [BookController::class, 'praiseForm'])->name('praiseDetail');
+    Route::get('/dedication', [BookController::class, 'dedication']);
+    Route::post('/dedicationForm', [BookController::class, 'dedicationForm'])->name('dedicationDetail');
+    Route::get('/how-to-use', [BookController::class, 'howToUse']);
+    Route::post('/howToUseForm', [BookController::class, 'howToUseForm'])->name('howToUseDetail');
+    Route::get('/forward', [BookController::class, 'forward']);
+    Route::post('/forwardForm', [BookController::class, 'forwardForm'])->name('forwardDetail');
+    Route::get('/content/${id}', [BookController::class, 'content'])->name('content');
+    Route::post('/contentForm', [BookController::class, 'contentForm'])->name('contentDetail');
+    Route::get('/conclusion', [BookController::class, 'conclusion']);
+    Route::post('/conclusionForm', [BookController::class, 'conclusionForm'])->name('conclusionDetail');
+    Route::get('/work-with-us', [BookController::class, 'workWithUs']);
+    Route::post('/workWithUsForm', [BookController::class, 'workWithUsForm'])->name('workWithUsDetail');
+    Route::get('/about', [BookController::class, 'about']);
+    Route::post('/aboutForm', [BookController::class, 'aboutForm'])->name('aboutDetail');
 
     // PDF Creation Routes 
     Route::get('/create-book', [PDFController::class, 'createPDF'])->name('createPDF');
