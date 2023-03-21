@@ -5,7 +5,7 @@ $percentage = bookProgress()['percentage'];
     <div class="progressDiv w-100 pr-5">
         <h4 class="text-white">Your Book Progress</h4>
         <div class=" progress " style="height: 18px;">
-            <div class="progress-bar @if($percentage<1) text-secondary @endif" role="progressbar" aria-valuenow="{{$percentage}}" aria-valuemin="0" aria-valuemax="100" style="width:<?= $percentage ?>%;height: 18px; background-color:green">
+            <div class="progress-bar @if($percentage<1) text-secondary @endif" role="progressbar" aria-valuenow="{{$percentage}}" aria-valuemin="0" aria-valuemax="100" style="width:<?= $percentage ?>%;height: 18px; background-color:#1b961b">
                 {{$percentage}}%
             </div>
         </div>

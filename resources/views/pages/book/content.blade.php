@@ -270,7 +270,7 @@
                     </div>
                 </div>
                 <div class="mt-3">
-                    <div id="editor2"><?php echo $bookdata['outline']['content']?></div>
+                    <div id="editor2"><?php echo $bookdata['outline']['content'] ?></div>
                 </div>
             </div>
 
@@ -298,7 +298,6 @@
     $(document).ready(function() {
         //jquery for toggle sub menus
         $('.sub-menu').slideToggle();
-        $('.dropdown').toggleClass('rotate');
         $('.sub-btn').click(function() {
             $(this).next('.sub-menu').slideToggle();
             $(this).find('.dropdown').toggleClass('rotate');
