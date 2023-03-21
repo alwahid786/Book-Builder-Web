@@ -264,56 +264,56 @@
         </ul><!-- Tab panes -->
         <div class="tab-content">
             <div class="tab-pane active" id="tabs-1" role="tabpanel">
-                <form action="{{route('frontCoverDetail')}}" method="post" id="frontCoverForm" class="pt-3">
+                <form action="{{route('copyrightDetail')}}" method="post" id="frontCoverForm1" class="pt-3">
                     @csrf
                     <div class="d-flex justify-content-between align-items-center">
                         <div class="input-group w-100 mx-2">
                             <span class="text-secondary mb-2">Copyright Year</span>
-                            <input type="text" value="<?php echo $bookdata['front_title'] ?? '' ?>" name="front_title" id="av_f_name">
+                            <input type="text" value="<?php echo $bookdata['copyright']['copyright_year'] ?? '' ?>" name="copyright_year" id="av_f_name">
                         </div>
                         <div class="input-group w-100 mx-2">
                             <span class="text-secondary mb-2">Copyright Name</span>
-                            <input type="text" value="<?php echo $bookdata['front_subtitle'] ?? '' ?>" name="front_subtitle" id="av_l_name">
+                            <input type="text" value="<?php echo $bookdata['copyright']['copyright_name'] ?? '' ?>" name="copyright_name" id="av_l_name">
                         </div>
                     </div>
                     <div class="d-flex justify-content-between align-items-center mt-3">
                         <div class="input-group w-100 mx-2">
                             <span class="text-secondary mb-2">Company Name 1</span>
-                            <input type="text" value="<?php echo $bookdata['author_fname'] ?? '' ?>" name="author_fname" id="av_f_name">
+                            <input type="text" value="<?php echo $bookdata['copyright']['company_name1'] ?? '' ?>" name="company_name1" id="av_f_name">
                         </div>
                         <div class="input-group w-100 mx-2">
                             <span class="text-secondary mb-2">Company Name 2 (Optional)</span>
-                            <input type="text" value="<?php echo $bookdata['author_lname'] ?? '' ?>" name="author_lname" id="av_l_name">
+                            <input type="text" data-class="avatar" value="<?php echo $bookdata['copyright']['company_name2'] ?? '' ?>" name="company_name2" id="av_l_name">
                         </div>
                     </div>
                     <div class="d-flex justify-content-between align-items-center mt-3">
                         <div class="input-group w-100 mx-2">
                             <span class="text-secondary mb-2">Street Address 1</span>
-                            <input type="text" value="<?php echo $bookdata['author_fname'] ?? '' ?>" name="author_fname" id="av_f_name">
+                            <input type="text" value="<?php echo $bookdata['copyright']['street_address1'] ?? '' ?>" name="street_address1" id="av_f_name">
                         </div>
                         <div class="input-group w-100 mx-2">
                             <span class="text-secondary mb-2">Street Address 2 (Optional)</span>
-                            <input type="text" value="<?php echo $bookdata['author_lname'] ?? '' ?>" name="author_lname" id="av_l_name">
+                            <input type="text" data-class="avatar" value="<?php echo $bookdata['copyright']['street_address2'] ?? '' ?>" name="street_address2" id="av_l_name">
                         </div>
                     </div>
                     <div class="d-flex justify-content-between align-items-center mt-3">
                         <div class="input-group w-100 mx-2">
                             <span class="text-secondary mb-2">City</span>
-                            <input type="text" value="<?php echo $bookdata['author_fname'] ?? '' ?>" name="author_fname" id="av_f_name">
+                            <input type="text" value="<?php echo $bookdata['copyright']['city'] ?? '' ?>" name="city" id="av_f_name">
                         </div>
                         <div class="input-group w-100 mx-2">
                             <span class="text-secondary mb-2">State</span>
-                            <input type="text" value="<?php echo $bookdata['author_lname'] ?? '' ?>" name="author_lname" id="av_l_name">
+                            <input type="text" value="<?php echo $bookdata['copyright']['state'] ?? '' ?>" name="state" id="av_l_name">
                         </div>
                     </div>
                     <div class="d-flex justify-content-between align-items-center mt-3">
                         <div class="input-group w-100 mx-2">
                             <span class="text-secondary mb-2">Country</span>
-                            <input type="text" value="<?php echo $bookdata['author_fname'] ?? '' ?>" name="author_fname" id="av_f_name">
+                            <input type="text" value="<?php echo $bookdata['copyright']['country'] ?? '' ?>" name="country" id="av_f_name">
                         </div>
                         <div class="input-group w-100 mx-2">
                             <span class="text-secondary mb-2">Zip Code</span>
-                            <input type="text" value="<?php echo $bookdata['author_lname'] ?? '' ?>" name="author_lname" id="av_l_name">
+                            <input type="text" value="<?php echo $bookdata['copyright']['zipcode'] ?? '' ?>" name="zipcode" id="av_l_name">
                         </div>
                     </div>
 
@@ -332,55 +332,59 @@
                             </div>
                         </div>
                         <div class="mt-3">
-                            <div id="editor2"></div>
+                            <div id="editor2"><?php if ($bookdata['copyright']['template_id'] == 1) {
+                                                    echo $bookdata['copyright']['content'];
+                                                }  ?></div>
                         </div>
                     </div>
 
-                    <input type="hidden" name="user_id" data-class="avatar" value="<?php echo  $bookdata['user_id'] ?? '' ?>">
-                    <div class=" mx-2 mt-3 d-flex justify-content-between align-items-center">
+                    <input type="hidden" name="user_id" data-class="avatar" value="<?php echo  $bookdata['copyright']['user_id'] ?? '' ?>">
+                    <input type="hidden" name="template_id" data-class="avatar" value="1">
+                    <input type="hidden" name="content" id="contentInput" data-class="avatar" value="1">
+                    <div class="mx-2 mt-3 d-flex justify-content-between align-items-center">
                         <a href="{{url('/cover-art')}}">
                             <button type="button" data-class="avatar" class="px-3 py-1"><i class="fas fa-arrow-left mr-2"></i>Previous</button></a>
-                        <button id="save" data-class="avatar" class="px-3 py-1"><i class="fas fa-save mr-2"></i>Save</button>
+                        <button type="submit" id="save" data-class="avatar" class="px-3 py-1"><i class="fas fa-save mr-2"></i>Save</button>
                     </div>
                 </form>
             </div>
             <div class="tab-pane" id="tabs-2" role="tabpanel">
-                <form action="{{route('frontCoverDetail')}}" method="post" id="frontCoverForm" class="pt-3">
+                <form action="{{route('copyrightDetail')}}" method="post" id="frontCoverForm2" class="pt-3">
                     @csrf
                     <div class="d-flex justify-content-between align-items-center">
                         <div class="input-group w-100 mx-2">
                             <span class="text-secondary mb-2">Year of publication</span>
-                            <input type="text" value="<?php echo $bookdata['front_title'] ?? '' ?>" name="front_title" id="av_f_name">
+                            <input type="text" value="<?php echo $bookdata['copyright']['publication_year'] ?? '' ?>" name="publication_year" id="av_f_name">
                         </div>
                         <div class="input-group w-100 mx-2">
                             <span class="text-secondary mb-2">Author Name</span>
-                            <input type="text" value="<?php echo $bookdata['front_subtitle'] ?? '' ?>" name="front_subtitle" id="av_l_name">
+                            <input type="text" value="<?php echo $bookdata['copyright']['author_name'] ?? '' ?>" name="author_name" id="av_l_name">
                         </div>
                     </div>
                     <div class="d-flex justify-content-between align-items-center mt-3">
                         <div class="input-group w-100 mx-2">
                             <span class="text-secondary mb-2">Cover Design By</span>
-                            <input type="text" value="<?php echo $bookdata['author_fname'] ?? '' ?>" name="author_fname" id="av_f_name">
+                            <input type="text" value="<?php echo $bookdata['copyright']['cover_designer'] ?? '' ?>" name="cover_designer" id="av_f_name">
                         </div>
                         <div class="input-group w-100 mx-2">
                             <span class="text-secondary mb-2">Edited By</span>
-                            <input type="text" value="<?php echo $bookdata['author_lname'] ?? '' ?>" name="author_lname" id="av_l_name">
+                            <input type="text" value="<?php echo $bookdata['copyright']['editor'] ?? '' ?>" name="editor" id="av_l_name">
                         </div>
                     </div>
                     <div class="d-flex justify-content-between align-items-center mt-3">
                         <div class="input-group w-100 mx-2">
                             <span class="text-secondary mb-2">Published By</span>
-                            <input type="text" value="<?php echo $bookdata['author_fname'] ?? '' ?>" name="author_fname" id="av_f_name">
+                            <input type="text" value="<?php echo $bookdata['copyright']['publisher'] ?? '' ?>" name="publisher" id="av_f_name">
                         </div>
                         <div class="input-group w-100 mx-2">
                             <span class="text-secondary mb-2">ISBN</span>
-                            <input type="text" value="<?php echo $bookdata['author_lname'] ?? '' ?>" name="author_lname" id="av_l_name">
+                            <input type="text" value="<?php echo $bookdata['copyright']['isbn'] ?? '' ?>" name="isbn" id="av_l_name">
                         </div>
                     </div>
                     <div class="d-flex justify-content-between align-items-center mt-3">
                         <div class="input-group w-50 mx-2">
                             <span class="text-secondary mb-2">Printed In Country</span>
-                            <input type="text" value="<?php echo $bookdata['author_fname'] ?? '' ?>" name="author_fname" id="av_f_name">
+                            <input type="text" value="<?php echo $bookdata['copyright']['printed_country'] ?? '' ?>" name="printed_country" id="av_f_name">
                         </div>
                     </div>
                     <div class="mt-4">
@@ -398,11 +402,16 @@
                             </div>
                         </div>
                         <div class="mt-3">
-                            <div id="editor"></div>
+                            <div id="editor"><?php if ($bookdata['copyright']['template_id'] == 2) {
+                                                    echo $bookdata['copyright']['content'];
+                                                }  ?></div>
                         </div>
                     </div>
 
-                    <input type="hidden" name="user_id" data-class="avatar" value="<?php echo  $bookdata['user_id'] ?? '' ?>">
+                    <input type="hidden" name="user_id" data-class="avatar" value="<?php echo  $bookdata['copyright']['user_id'] ?? '' ?>">
+                    <input type="hidden" name="template_id" data-class="avatar" value="2">
+                    <input type="hidden" name="content" id="contentInput2" data-class="avatar" value="1">
+
                     <div class=" mx-2 mt-3 d-flex justify-content-between align-items-center">
                         <a href="{{url('/cover-art')}}">
                             <button type="button" data-class="avatar" class="px-3 py-1"><i class="fas fa-arrow-left mr-2"></i>Previous</button></a>
@@ -441,12 +450,23 @@
             $('.menu-btn').css("visibility", "visible");
         });
 
+        CKEDITOR.replace('editor', {
+            height: '400px'
+        });
+        CKEDITOR.replace('editor2', {
+            height: '400px'
+        });
+
         // Contact Us Form Submission Function
-        $("#frontCoverForm").submit(function(e) {
+        $("#frontCoverForm1").submit(function(e) {
+
+            console.log(content);
             e.preventDefault();
             validation = validateForm();
             if (validation) {
-                $("#frontCoverForm")[0].submit();
+                var content = CKEDITOR.instances['editor2'].getData();
+                $('#contentInput').val(content);
+                $("#frontCoverForm1")[0].submit();
             } else {
                 swal({
                     title: "Some Fields Missing",
@@ -458,7 +478,7 @@
 
         function validateForm() {
             let errorCount = 0;
-            $("form#frontCoverForm :input").each(function() {
+            $("form#frontCoverForm1 :input").each(function() {
                 let val = $(this).val();
                 if (val == '' && $(this).attr('data-class') !== 'avatar') {
                     errorCount++
@@ -472,12 +492,40 @@
             }
             return true;
         }
-        CKEDITOR.replace('editor', {
-            height: '400px'
-        });
-        CKEDITOR.replace('editor2', {
-            height: '400px'
-        });
+
+        // Contact Us Form Submission Function
+        $("#frontCoverForm2").submit(function(e) {
+            e.preventDefault();
+            validation = validateForm2();
+            if (validation) {
+                var content = CKEDITOR.instances['editor'].getData();
+                $('#contentInput2').val(content);
+                $("#frontCoverForm2")[0].submit();
+            } else {
+                swal({
+                    title: "Some Fields Missing",
+                    text: "Please fill all fields.",
+                    icon: "error",
+                });
+            }
+        })
+
+        function validateForm2() {
+            let errorCount = 0;
+            $("form#frontCoverForm2 :input").each(function() {
+                let val = $(this).val();
+                if (val == '' && $(this).attr('data-class') !== 'avatar') {
+                    errorCount++
+                    $(this).css('border', '1px solid red');
+                } else {
+                    $(this).css('border', 'none');
+                }
+            });
+            if (errorCount > 0) {
+                return false;
+            }
+            return true;
+        }
 
         let recognition;
         let transcription = '';
@@ -639,7 +687,7 @@
     });
 </script>
 <script>
-    $('.menu .item:nth-of-type(6) a').addClass('active-nav');
+    $('.menu .item:nth-of-type(7) a').addClass('active-nav');
 </script>
 
 

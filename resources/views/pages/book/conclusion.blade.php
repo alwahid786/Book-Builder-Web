@@ -253,7 +253,7 @@
     @include('layouts.book-layout.progress')
     <div class="content px-5 py-4">
         <h3 class="av_heading text-center">Conclusion</h3>
-        <form action="{{route('frontCoverDetail')}}" method="post" id="frontCoverForm" class="pt-3">
+        <form action="{{route('conclusionDetail')}}" method="post" id="conclusionForm" class="pt-3">
             @csrf
             <div class="mt-4">
                 <h4 class="mb-0">Record Audio</h4>
@@ -270,10 +270,10 @@
                     </div>
                 </div>
                 <div class="mt-3">
-                    <div id="editor2"></div>
+                    <div id="editor2"><?php echo $bookdata['conclusion'] ?? '' ?></div>
                 </div>
             </div>
-
+            <input type="hidden" name="conclusion" id="contentInput" data-class="avatar">
             <input type="hidden" name="user_id" data-class="avatar" value="<?php echo  $bookdata['user_id'] ?? '' ?>">
             <div class=" mx-2 mt-3 d-flex justify-content-between align-items-center">
                 <a href="{{url('/cover-art')}}">
@@ -310,12 +310,21 @@
             $('.menu-btn').css("visibility", "visible");
         });
 
+        CKEDITOR.replace('editor', {
+            height: '400px'
+        });
+        CKEDITOR.replace('editor2', {
+            height: '400px'
+        });
+
         // Contact Us Form Submission Function
-        $("#frontCoverForm").submit(function(e) {
+        $("#conclusionForm").submit(function(e) {
             e.preventDefault();
             validation = validateForm();
             if (validation) {
-                $("#frontCoverForm")[0].submit();
+                var content = CKEDITOR.instances['editor2'].getData();
+                $('#contentInput').val(content);
+                $("#conclusionForm")[0].submit();
             } else {
                 swal({
                     title: "Some Fields Missing",
@@ -327,7 +336,7 @@
 
         function validateForm() {
             let errorCount = 0;
-            $("form#frontCoverForm :input").each(function() {
+            $("form#conclusionForm :input").each(function() {
                 let val = $(this).val();
                 if (val == '' && $(this).attr('data-class') !== 'avatar') {
                     errorCount++
@@ -341,12 +350,7 @@
             }
             return true;
         }
-        CKEDITOR.replace('editor', {
-            height: '400px'
-        });
-        CKEDITOR.replace('editor2', {
-            height: '400px'
-        });
+
 
         let recognition;
         let transcription = '';
@@ -508,7 +512,7 @@
     });
 </script>
 <script>
-    $('.menu .item:nth-of-type(6) a').addClass('active-nav');
+    $('.menu .item:nth-of-type(11) a').addClass('active-nav');
 </script>
 
 

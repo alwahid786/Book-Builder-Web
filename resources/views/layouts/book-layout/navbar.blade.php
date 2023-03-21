@@ -8,6 +8,15 @@
     .filled-circle {
         margin-left: 10%;
     }
+
+    .side-bar .menu .item a {
+        color: #fff;
+        font-size: 16px;
+        text-decoration: none;
+        display: block;
+        padding: 5px 10px 5px 18px;
+        line-height: 30px;
+    }
 </style>
 <?php
 $sections = bookProgress()['sections'];
@@ -52,9 +61,9 @@ $sections = bookProgress()['sections'];
                 @if($sections['forword'])<i class="fas fa-check-circle filled-circle"></i>@endif
             </a></div>
         <div class="item">
-            <a class="sub-btn @if(!$sections['table_of_content']) disableTab @endif"><i class="fas fa-list"></i>Table of Content
+            <a class="sub-btn @if(!$sections['table_of_content']) disableTab @endif"><i class="fas fa-list"></i>Chapters
                 @if($sections['table_of_content'])<i class="fas fa-check-circle filled-circle"></i>@endif
-                <i class="fas fa-angle-right dropdown"></i></a>
+            </a>
             <div class="sub-menu">
                 @foreach(outlines() as $outline)
                 <a href="{{route('content', ['id'=> $outline['id']] )}}" class="sub-item">{{$outline['outline_name']}}</a>

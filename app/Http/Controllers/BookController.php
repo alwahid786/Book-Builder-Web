@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Models\User;
 use App\Models\Book;
 use App\Models\Outline;
+use App\Models\Copyright;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Mail;
 use App\Mail\VerifyEmail;
@@ -157,16 +158,24 @@ class BookController extends Controller
     public function copyright()
     {
         $bookdata = Book::where('user_id', auth()->user()->id)->first();
+        $copyright = Copyright::where('user_id', auth()->user()->id)->first();
+        $copyright = json_decode($copyright, true);
         $bookdata = json_decode($bookdata, true);
+        $bookdata['copyright'] = $copyright;
         return view('pages.book.copyright', compact('bookdata'));
     }
 
     public function copyrightForm(Request $request)
     {
         $data = $request->except('_token');
-        $book = Book::where('user_id', $request->user_id)->update($data);
-        if ($book) {
-            return redirect('/inside-cover');
+        $copyrightData = Copyright::where('user_id', $request->user_id)->first();
+        if ($copyrightData) {
+            $copyright = $copyrightData->update($data);
+            return redirect('/praise');
+        } else {
+            $copyright = new Copyright;
+            $copyright->create($data);
+            return redirect('/praise');
         }
     }
     public function praise()
@@ -181,7 +190,7 @@ class BookController extends Controller
         $data = $request->except('_token');
         $book = Book::where('user_id', $request->user_id)->update($data);
         if ($book) {
-            return redirect('/inside-cover');
+            return redirect('/dedication');
         }
     }
     public function dedication()
@@ -196,7 +205,7 @@ class BookController extends Controller
         $data = $request->except('_token');
         $book = Book::where('user_id', $request->user_id)->update($data);
         if ($book) {
-            return redirect('/inside-cover');
+            return redirect('/how-to-use');
         }
     }
     public function howToUse()
@@ -211,7 +220,7 @@ class BookController extends Controller
         $data = $request->except('_token');
         $book = Book::where('user_id', $request->user_id)->update($data);
         if ($book) {
-            return redirect('/inside-cover');
+            return redirect('/forward');
         }
     }
     public function Forward()
@@ -226,7 +235,8 @@ class BookController extends Controller
         $data = $request->except('_token');
         $book = Book::where('user_id', $request->user_id)->update($data);
         if ($book) {
-            return redirect('/inside-cover');
+            $outlines = Outline::where('user_id', auth()->user()->id)->get(['id', 'outline_name']);
+            return redirect('/content/%24'. $outlines[0]['id']);
         }
     }
     public function content($id)
