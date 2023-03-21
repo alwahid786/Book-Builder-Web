@@ -236,22 +236,43 @@ class BookController extends Controller
         $book = Book::where('user_id', $request->user_id)->update($data);
         if ($book) {
             $outlines = Outline::where('user_id', auth()->user()->id)->get(['id', 'outline_name']);
-            return redirect('/content/%24'. $outlines[0]['id']);
+            return redirect('/content/%24' . $outlines[0]['id']);
         }
     }
     public function content($id)
     {
+        $bookdata = Book::where('user_id', auth()->user()->id)->first();
         $outline = Outline::where('id', $id)->first();
         $outline = json_decode($outline, true);
-        return view('pages.book.content', compact('outline'));
+        $bookdata = json_decode($bookdata, true);
+        $bookdata['outline'] = $outline;
+        return view('pages.book.content', compact('bookdata'));
     }
 
     public function contentForm(Request $request)
     {
-        $data = $request->except('_token');
-        $book = Book::where('user_id', $request->user_id)->update($data);
-        if ($book) {
-            return redirect('/inside-cover');
+        $outlineIds = Outline::where('user_id', $request->user_id)->get('id');
+        $outlineIds = json_decode($outlineIds, true);
+        $next_id = $this->getNextId($outlineIds, $request->outline_id);
+        $outline = Outline::where('id', $request->outline_id)->update(['content' => $request->content]);
+        if ($next_id) {
+            return redirect('/content/%24' . $next_id);
+        }
+        return redirect('/conclusion');
+    }
+    function getNextId($array, $outline_id)
+    {
+        $index = -1;
+        foreach ($array as $key => $value) {
+            if ($value['id'] == $outline_id) {
+                $index = $key;
+                break;
+            }
+        }
+        if ($index == -1 || $index == count($array) - 1) {
+            return false;
+        } else {
+            return $array[$index + 1]['id'];
         }
     }
     public function conclusion()

@@ -66,7 +66,7 @@ $sections = bookProgress()['sections'];
             </a>
             <div class="sub-menu">
                 @foreach(outlines() as $outline)
-                <a href="{{route('content', ['id'=> $outline['id']] )}}" class="sub-item">{{$outline['outline_name']}}</a>
+                <a href="{{route('content', ['id'=> $outline['id']] )}}" data-class="{{$outline['id']}}" class="sub-item">{{$outline['outline_name']}}</a>
                 @endforeach
             </div>
         </div>

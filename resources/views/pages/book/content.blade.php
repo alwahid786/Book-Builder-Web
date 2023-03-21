@@ -252,8 +252,8 @@
 <section class="main">
     @include('layouts.book-layout.progress')
     <div class="content px-5 py-4">
-        <h3 class="av_heading text-center">{{$outline['outline_name']}}</h3>
-        <form action="{{route('frontCoverDetail')}}" method="post" id="frontCoverForm" class="pt-3">
+        <h3 class="av_heading text-center">{{$bookdata['outline']['outline_name']}}</h3>
+        <form action="{{route('contentDetail')}}" method="post" id="contentForm" class="pt-3">
             @csrf
             <div class="mt-4">
                 <h4 class="mb-0">Record Audio</h4>
@@ -270,11 +270,14 @@
                     </div>
                 </div>
                 <div class="mt-3">
-                    <div id="editor2"></div>
+                    <div id="editor2"><?php echo $bookdata['outline']['content']?></div>
                 </div>
             </div>
 
             <input type="hidden" name="user_id" data-class="avatar" value="<?php echo  $bookdata['user_id'] ?? '' ?>">
+            <input type="hidden" name="outline_id" id="outline_id" data-class="avatar" value="<?php echo  $bookdata['outline']['id'] ?? '' ?>">
+            <input type="hidden" name="content" id="contentInput" data-class="avatar">
+
             <div class=" mx-2 mt-3 d-flex justify-content-between align-items-center">
                 <a href="{{url('/cover-art')}}">
                     <button type="button" data-class="avatar" class="px-3 py-1"><i class="fas fa-arrow-left mr-2"></i>Previous</button></a>
@@ -294,6 +297,8 @@
 <script type="text/javascript">
     $(document).ready(function() {
         //jquery for toggle sub menus
+        $('.sub-menu').slideToggle();
+        $('.dropdown').toggleClass('rotate');
         $('.sub-btn').click(function() {
             $(this).next('.sub-menu').slideToggle();
             $(this).find('.dropdown').toggleClass('rotate');
@@ -311,11 +316,13 @@
         });
 
         // Contact Us Form Submission Function
-        $("#frontCoverForm").submit(function(e) {
+        $("#contentForm").submit(function(e) {
             e.preventDefault();
             validation = validateForm();
             if (validation) {
-                $("#frontCoverForm")[0].submit();
+                var content = CKEDITOR.instances['editor2'].getData();
+                $('#contentInput').val(content);
+                $("#contentForm")[0].submit();
             } else {
                 swal({
                     title: "Some Fields Missing",
@@ -327,7 +334,7 @@
 
         function validateForm() {
             let errorCount = 0;
-            $("form#frontCoverForm :input").each(function() {
+            $("form#contentForm :input").each(function() {
                 let val = $(this).val();
                 if (val == '' && $(this).attr('data-class') !== 'avatar') {
                     errorCount++
@@ -508,7 +515,15 @@
     });
 </script>
 <script>
-    $('.menu .item:nth-of-type(6) a').addClass('active-nav');
+    $('.menu .item:nth-of-type(12) a').addClass('active-nav');
+    $('.sub-item').removeClass('active-nav');
+    $('.sub-item').each(function() {
+        let classname = $(this).attr('data-class');
+        let outlineId = $('#outline_id').val();
+        if (classname == outlineId) {
+            $(this).addClass('active-nav');
+        }
+    })
 </script>
 
 
