@@ -243,26 +243,35 @@
 <section class="main">
     @include('layouts.book-layout.progress')
     <div class="content px-5 py-4">
-        <h3 class="av_heading text-center">Fill Avatar Details</h3>
-        <form action="{{route('avatarDetail')}}" method="post" id="avatarForm" class="pt-3">
+        <h3 class="av_heading text-center">Front Cover Details</h3>
+        <form action="{{route('frontCoverDetail')}}" method="post" id="frontCoverForm" class="pt-3">
             @csrf
             <div class="d-flex justify-content-between align-items-center">
                 <div class="input-group w-100 mx-2">
-                    <span class="text-secondary mb-2">Avatar First Name</span>
-                    <input type="text" value="<?php echo $bookdata['avatar_fname'] ?? '' ?>" name="avatar_fname" id="av_f_name">
+                    <span class="text-secondary mb-2">Title</span>
+                    <input type="text" value="<?php echo $bookdata['front_title'] ?? '' ?>" name="front_title" id="av_f_name">
                 </div>
                 <div class="input-group w-100 mx-2">
-                    <span class="text-secondary mb-2">Avatar Last Name</span>
-                    <input type="text" value="<?php echo $bookdata['avatar_lname'] ?? '' ?>" name="avatar_lname" id="av_l_name">
+                    <span class="text-secondary mb-2">Subtitle</span>
+                    <input type="text" value="<?php echo $bookdata['front_subtitle'] ?? '' ?>" name="front_subtitle" id="av_l_name">
                 </div>
             </div>
-            <div class="mt-3 mx-2">
-                <span class="text-secondary ">Avatar Description</span><br>
-                <textarea name="avatar_description" value="<?php echo  $bookdata['avatar_description'] ?? '' ?>" id="" class="w-100 mt-2" rows="5"><?php echo  $bookdata['avatar_description'] ?? '' ?></textarea>
+            <div class="d-flex justify-content-between align-items-center mt-3">
+                <div class="input-group w-100 mx-2">
+                    <span class="text-secondary mb-2">Author First Name</span>
+                    <input type="text" value="<?php echo $bookdata['author_fname'] ?? '' ?>" name="author_fname" id="av_f_name">
+                </div>
+                <div class="input-group w-100 mx-2">
+                    <span class="text-secondary mb-2">Author Last Name</span>
+                    <input type="text" value="<?php echo $bookdata['author_lname'] ?? '' ?>" name="author_lname" id="av_l_name">
+                </div>
             </div>
+
             <input type="hidden" name="user_id" data-class="avatar" value="<?php echo  $bookdata['user_id'] ?? '' ?>">
-            <div class="text-right mx-2 mt-3">
-                <button type="submit" id="avatar" data-class="avatar" class="px-3 py-1"><i class="fas fa-save mr-2"></i>Save</button>
+            <div class=" mx-2 mt-3 d-flex justify-content-between align-items-center">
+                <a href="{{url('/cover-art')}}">
+                    <button type="button" data-class="avatar" class="px-3 py-1"><i class="fas fa-arrow-left mr-2"></i>Previous</button></a>
+                <button id="save" data-class="avatar" class="px-3 py-1"><i class="fas fa-save mr-2"></i>Save</button>
             </div>
         </form>
     </div>
@@ -291,11 +300,11 @@
         });
 
         // Contact Us Form Submission Function
-        $("#avatarForm").submit(function(e) {
+        $("#frontCoverForm").submit(function(e) {
             e.preventDefault();
             validation = validateForm();
             if (validation) {
-                $("#avatarForm")[0].submit();
+                $("#frontCoverForm")[0].submit();
             } else {
                 swal({
                     title: "Some Fields Missing",
@@ -307,7 +316,7 @@
 
         function validateForm() {
             let errorCount = 0;
-            $("form#avatarForm :input").each(function() {
+            $("form#frontCoverForm :input").each(function() {
                 let val = $(this).val();
                 if (val == '' && $(this).attr('data-class') !== 'avatar') {
                     errorCount++
@@ -324,7 +333,7 @@
     });
 </script>
 <script>
-    $('.menu .item:nth-of-type(2) a').addClass('active-nav');
+    $('.menu .item:nth-of-type(6) a').addClass('active-nav');
 </script>
 
 

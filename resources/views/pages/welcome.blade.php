@@ -154,8 +154,12 @@
                         <div class="row">
                             <div class="col-12">
                                 <div class="text-center">
-                                    <h2>Welcome To 3X Author</h2>
-                                    <p class="my-3">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Eius fugit sint laborum recusandae eaque voluptatibus sequi nobis dolore eos nesciunt nihil voluptatum nam ea vitae accusamus nisi iste modi odit consequatur nemo, consectetur tenetur aperiam! Error ipsam quisquam exercitationem at incidunt quam consequatur? Numquam voluptatem ea fuga quisquam laborum provident sequi cupiditate qui! Vel, tempora facilis. Maxime, omnis! Temporibus expedita optio libero repellat, tempore illo consectetur perferendis, aut natus cum ab id sapiente asperiores ipsam nam ullam ut perspiciatis harum voluptas facere! Amet, consectetur aperiam? Provident accusantium exercitationem rerum suscipit! Nam inventore sapiente nihil ratione, ducimus ea dolorem vitae dolores!</p>
+                                    <h2>Welcome to 3X Author & Your Book Builder tool</h2>
+                                    <p class="my-3">Your Book Builder simplifies and speeds up the process of writing your book. In addition to making it easy to get your book to paper (or screen – LOL). The tool will help you track your progress toward the finish line. </p>
+                                    <p>The biggest challenge about getting a book out of your head or heart and on to paper is your own brain. Most people overthink the process. Some overthinkers suffer from paralysis of analysis. Somewhere between starting and finishing their book, they reach a point where they just freeze. It took me a year to write my first book and it’s a 60-page book. I’ll write a brand-new book alongside you and share my progress during the project. </p>
+                                    <p>Remember, getting to the finish line is as easy as you think it is. Henry Ford said “Whether you think you can, or you think you can't – you're right.” That quote is certainly true about writing a book. You’ll probably be amazed at the changes in your attitude, business, and life you’ll see as an Author.</p>
+                                    <p>Nothing builds Authority like being an Author. </p>
+                                    <p>Thank you for allowing me to help you on this journey, I’m grateful. </p>
                                 </div>
                             </div>
                             <div class="col-12">
@@ -190,9 +194,33 @@
                     <div class="container px-5 py-3 my-3">
                         <div class="row">
                             <div class="col-12">
-                                <div class="text-center">
-                                    <h2>Story Telling</h2>
-                                    <p class="my-3">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Eius fugit sint laborum recusandae eaque voluptatibus sequi nobis dolore eos nesciunt nihil voluptatum nam ea vitae accusamus nisi iste modi odit consequatur nemo, consectetur tenetur aperiam! Error ipsam quisquam exercitationem at incidunt quam consequatur? Numquam voluptatem ea fuga quisquam laborum provident sequi cupiditate qui! Vel, tempora facilis. Maxime, omnis! Temporibus expedita optio libero repellat, tempore illo consectetur perferendis, aut natus cum ab id sapiente asperiores ipsam nam ullam ut perspiciatis harum voluptas facere! Amet, consectetur aperiam? Provident accusantium exercitationem rerum suscipit! Nam inventore sapiente nihil ratione, ducimus ea dolorem vitae dolores!</p>
+                                <div>
+                                    <h2 class="text-center">Story Telling</h2>
+                                    <p class="mt-3 mb-0"><strong>Tip 1 -</strong> Tell your story to a specific person.</p>
+                                    <p class=" mb-0"><strong>Tip 2 -</strong> Tell your story in chronological order.</p>
+                                    <p class=" mb-0"><strong>Tip 3 -</strong> Tell your story from your heart.</p>
+                                    <p class=" mb-0">Tell Your Story like a Fairy Tale.</p>
+
+                                    <h5 class=" my-2"><strong>Cinderella</strong></h5>
+                                    <p class=" mb-0">Cinderella was a beautiful and kind-hearted girl who lived with her wicked stepmother and stepsisters. They made her do all the household chores and treated her poorly.</p>
+                                    <p class=" mb-0">One day, the prince of the kingdom announced a grand ball, and all the eligible maidens were invited. Cinderella wanted to go, but her stepmother forbade her from attending.</p>
+                                    <p class=" mb-0">With the help of her fairy godmother, Cinderella got a beautiful dress, glass slippers, and a carriage. She went to the ball and danced with the prince, but had to leave before midnight, leaving behind one glass slipper.</p>
+                                    <p class=" mb-0">The prince searched the kingdom for the owner of the slipper and finally found Cinderella. He recognized her beauty and kindness, and they lived happily ever after.</p>
+                                    <p class=" mb-0">The original Cinderella Story was titled "Cendrillon ou La petite pantoufle de verre" and written by Charles Perrault in the late 17th century.</p>
+
+                                    <h5 class=" my-2"><strong>Tell Your Story like the Hero’s Journey</strong></h5>
+                                    <p class=" mb-0"><strong>The Call to Adventure -</strong> The hero receives a call to action or adventure, which sets them on a journey.</p>
+                                    <p class=" mb-0"><strong>Refusal of the Call -</strong> The hero may initially refuse the call, often due to fear or self-doubt.</p>
+                                    <p class=" mb-0"><strong> Acceptance of the Call - </strong>The hero eventually accepts the call to adventure and begins their journey.</p>
+                                    <p class=" mb-0"><strong> Meeting the Mentor - </strong>The hero meets a mentor who provides guidance and assistance on their journey.</p>
+                                    <p class=" mb-0"><strong> Crossing the Threshold - </strong>The hero crosses a threshold into the unknown or unfamiliar world of their adventure.</p>
+                                    <p class=" mb-0"><strong> Trials and Challenges - </strong>The hero faces various trials and challenges that test their skills, abilities, and resolve.</p>
+                                    <p class=" mb-0"><strong> The Approach -</strong> The hero approaches their ultimate goal, facing greater obstacles and challenges.</p>
+                                    <p class=" mb-0"><strong> The Ordeal -</strong> The hero faces their greatest challenge or ordeal, often a life or death situation.</p>
+                                    <p class=" mb-0"><strong> The Reward -</strong> The hero emerges from their ordeal with a reward, such as knowledge, a magical object, or a sense of self-discovery.</p>
+                                    <p class=" mb-0"><strong> The Road Back - </strong> The hero begins their journey back to their ordinary world, often facing new challenges.</p>
+                                    <p class=" mb-0"><strong> The Resurrection - </strong>The hero faces a final challenge, often a battle or confrontation, that tests their growth and transformation.</p>
+                                    <p class=""><strong> The Return - </strong> The hero returns to their ordinary world, using their new knowledge and abilities to help others or make positive changes in their world.</p>
                                 </div>
                             </div>
                             <div class="col-12">
