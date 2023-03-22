@@ -350,7 +350,7 @@
                     <input type="hidden" name="template_id" data-class="avatar" value="1">
                     <input type="hidden" name="content" id="contentInput" data-class="avatar" value="1">
                     <div class="mx-2 mt-3 d-flex justify-content-between align-items-center">
-                        <a href="{{url('/cover-art')}}">
+                        <a href="{{url('/inside-cover')}}">
                             <button type="button" data-class="avatar" class="px-3 py-1"><i class="fas fa-arrow-left mr-2"></i>Previous</button></a>
                         <button type="submit" id="save" data-class="avatar" class="px-3 py-1"><i class="fas fa-save mr-2"></i>Save</button>
                     </div>
@@ -434,7 +434,7 @@
                     <input type="hidden" name="content" id="contentInput2" data-class="avatar" value="1">
 
                     <div class=" mx-2 mt-3 d-flex justify-content-between align-items-center">
-                        <a href="{{url('/cover-art')}}">
+                        <a href="{{url('/inside-cover')}}">
                             <button type="button" data-class="avatar" class="px-3 py-1"><i class="fas fa-arrow-left mr-2"></i>Previous</button></a>
                         <button id="save" data-class="avatar" class="px-3 py-1"><i class="fas fa-save mr-2"></i>Save</button>
                     </div>
