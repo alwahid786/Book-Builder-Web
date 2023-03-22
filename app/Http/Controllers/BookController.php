@@ -152,7 +152,7 @@ class BookController extends Controller
         $data = $request->except('_token');
         $book = Book::where('user_id', $request->user_id)->update($data);
         if ($book) {
-            return redirect('/inside-cover');
+            return redirect('/copyright');
         }
     }
     public function copyright()

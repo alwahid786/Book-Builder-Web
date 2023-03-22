@@ -24,6 +24,17 @@
         right: 0;
         transform: translateY(-50%);
     }
+
+    .logoImg{
+        max-width: 250px;
+        width: 80% !important;
+        border: none;
+        object-fit: contain;
+        border-radius: none !important;
+    }
+    img{
+        border-radius: 0px !important;
+    }
 </style>
 <?php
 $sections = bookProgress()['sections'];
@@ -31,7 +42,7 @@ $sections = bookProgress()['sections'];
 <div class="side-bar">
 
     <div class="menu">
-        <div class=" text-center text-white" style="height: 85px; display:flex; font-size:30px; justify-content:center; align-items:center">LOGO</div>
+        <div class=" text-center text-white" style="height: 85px; display:flex; font-size:30px; justify-content:center; align-items:center"><img class="logoImg m-0" style="border-radius:none !important;" src="{{asset('assets/images/LOGO_PNG.png')}}" alt=""></div>
         <div class="item position-relative">
             <a href="{{url('/avatar')}}" class="@if(!$sections['avatar']) disableTab @endif"><i class="fas fa-book"></i>Avatar
                 @if($sections['avatar'])<i class="fas fa-check-circle filled-circle"></i>@endif

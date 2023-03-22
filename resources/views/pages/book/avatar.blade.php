@@ -127,7 +127,7 @@
     img {
         width: 100px;
         margin: 15px;
-        border-radius: 50%;
+        /* border-radius: 50%; */
         margin-left: 70px;
         border: 3px solid #b4b8b9;
     }

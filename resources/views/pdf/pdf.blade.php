@@ -30,8 +30,9 @@
 </head>
 
 <body>
+    @if(isset())
     <h1 class="text-center mt-3">{{$data['book_title']}}</h1>
-    <h5 class="text-center" style="font-style:italic"> {{$data['book_title']}}</h5>
+    <h5 class="text-center" style="font-style:italic"> {{$data['book_subtitle']}}</h5>
     <div class="coverImg mt-3">
         <img src="{{$data['front_cover']}}" alt="Front Cover Image">
     </div>
