@@ -168,15 +168,11 @@ class BookController extends Controller
     public function copyrightForm(Request $request)
     {
         $data = $request->except('_token');
-        $copyrightData = Copyright::where('user_id', $request->user_id)->first();
-        if ($copyrightData) {
-            $copyright = $copyrightData->update($data);
+
+            $data['user_id'] = auth()->user()->id;
+            Copyright::updateOrCreate(['user_id' => auth()->user()->id],$data);
             return redirect('/praise');
-        } else {
-            $copyright = new Copyright;
-            $copyright->create($data);
-            return redirect('/praise');
-        }
+            
     }
     public function praise()
     {
@@ -236,6 +232,9 @@ class BookController extends Controller
         $book = Book::where('user_id', $request->user_id)->update($data);
         if ($book) {
             $outlines = Outline::where('user_id', auth()->user()->id)->get(['id', 'outline_name']);
+            if(!sizeof($outlines)){
+                return redirect('/outline');
+            }
             return redirect('/content/%24' . $outlines[0]['id']);
         }
     }
