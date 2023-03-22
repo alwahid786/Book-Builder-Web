@@ -80,11 +80,16 @@ $sections = bookProgress()['sections'];
             </a></div>
         <div class="item">
             <a class="sub-btn @if(!$sections['table_of_content']) disableTab @endif"><i class="fas fa-list"></i>Chapters
-                @if($sections['table_of_content'])<i class="fas fa-check-circle filled-circle"></i>@endif
+                <!-- @if($sections['table_of_content'])<i class="fas fa-check-circle filled-circle"></i>@endif -->
             </a>
             <div class="sub-menu">
-                @foreach(outlines() as $outline)
-                <a href="{{route('content', ['id'=> $outline['id']] )}}" data-class="{{$outline['id']}}" class="sub-item">{{$outline['outline_name']}}</a>
+                @foreach(outlines() as $outline)<?php
+               $id = $sections['sub_outline_'.$outline['id']];
+                ?>
+                <a href="{{route('content', ['id'=> $outline['id']] )}}" data-class="{{$outline['id']}}" class="sub-item">{{$outline['outline_name']}}
+                
+                @if($id)<i class="fas fa-check-circle filled-circle"></i>@endif
+                </a>
                 @endforeach
             </div>
         </div>
@@ -99,3 +104,8 @@ $sections = bookProgress()['sections'];
             </a></div>
     </div>
 </div>
+<!-- @if($sections['table_of_content'])
+<script>
+     $('.sub-menu').slideToggle();
+</script>
+@endif -->

@@ -24,9 +24,27 @@ function bookProgress()
 
     $book_details = Book::where('user_id', auth()->user()->id)
     ->with(['outlines' => function($query){
-        $query->select('id', 'outline_name');
+        $query->select('id', 'outline_name', 'user_id', 'content');
     }, 'copyright'])
     ->first();
+
+    $sub_outlines = ($book_details->outlines)->toArray();
+    foreach($sub_outlines as $sub_outline){
+       if(!empty($sub_outline['content'])){
+        $sections['sub_outline_'.$sub_outline['id']] = true;
+       }else{
+        $sections['sub_outline_'.$sub_outline['id']] = false;
+       }
+    }
+
+    $notEmptyContentFields = array_filter($sub_outlines, function($item) {
+        return !empty($item['content']);
+    });
+
+    
+    if(sizeof($notEmptyContentFields)){
+        $sections['table_of_content'] = true;
+    }
 
     // Outline 
     if(sizeof($book_details->outlines)){
@@ -36,10 +54,6 @@ function bookProgress()
     // copyright
     if(!empty($book_details->copyright)){
         $sections['copy_right'] = true;
-    }
-    
-    if(!empty($book_details->singleOutline['content'])){
-        $sections['table_of_content'] = true;
     }
 
     if (!empty($book_details)) {
@@ -87,8 +101,11 @@ function bookProgress()
             $sections['about'] = true;
         }
     }
-    $count_true = count(array_filter($sections)); // count number of true values
-    $total = count($sections); // count total elements
+    $sectionsWithoutContent = $sections;
+    unset($sectionsWithoutContent['table_of_content']);
+    $count_true = count(array_filter($sectionsWithoutContent)); // count number of true values
+    // echo'<pre>';print_r($sectionsWithoutContent);exit;
+    $total = count($sectionsWithoutContent); // count total elements
     $percentage =  round($count_true / $total * 100); // calculate percentage
 
 
