@@ -25,14 +25,15 @@
         transform: translateY(-50%);
     }
 
-    .logoImg{
+    .logoImg {
         max-width: 250px;
         width: 80% !important;
         border: none;
         object-fit: contain;
         border-radius: none !important;
     }
-    img{
+
+    img {
         border-radius: 0px !important;
     }
 </style>
@@ -84,11 +85,11 @@ $sections = bookProgress()['sections'];
             </a>
             <div class="sub-menu">
                 @foreach(outlines() as $outline)<?php
-               $id = $sections['sub_outline_'.$outline['id']];
-                ?>
+                                                $id = $sections['sub_outline_' . $outline['id']];
+                                                ?>
                 <a href="{{route('content', ['id'=> $outline['id']] )}}" data-class="{{$outline['id']}}" class="sub-item">{{$outline['outline_name']}}
-                
-                @if($id)<i class="fas fa-check-circle filled-circle"></i>@endif
+
+                    @if($id)<i class="fas fa-check-circle filled-circle"></i>@endif
                 </a>
                 @endforeach
             </div>

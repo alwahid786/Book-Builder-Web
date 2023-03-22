@@ -9,6 +9,7 @@
         body {
             font-family: Arial, sans-serif;
         }
+
         h3 {
             font-family: Arial, sans-serif;
         }
@@ -90,31 +91,33 @@
     <!-- Outlines Section  -->
     @if(isset($data['outlines']) && !empty($data['outlines']))
     <div class="outlineDiv mx-5">
-        <h2 class="mt-3">Table of Content:</h2>
+        <h2 class="mt-3">Table of Contents:</h2>
         <hr class="mt-0">
-        <?php $count = 1; ?>
-        @foreach($data['outlines'] as $outline)
-        <div class="divOutline">
-            <div class="w-25 pl-3">
-                <?php echo $count;
-                $count++; ?>
-            </div>
-            <div class="w-75 text-center">
-                {{$outline['outline_name']}}
-            </div>
-        </div>
-        @endforeach
+        <table class="w-100">
+            <tbody>
+                <?php $count = 1; ?>
+                @foreach($data['outlines'] as $outline)
+                <tr>
+                    <td class="w-100">{{$count}}</td>
+                    <td class="w-100">{{$outline['outline_name']}}</td>
+                </tr>
+                <?php $count++; ?>
+                @endforeach
+            </tbody>
+        </table>
     </div>
     @endif
     <!-- Chapters Section  -->
     @if(isset($data['outlines']) && !empty($data['outlines']))
     @foreach($data['outlines'] as $outlineValue)
+    @if($outlineValue['content'] != null)
     <div class="outlineDiv mx-3">
         <h2 class="my-3">{{$outlineValue['outline_name']}}</h2>
         <div class="chapter-content">
             {!! $outlineValue['content'] !!}
         </div>
     </div>
+    @endif
     @endforeach
     @endif
     @if(isset($data['conclusion']) && !empty($data['conclusion']))

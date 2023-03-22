@@ -162,10 +162,10 @@
                                     <p>Thank you for allowing me to help you on this journey, I’m grateful. </p>
                                 </div>
                             </div>
-                            <div class="col-12">
+                            <!-- <div class="col-12">
                                 <iframe width="100%" height="345" src="https://www.youtube.com/embed/ptssvF8NYnI">
                                 </iframe>
-                            </div>
+                            </div> -->
                             <div class="col-12 mt-3">
                                 <div class="text-right">
                                     <!-- <a href="{{url('/storytelling')}}"> -->
@@ -223,10 +223,10 @@
                                     <p class=""><strong> The Return - </strong> The hero returns to their ordinary world, using their new knowledge and abilities to help others or make positive changes in their world.</p>
                                 </div>
                             </div>
-                            <div class="col-12">
+                            <!-- <div class="col-12">
                                 <iframe width="100%" height="345" src="https://www.youtube.com/embed/ptssvF8NYnI">
                                 </iframe>
-                            </div>
+                            </div> -->
                             <div class="col-12 mt-3">
                                 <div class="text-right">
                                     <button class="px-5 py-2" id="gratitudeBtn">

@@ -255,15 +255,21 @@
         <h3 class="av_heading text-center">Copyright</h3>
         <ul class="nav nav-tabs" role="tablist">
             <li class="nav-item">
-                <a class="nav-link active" data-toggle="tab" href="#tabs-1" role="tab">Template 01</a>
+                <a class="nav-link <?php if (isset($bookdata['copyright']) && $bookdata['copyright']['template_id'] == 1) {
+                                        echo "active";
+                                    }  ?>" data-toggle="tab" href="#tabs-1" role="tab">Template 01</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" data-toggle="tab" href="#tabs-2" role="tab">Template 02</a>
+                <a class="nav-link <?php if (isset($bookdata['copyright']) && $bookdata['copyright']['template_id'] == 2) {
+                                        echo "active";
+                                    }  ?>" data-toggle="tab" href="#tabs-2" role="tab">Template 02</a>
             </li>
 
         </ul><!-- Tab panes -->
         <div class="tab-content">
-            <div class="tab-pane active" id="tabs-1" role="tabpanel">
+            <div class="tab-pane <?php if (isset($bookdata['copyright']) && $bookdata['copyright']['template_id'] == 1) {
+                                        echo "active";
+                                    }  ?>" id="tabs-1" role="tabpanel">
                 <form action="{{route('copyrightDetail')}}" method="post" id="frontCoverForm1" class="pt-3">
                     @csrf
                     <!-- <div class="d-flex justify-content-between align-items-center">
@@ -356,7 +362,9 @@
                     </div>
                 </form>
             </div>
-            <div class="tab-pane" id="tabs-2" role="tabpanel">
+            <div class="tab-pane <?php if (isset($bookdata['copyright']) && $bookdata['copyright']['template_id'] == 2) {
+                                        echo "active";
+                                    }  ?>" id="tabs-2" role="tabpanel">
                 <form action="{{route('copyrightDetail')}}" method="post" id="frontCoverForm2" class="pt-3">
                     @csrf
                     <!-- <div class="d-flex justify-content-between align-items-center">
