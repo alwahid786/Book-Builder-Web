@@ -243,6 +243,19 @@
     .nav-item a {
         color: #33363a;
     }
+
+    .sample {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        width: 100%;
+        transform: translate(-50%, -50%);
+    }
+
+    .sample-outer {
+        position: relative;
+        height: 170px;
+    }
 </style>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js" charset="utf-8"></script>
@@ -255,6 +268,26 @@
         <h3 class="av_heading text-center">Express Dedication</h3>
         <form action="{{route('dedicationDetail')}}" method="post" id="dedicationForm" class="pt-3">
             @csrf
+            <div class="">
+                <div class="row">
+                    <div class="col-6 text-center sample-outer" style="border: 1px solid lightgray;  padding: 10px;">
+                        <div class="sample">
+                            <h6 class="text-center">- Sample 01 -</h6>
+                            <p class="mt-0">To everyone who has shared a story of the inexplicable beauty and power of Gratitude with another person – thank you for making the world a better place.</p>
+                            <p class="m-0">This book is for you.</p>
+                        </div>
+                    </div>
+                    <div class="col-6 text-center sample-outer" style="border: 1px solid lightgray;  padding: 10px;">
+                        <div class="sample">
+                            <h6 class="text-center">- Sample 02 -</h6>
+
+                            <p class="m-0" style="height:100%;">To the brave, creative, and romantic entrepreneurs and
+                                business owners that make our lives better.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
             <div class="mt-4">
                 <h4 class="mb-0">Record Audio</h4>
                 <p>Record audio to convert to text in the editor below.</p>

@@ -244,26 +244,48 @@
     @include('layouts.book-layout.progress')
     <div class="content px-5 py-4">
         <h3 class="av_heading text-center">Front Cover Details</h3>
+        <div class="my-3">
+            <div class="row">
+                <div class="col-6 text-center" style="border: 1px solid lightgray;  padding: 10px;">
+                    <h6 class="text-center">Sample 01</h6>
+                    <h4>GRATITUDE STORIES FROM OUR HEARTS BY</h4>
+                    <h5 style="color:#6dabe4;">DON WILLIAMS AND FRIENDS</h5>
+                    <p class="m-0">Cover Art - “The Gratitude Heart”</p>
+                    <p class="m-0">© 2020 Leta Farnsworth https://letafarnsworthart.com</p>
+
+                </div>
+                <div class="col-6 text-center" style="border: 1px solid lightgray;  padding: 10px;">
+                    <h6 class="text-center">Sample 02</h6>
+                    <h4 style="color:#6dabe4;">Romancing Your Customer</h4>
+                    <h6>How to Passionately Attract, Retain, and Win-Back Customers
+                        for Unbelievable Loyalty and Profit
+                    </h6>
+                    <p class=" m-0">By</p>
+                    <p class=" m-0">Don Williams</p>
+
+                </div>
+            </div>
+        </div>
         <form action="{{route('frontCoverDetail')}}" method="post" id="frontCoverForm" class="pt-3">
             @csrf
             <div class="d-flex justify-content-between align-items-center">
                 <div class="input-group w-100 mx-2">
                     <span class="text-secondary mb-2">Title</span>
-                    <input type="text" value="<?php echo $bookdata['front_title'] ?? '' ?>" name="front_title" id="av_f_name">
+                    <input type="text" value="<?php echo $bookdata['front_title'] ?? $bookdata['book_title'] ?>" name="front_title" id="av_f_name">
                 </div>
                 <div class="input-group w-100 mx-2">
                     <span class="text-secondary mb-2">Subtitle</span>
-                    <input type="text" value="<?php echo $bookdata['front_subtitle'] ?? '' ?>" name="front_subtitle" id="av_l_name">
+                    <input type="text" value="<?php echo $bookdata['front_subtitle'] ?? $bookdata['book_subtitle'] ?>" name="front_subtitle" id="av_l_name">
                 </div>
             </div>
             <div class="d-flex justify-content-between align-items-center mt-3">
                 <div class="input-group w-100 mx-2">
                     <span class="text-secondary mb-2">Author First Name</span>
-                    <input type="text" value="<?php echo $bookdata['author_fname'] ?? '' ?>" name="author_fname" id="av_f_name">
+                    <input type="text" value="<?php echo $bookdata['author_fname'] ?? auth()->user()->name ?>" name="author_fname" id="av_f_name">
                 </div>
                 <div class="input-group w-100 mx-2">
                     <span class="text-secondary mb-2">Author Last Name</span>
-                    <input type="text" value="<?php echo $bookdata['author_lname'] ?? '' ?>" name="author_lname" id="av_l_name">
+                    <input type="text" value="<?php echo $bookdata['author_lname'] ?? auth()->user()->l_name ?>" name="author_lname" id="av_l_name">
                 </div>
             </div>
 

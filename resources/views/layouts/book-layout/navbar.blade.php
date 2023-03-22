@@ -17,6 +17,13 @@
         padding: 5px 10px 5px 18px;
         line-height: 30px;
     }
+
+    .filled-circle {
+        position: absolute;
+        top: 50%;
+        right: 0;
+        transform: translateY(-50%);
+    }
 </style>
 <?php
 $sections = bookProgress()['sections'];

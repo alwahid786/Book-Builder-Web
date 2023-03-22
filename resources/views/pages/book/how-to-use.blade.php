@@ -255,6 +255,14 @@
         <h3 class="av_heading text-center">How To Use This Book</h3>
         <form action="{{route('howToUseDetail')}}" method="post" id="howToUseForm" class="pt-3">
             @csrf
+            <div class="mb-3 text-center" style="border: 1px solid lightgray;  padding: 10px;">
+                <h6 class="text-center">- Sample -</h6>
+                <p class="m-0">These stories showed me that the spectrum of gratitude has unfathomable breadth and depth.</p>
+                <p class="m-0">This book is a compilation of such stories from family, friends, and strangers.</p>
+                <p class="mt-0">My wish is that as you go through these pages, they light a fire in your own heart to begin a daily intentional practice of gratitude.</p>
+                <p class="m-0">At the end of each story, there are a few blank pages. I encourage you to reflect on the moments of your daily life that resemble each of these accounts. Journal daily until gratitude becomes a habit.</p>
+                <p class="mt-0">If you read one story a day, then this book has twenty-five days of stories.</p>
+            </div>
             <div class="mt-4">
                 <h4 class="mb-0">Record Audio</h4>
                 <p>Record audio to convert to text in the editor below.</p>

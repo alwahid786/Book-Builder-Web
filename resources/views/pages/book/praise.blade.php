@@ -252,9 +252,18 @@
 <section class="main">
     @include('layouts.book-layout.progress')
     <div class="content px-5 py-4">
-        <h3 class="av_heading text-center">What Others are Saying</h3>
+        <h3 class="av_heading text-center">Praise - What Others are Saying</h3>
         <form action="{{route('praiseDetail')}}" method="post" id="praiseForm" class="pt-3">
             @csrf
+            <div class="mb-3 text-center" style="border: 1px solid lightgray;  padding: 10px;">
+                <h6 class="text-center">- Sample -</h6>
+                <p class="m-0">“Don Williams is living proof that actively practicing gratitude can change your life.</p>
+                <p class="mt-0">Don has done an exceptional job of illustrating that the key to gratitude is disciplined practice and eloquently presents numerous stories that reinforce this message.</p>
+                <p class="m-0">Gratitude shifts you into a higher state and is the secret ingredient to living a more powerful life.</p>
+                <p class="mt-0">Buy two copies of this book and give one to a friend.”</p>
+                <p class="m-0">Gina Mollicone-Long</p>
+                <p class="m-0">International Best-Selling Author, Creator of Greatness U and the ACME Coaching Framework</p>
+            </div>
             <div class="mt-4">
                 <h4 class="mb-0">Record Audio</h4>
                 <p>Record audio to convert to text in the editor below.</p>

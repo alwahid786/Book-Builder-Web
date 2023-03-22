@@ -266,7 +266,7 @@
             <div class="tab-pane active" id="tabs-1" role="tabpanel">
                 <form action="{{route('copyrightDetail')}}" method="post" id="frontCoverForm1" class="pt-3">
                     @csrf
-                    <div class="d-flex justify-content-between align-items-center">
+                    <!-- <div class="d-flex justify-content-between align-items-center">
                         <div class="input-group w-100 mx-2">
                             <span class="text-secondary mb-2">Copyright Year</span>
                             <input type="text" value="<?php echo $bookdata['copyright']['copyright_year'] ?? '' ?>" name="copyright_year" id="av_f_name">
@@ -315,8 +315,16 @@
                             <span class="text-secondary mb-2">Zip Code</span>
                             <input type="text" value="<?php echo $bookdata['copyright']['zipcode'] ?? '' ?>" name="zipcode" id="av_l_name">
                         </div>
+                    </div> -->
+                    <div class="my-3 text-center" style="border: 1px solid lightgray;  padding: 10px;">
+                        <h6 class="text-center">- Sample 01 -</h6>
+                        <p class="m-0">Copyright (Year) (First Name) (Last Name), (Company Name 1), (Company Name 2)</p>
+                        <p class="mt-0">All Rights Reserved</p>
+                        <p class="m-0">Contact the Author at:</p>
+                        <p class="mt-0">(Street Address 1), (Street Address 2), (City), (ST) (Country) (Zip Code)</p>
+                        <p class="m-0">First Edition</p>
+                        <p class="m-0">All rights reserved. No part of this publication may be reproduced, distributed, or transmitted in any form or by any means, including photocopying, recording. Or other electronic or mechanical method(s) or by any information storage and retrieval systems without the prior written permission of the publisher and author, except in the case of brief quotations embodied in reviews and certain other non-commercial uses permitted by copyright law.</p>
                     </div>
-
                     <div class="mt-4">
                         <h4 class="mb-0">Record Audio</h4>
                         <p>Record audio to convert to text in the editor below.</p>
@@ -351,7 +359,7 @@
             <div class="tab-pane" id="tabs-2" role="tabpanel">
                 <form action="{{route('copyrightDetail')}}" method="post" id="frontCoverForm2" class="pt-3">
                     @csrf
-                    <div class="d-flex justify-content-between align-items-center">
+                    <!-- <div class="d-flex justify-content-between align-items-center">
                         <div class="input-group w-100 mx-2">
                             <span class="text-secondary mb-2">Year of publication</span>
                             <input type="text" value="<?php echo $bookdata['copyright']['publication_year'] ?? '' ?>" name="publication_year" id="av_f_name">
@@ -386,6 +394,19 @@
                             <span class="text-secondary mb-2">Printed In Country</span>
                             <input type="text" value="<?php echo $bookdata['copyright']['printed_country'] ?? '' ?>" name="printed_country" id="av_f_name">
                         </div>
+                    </div> -->
+                    <div class="my-3 text-center" style="border: 1px solid lightgray;  padding: 10px;">
+                        <h6 class="text-center">- Sample 02 -</h6>
+                        <p class="m-0">COPYRIGHT © (year of publication) by (author's name)</p>
+                        <p class="m-0">All rights reserved. No part of this book may be reproduced, stored in a retrieval system, or transmitted in any form or by any means, electronic, mechanical, photocopying, recording, or otherwise, without the prior written permission of the author/publisher.</p>
+                        <p class="mt-0">This book is a work of fiction (or non-fiction) and any resemblance to persons, living or dead, or places, events or locales is purely coincidental. The characters are productions of the author's imagination and used fictitiously.</p>
+                        <p class="m-0">Cover design by (cover designer's name)</p>
+                        <p class="m-0">Edited by (editor's name)</p>
+                        <p class="m-0">Published by (publisher's name)</p>
+                        <p class="m-0">ISBN (insert ISBN here)</p>
+                        <p class="m-0">Printed in (insert country where book is printed)</p>
+                        <p class="m-0">(Insert any disclaimers or legal notices here)</p>
+                        <p class="m-0">For permission to use material from this book, please contact the author or the publisher.</p>
                     </div>
                     <div class="mt-4">
                         <h4 class="mb-0">Record Audio</h4>

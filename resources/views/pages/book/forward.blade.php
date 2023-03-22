@@ -255,6 +255,29 @@
         <h3 class="av_heading text-center">Forward</h3>
         <form action="{{route('forwardDetail')}}" method="post" id="forwardForm" class="pt-3">
             @csrf
+            <div class="mb-3 text-center" style="border: 1px solid lightgray;  padding: 10px;">
+                <h6 class="text-center">- Sample -</h6>
+                <p class="m-0">I’m Don Williams and I’ll serve as your romance guide through this book. As the founder and CEO of Don Williams Global, my company helps small, medium, and major corporations deliver better experiences to their prospects which helps them become customers, and helps customers remain and become more profitable customers.</p>
+                <p class="m-0">Have you seen that bumper sticker that says, “I wasn’t born in Texas, but I got here as fast as I could”? That’s me. I grew up in Kansas and moved to Texas in 1986 when I opened my first company.</p>
+                <p class="mt-0">During my initial eighteen months in business we nearly starved to death. I did no business. Halfway through that second year, things began to work better and at the end of year two I opened a second location in another city. That second location introduced five more years of struggle, and then in the next three years Itransitioned from surviving to thriving in multiple locations.</p>
+                <p class="m-0">The single action that resulted in the greatest gain occurred when we, as a company, began looking at everything we did from the customer’s point of view.</p>
+                <ul class="ml-3 text-left" style="color:#777;">
+                    <li>
+                        How could we help the customer fall in love with our company?
+                    </li>
+                    <li>
+                        How could we make doing business with our company such a great experience for our customer they looked forward to working with us again?
+                    </li>
+                    <li>
+                        How could we add a “Wow!” factor to our customer service?
+                    </li>
+                </ul>
+                <p class="mt-0">The results were astounding. Our company grew from two locations in seven years to 19 locations in three years. Wow! Three years later we pivoted from that company and started a new business.</p>
+                <p class="mt-0">Since 1999, I’ve worked with 273 Fortune 500 Companies in marketing, sales and service strategies, and execution. Like Jiminy Cricket, I come alongside the big boys and girls of American and International business. In addition to my Fortune 500 clients, I’ve had the great pleasure to work with major firms from Australia, China, France, Greece, Israel, Italy, Spain, United Arab Emirates, and the United Kingdom on efforts in the American and International markets.</p>
+                <p class="mt-0">One common denominator of major success in businesses from Main Street to Wall Street is – drum roll, please – does a business approach their prospects, customers, and previous customers from an attitude of care and gratitude? Do they show the same appreciation to their employees, contractors, partners, and vendors? In my experience, the great business romantics provide an unparalleled and unforgettable level of service.</p>
+                <p class="mt-0">Let’s look at companies that do a fantastic job romancing their customers and compare how their customer service affects the overall brand of the company, and therefore, the bottom line. This strategy also works with employees, vendors, partners, neighbors, children, and your spouse/mate/love/squeeze. Your customers deserve the rewards of real romance from your company and so do you.</p>
+                <p class="mt-0">Apply romance liberally for nearly instant results. An added benefit is that you can apply the same principles that make you successful in business to other areas and experience exponential results in your personal life.</p>
+            </div>
             <div class="mt-4">
                 <h4 class="mb-0">Record Audio</h4>
                 <p>Record audio to convert to text in the editor below.</p>
