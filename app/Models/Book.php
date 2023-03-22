@@ -20,4 +20,12 @@ class Book extends Model
         'avatar_description',
         'user_id'
     ];
+
+    public function outlines(){
+        return $this->hasMany(Outline::class, 'user_id', 'user_id');
+    }
+
+    public function copyright(){
+        return $this->hasOne(Copyright::class, 'user_id', 'user_id');
+    }
 }

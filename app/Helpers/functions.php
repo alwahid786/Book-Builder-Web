@@ -22,11 +22,26 @@ function bookProgress()
         'about' => false,
     ];
 
-    $outlines = Outline::where('user_id', auth()->user()->id)->first();
-    if(!empty($outlines)){
+    $book_details = Book::where('user_id', auth()->user()->id)
+    ->with(['outlines' => function($query){
+        $query->select('id', 'name');
+    }, 'copyright'])
+    ->first();
+
+    // Outline 
+    if(sizeof($book_details->outlines)){
         $sections['outline'] = true;
     }
-    $book_details = Book::where('user_id', auth()->user()->id)->first();
+
+    // copyright
+    if(!empty($book_details->copyright)){
+        $sections['copy_right'] = true;
+    }
+    
+    if(!empty($book_details->singleOutline['content'])){
+        $sections['table_of_content'] = true;
+    }
+
     if (!empty($book_details)) {
         if (!empty($book_details->avatar_fname)) {
             $sections['avatar'] = true;
@@ -38,6 +53,38 @@ function bookProgress()
 
         if (!empty($book_details->front_cover)) {
             $sections['cover_art'] = true;
+        }
+
+        if (!empty($book_details->front_title)) {
+            $sections['inside_cover'] = true;
+        }
+
+        if (!empty($book_details->praise)) {
+            $sections['praise'] = true;
+        }
+
+        if (!empty($book_details->dedication)) {
+            $sections['dedication'] = true;
+        }
+
+        if (!empty($book_details->how_to_use)) {
+            $sections['how_to_use'] = true;
+        }
+
+        if (!empty($book_details->forward)) {
+            $sections['forword'] = true;
+        }
+
+        if (!empty($book_details->conclusion)) {
+            $sections['conclusion'] = true;
+        }
+
+        if (!empty($book_details->work_with_us)) {
+            $sections['work_with_us'] = true;
+        }
+
+        if (!empty($book_details->about)) {
+            $sections['about'] = true;
         }
     }
     $count_true = count(array_filter($sections)); // count number of true values

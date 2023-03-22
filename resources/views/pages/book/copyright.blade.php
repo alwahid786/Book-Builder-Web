@@ -340,7 +340,7 @@
                             </div>
                         </div>
                         <div class="mt-3">
-                            <div id="editor2"><?php if ($bookdata['copyright']['template_id'] == 1) {
+                            <div id="editor2"><?php if (isset($bookdata['copyright']) && $bookdata['copyright']['template_id'] == 1) {
                                                     echo $bookdata['copyright']['content'];
                                                 }  ?></div>
                         </div>
@@ -423,7 +423,7 @@
                             </div>
                         </div>
                         <div class="mt-3">
-                            <div id="editor"><?php if ($bookdata['copyright']['template_id'] == 2) {
+                            <div id="editor"><?php if (isset($bookdata['copyright']) && $bookdata['copyright']['template_id'] == 2) {
                                                     echo $bookdata['copyright']['content'];
                                                 }  ?></div>
                         </div>
