@@ -255,6 +255,13 @@
         <h3 class="av_heading text-center">Work With Us</h3>
         <form action="{{route('workWithUsDetail')}}" method="post" id="workWithUsForm" class="pt-3">
             @csrf
+            <div class="mb-3 text-center" style="border: 1px solid lightgray;  padding: 10px;">
+                <h6 class="text-center">- Sample -</h6>
+                <p class="m-0">Want to Work with Don? Don Speaks, Consults and Facilitates Anywhere on Earth!</p>
+                <p class="m-0">Contact Don at:</p>
+                <p class="m-0">don@donwilliamsglobal.com 800 823 0403</p>
+                <p>Or Nearly Everywhere on Social Media</p>
+            </div>
             <div class="mt-4">
                 <h4 class="mb-0">Record Audio</h4>
                 <p>Record audio to convert to text in the editor below.</p>

@@ -255,6 +255,12 @@
         <h3 class="av_heading text-center">About</h3>
         <form action="{{route('aboutDetail')}}" method="post" id="aboutForm" class="pt-3">
             @csrf
+            <div class="mb-3 text-center" style="border: 1px solid lightgray;  padding: 10px;">
+                <h6 class="text-center">- Sample -</h6>
+                <p class="m-0">Don Williams is a 35-year serial entrepreneur. He lives outside Dallas-Ft. Worth, Texas with the love of his life Leta and their Labrador Retrievers Maggie and Tess.</p>
+                <p class="m-0">Don spends most of his time speaking, writing, and consulting.</p>
+                <p class="m-0">Don is a sales, service, culture, and leadership experience expert. Don helps Companies from startups to the Fortune 100 do more business and do “better” business.</p>
+            </div>
             <div class="mt-4">
                 <h4 class="mb-0">Record Audio</h4>
                 <p>Record audio to convert to text in the editor below.</p>

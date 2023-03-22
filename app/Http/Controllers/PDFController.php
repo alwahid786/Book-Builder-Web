@@ -35,7 +35,7 @@ class PDFController extends Controller
         // Set the response content-type to PDF
         $headers = [
             'Content-Type' => 'application/pdf',
-            'Content-Disposition' => 'inline; filename="mypdf.pdf"'
+            'Content-Disposition' => 'inline; filename='.$data['book_title'] ?? 'book'.'".pdf"'
         ];
 
         // Return the rendered PDF in a new tab

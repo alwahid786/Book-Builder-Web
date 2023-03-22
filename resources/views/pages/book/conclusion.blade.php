@@ -255,6 +255,12 @@
         <h3 class="av_heading text-center">Conclusion</h3>
         <form action="{{route('conclusionDetail')}}" method="post" id="conclusionForm" class="pt-3">
             @csrf
+            <div class="mb-3 text-center" style="border: 1px solid lightgray;  padding: 10px;">
+                <h6 class="text-center">- Sample -</h6>
+                <p class="m-0">I hope you enjoyed your journey into your Daily Practice of Gratitude. I encourage you to stay with it. If you miss a day - it’s no big deal just start again the next day. Remember the more you practice gratitude with intention the more grateful you’ll become. And the more grateful you become, the more contentment and peace you’ll experience.</p>
+                <p class="mt-0">I’m grateful to have a small part in your progress. Thank You.</p>
+                <p>I’m grateful!</p>
+            </div>
             <div class="mt-4">
                 <h4 class="mb-0">Record Audio</h4>
                 <p>Record audio to convert to text in the editor below.</p>
