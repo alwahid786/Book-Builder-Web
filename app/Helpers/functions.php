@@ -24,7 +24,7 @@ function bookProgress()
 
     $book_details = Book::where('user_id', auth()->user()->id)
     ->with(['outlines' => function($query){
-        $query->select('id', 'name');
+        $query->select('id', 'outline_name');
     }, 'copyright'])
     ->first();
 
