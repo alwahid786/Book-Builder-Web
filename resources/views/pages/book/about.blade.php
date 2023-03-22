@@ -276,7 +276,7 @@
             <input type="hidden" name="about" id="contentInput" data-class="avatar">
             <input type="hidden" name="user_id" data-class="avatar" value="<?php echo  $bookdata['user_id'] ?? '' ?>">
             <div class=" mx-2 mt-3 d-flex justify-content-between align-items-center">
-                <a href="{{url('/cover-art')}}">
+                <a href="{{url('/work-with-us')}}">
                     <button type="button" data-class="avatar" class="px-3 py-1"><i class="fas fa-arrow-left mr-2"></i>Previous</button></a>
                 <button id="save" data-class="avatar" class="px-3 py-1"><i class="fas fa-save mr-2"></i>Save</button>
             </div>
