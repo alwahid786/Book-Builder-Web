@@ -100,15 +100,14 @@ class BookController extends Controller
                 $file = $request->file('front_cover');
                 $name = time() . $file->getClientOriginalName();
                 $directory = public_path('/files');
-                if (!File::exists($directory)) {
-                    File::makeDirectory($directory, 0755, true);
+                if (!is_dir($directory)) {
+                    mkdir($directory, 777, true);
                 }
                 $file->move($directory, $name);
                 $fileNames = $name;
 
             } catch (Exception $e) {
                 $message = $e->getMessage();
-                dd($message);
                 return $this->failure($message);
             }
             $imageFront = url('public/files') . '/' . $fileNames;
@@ -119,8 +118,8 @@ class BookController extends Controller
                 $file = $request->file('spine_cover');
                 $name = time() . $file->getClientOriginalName();
                 $directory = public_path('/files');
-                if (!File::exists($directory)) {
-                    File::makeDirectory($directory, 0755, true);
+                if (!is_dir($directory)) {
+                    mkdir($directory, 777, true);
                 }
                 $file->move($directory, $name);
                 $fileNames = $name;
@@ -137,8 +136,8 @@ class BookController extends Controller
                 $file = $request->file('back_cover');
                 $name = time() . $file->getClientOriginalName();
                 $directory = public_path('/files');
-                if (!File::exists($directory)) {
-                    File::makeDirectory($directory, 0755, true);
+                if (!is_dir($directory)) {
+                    mkdir($directory, 777, true);
                 }
                 $file->move($directory, $name);
                 $fileNames = $name;
