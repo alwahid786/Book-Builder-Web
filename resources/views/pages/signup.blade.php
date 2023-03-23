@@ -79,27 +79,27 @@
                     <form method="POST" class="register-form" action="{{route('register')}}" id="registerForm" enctype="multipart/form-data">
                         @csrf
                         <div class="form-group">
-                            <label for="name"><i class="zmdi zmdi-account material-icons-name"></i></label>
+                            <label for="name"><i class="fas fa-user"></i></label>
                             <input type="text" name="f_name" id="name" placeholder="First Name" />
                         </div>
                         <div class="form-group">
-                            <label for="name"><i class="zmdi zmdi-account material-icons-name"></i></label>
+                            <label for="name"><i class="fas fa-user"></i></label>
                             <input type="text" name="l_name" id="name" placeholder="Last Name" />
                         </div>
                         <div class="form-group">
-                            <label for="email"><i class="zmdi zmdi-email"></i></label>
+                            <label for="email"><i class="fas fa-envelope"></i></label>
                             <input type="email" name="email" id="email" placeholder="Your Email" />
                         </div>
                         <div class="form-group">
-                            <label for="name"><i class="zmdi zmdi-phone"></i></label>
+                            <label for="name"><i class="fas fa-phone"></i></label>
                             <input type="text" name="phone" id="name" placeholder="Phone" />
                         </div>
                         <div class="form-group">
-                            <label for="pass"><i class="zmdi zmdi-lock"></i></label>
+                            <label for="pass"><i class="fas fa-lock"></i></label>
                             <input type="password" name="password" id="pass" placeholder="Password" />
                         </div>
                         <div class="form-group">
-                            <label for="re-pass"><i class="zmdi zmdi-lock-outline"></i></label>
+                            <label for="re-pass"><i class="fas fa-lock"></i></label>
                             <input type="password" name="password_confirmation" id="re_pass" placeholder="Repeat your password" />
                         </div>
                         <div class="avatar-upload">

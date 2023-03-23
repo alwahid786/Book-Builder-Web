@@ -70,7 +70,7 @@ class AuthController extends Controller
             return redirect('/welcome');
         }
         toastr()->error('An error occured. Try again');
-        return redirect()->back();
+        return redirect('/sign-up');
     }
 
     // Login Function 
@@ -91,7 +91,7 @@ class AuthController extends Controller
         ];
         if (!auth()->attempt($UserData)) {
             toastr()->error('Try again. Wrong password.Try again or click forget password to reset your password.');
-            return redirect()->back();
+            return redirect('/');
         }
         $authUser = auth()->user();
         $authUser->token = $authUser->createToken('API Token')->accessToken;
