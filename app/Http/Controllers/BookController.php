@@ -331,6 +331,7 @@ class BookController extends Controller
         $data = $request->except('_token');
         $book = Book::where('user_id', $request->user_id)->update($data);
         if ($book) {
+            session()->flash('open_modal', true);
             return redirect()->back();
         }
     }

@@ -243,6 +243,20 @@
     .nav-item a {
         color: #33363a;
     }
+
+    .imgDiv {
+        width: 200px;
+        height: 200px;
+        overflow: hidden;
+    }
+
+    .imgDiv img {
+        width: 100%;
+        height: 100%;
+        object-fit: contain;
+        border: none;
+        margin: 0;
+    }
 </style>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js" charset="utf-8"></script>
@@ -292,6 +306,33 @@
         <button class="p-2 pdfBtn"><i class="fas fa-book"></i></button>
     </a>
 </section>
+<!-- Button trigger modal -->
+<!-- <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModalCenter">
+    Launch demo modal
+</button> -->
+
+<!-- Modal -->
+<div class="modal fade" id="congratulationModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-body text-center">
+                <div class="imgDiv mx-auto">
+                    <img src="{{asset('assets/images/pngegg.png')}}" alt="Confetti Cone">
+                </div>
+                <h3 style="color:#6dabe4; margin-top:15px;">CONGRATULATIONS</h3>
+                <p class="mb-0 mt-2">You have completed your book with us.</p>
+                <p>We are grateful.</p>
+            </div>
+        </div>
+    </div>
+</div>
+@if (session()->has('open_modal'))
+<script>
+    $(document).ready(function() {
+        $('#congratulationModal').modal('show');
+    });
+</script>
+@endif
 <!-- inserting these scripts at the end to be able to use all the elements in the DOM -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
 <script src="https://cdn.WebRTC-Experiment.com/RecordRTC.js"></script>
@@ -299,6 +340,7 @@
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <script type="text/javascript">
     $(document).ready(function() {
+
         //jquery for toggle sub menus
         $('.sub-btn').click(function() {
             $(this).next('.sub-menu').slideToggle();
