@@ -108,6 +108,7 @@ class BookController extends Controller
 
             } catch (Exception $e) {
                 $message = $e->getMessage();
+                dd($message);
                 return $this->failure($message);
             }
             $imageFront = url('public/files') . '/' . $fileNames;
