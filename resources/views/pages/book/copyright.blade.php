@@ -255,7 +255,7 @@
         <h3 class="av_heading text-center">Copyright</h3>
         <ul class="nav nav-tabs" role="tablist">
             <li class="nav-item">
-                <a class="nav-link <?php if ((isset($bookdata['copyright']) && $bookdata['copyright']['template_id'] == 1) || $bookdata['copyright']['template_id'] == null) {
+                <a class="nav-link <?php if ((isset($bookdata['copyright']) && $bookdata['copyright']['template_id'] == 1) || (isset($bookdata['copyright']) && $bookdata['copyright']['template_id'] == null)) {
                                         echo "active";
                                     }  ?>" data-toggle="tab" href="#tabs-1" role="tab">Template 01</a>
             </li>
