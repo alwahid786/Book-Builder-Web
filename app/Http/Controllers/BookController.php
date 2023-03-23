@@ -13,6 +13,7 @@ use App\Mail\VerifyEmail;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Auth;
 use Exception;
+use Illuminate\Support\Facades\File;
 
 
 class BookController extends Controller
@@ -98,8 +99,13 @@ class BookController extends Controller
             try {
                 $file = $request->file('front_cover');
                 $name = time() . $file->getClientOriginalName();
-                $file->move(public_path('/files'), $name);
+                $directory = public_path('/files');
+                if (!File::exists($directory)) {
+                    File::makeDirectory($directory, 0755, true);
+                }
+                $file->move($directory, $name);
                 $fileNames = $name;
+
             } catch (Exception $e) {
                 $message = $e->getMessage();
                 return $this->failure($message);
@@ -111,8 +117,13 @@ class BookController extends Controller
             try {
                 $file = $request->file('spine_cover');
                 $name = time() . $file->getClientOriginalName();
-                $file->move(public_path('/files'), $name);
+                $directory = public_path('/files');
+                if (!File::exists($directory)) {
+                    File::makeDirectory($directory, 0755, true);
+                }
+                $file->move($directory, $name);
                 $fileNames = $name;
+
             } catch (Exception $e) {
                 $message = $e->getMessage();
                 return $this->failure($message);
@@ -124,8 +135,13 @@ class BookController extends Controller
             try {
                 $file = $request->file('back_cover');
                 $name = time() . $file->getClientOriginalName();
-                $file->move(public_path('/files'), $name);
+                $directory = public_path('/files');
+                if (!File::exists($directory)) {
+                    File::makeDirectory($directory, 0755, true);
+                }
+                $file->move($directory, $name);
                 $fileNames = $name;
+
             } catch (Exception $e) {
                 $message = $e->getMessage();
                 return $this->failure($message);
