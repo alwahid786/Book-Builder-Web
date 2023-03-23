@@ -105,10 +105,10 @@ class BookController extends Controller
                 }
                 $file->move($directory, $name);
                 $fileNames = $name;
-
             } catch (Exception $e) {
                 $message = $e->getMessage();
-                return $this->failure($message);
+                toastr()->error($message);
+                return redirect()->back();
             }
             $imageFront = url('public/files') . '/' . $fileNames;
             $data['front_cover'] = $imageFront;
@@ -123,10 +123,10 @@ class BookController extends Controller
                 }
                 $file->move($directory, $name);
                 $fileNames = $name;
-
             } catch (Exception $e) {
                 $message = $e->getMessage();
-                return $this->failure($message);
+                toastr()->error($message);
+                return redirect()->back();
             }
             $imageSpine = url('public/files') . '/' . $fileNames;
             $data['spine_cover'] = $imageSpine;
@@ -141,10 +141,10 @@ class BookController extends Controller
                 }
                 $file->move($directory, $name);
                 $fileNames = $name;
-
             } catch (Exception $e) {
                 $message = $e->getMessage();
-                return $this->failure($message);
+                toastr()->error($message);
+                return redirect()->back();
             }
             $imageBack = url('public/files') . '/' . $fileNames;
             $data['back_cover'] = $imageBack;
@@ -185,10 +185,9 @@ class BookController extends Controller
     {
         $data = $request->except('_token');
 
-            $data['user_id'] = auth()->user()->id;
-            Copyright::updateOrCreate(['user_id' => auth()->user()->id],$data);
-            return redirect('/praise');
-            
+        $data['user_id'] = auth()->user()->id;
+        Copyright::updateOrCreate(['user_id' => auth()->user()->id], $data);
+        return redirect('/praise');
     }
     public function praise()
     {
@@ -248,7 +247,7 @@ class BookController extends Controller
         $book = Book::where('user_id', $request->user_id)->update($data);
         if ($book) {
             $outlines = Outline::where('user_id', auth()->user()->id)->get(['id', 'outline_name']);
-            if(!sizeof($outlines)){
+            if (!sizeof($outlines)) {
                 return redirect('/outline');
             }
             return redirect('/content/%24' . $outlines[0]['id']);
