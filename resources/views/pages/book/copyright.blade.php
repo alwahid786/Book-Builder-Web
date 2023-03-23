@@ -267,7 +267,7 @@
 
         </ul><!-- Tab panes -->
         <div class="tab-content">
-            <div class="tab-pane <?php if (isset($bookdata['copyright']) && $bookdata['copyright']['template_id'] == 1) {
+            <div class="tab-pane <?php if ((isset($bookdata['copyright']) && $bookdata['copyright']['template_id'] == 1) || (!isset($bookdata['copyright']))) {
                                         echo "active";
                                     }  ?>" id="tabs-1" role="tabpanel">
                 <form action="{{route('copyrightDetail')}}" method="post" id="frontCoverForm1" class="pt-3">
