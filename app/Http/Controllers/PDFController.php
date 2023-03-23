@@ -31,11 +31,10 @@ class PDFController extends Controller
         $data = json_decode($data, true);
         $pdf = PDF::loadView('pdf.pdf', compact('data')); // load view and pass data
         $pdf->setPaper('a4', 'portrait');
-        dd($data['book_title']);
         // Set the response content-type to PDF
         $headers = [
             'Content-Type' => 'application/pdf',
-            'Content-Disposition' => 'inline; filename='.$data['book_title'] ?? 'book'.'".pdf"'
+            'Content-Disposition' => 'inline; filename=' . $data['book_title'] ?? 'book' . '".pdf"'
         ];
 
         // Return the rendered PDF in a new tab
