@@ -296,7 +296,8 @@
                     </div>
                     <div class="text-center">
                         <label class="hero-section-upload my-4 w-75 mx-auto"> Upload Front Cover
-                            <input type="file" name="front_cover" class="d-none" id="profile-img" size="60">
+                            <input type="file" name="front_cover" class="d-none" id="profile-img" size="60" accept="image/*" max-size="5mb">
+
                         </label>
                     </div>
                 </div>
@@ -310,7 +311,7 @@
                     </div>
                     <div class="text-center">
                         <label class="hero-section-upload my-4 w-75 mx-auto"> Upload Spine Cover
-                            <input type="file" name="spine_cover" class="d-none" id="profile-img2" size="60">
+                            <input type="file" name="spine_cover" class="d-none" id="profile-img2" size="60" accept="image/*" max-size="5mb">
                         </label>
                     </div>
                 </div>
@@ -324,7 +325,7 @@
                     </div>
                     <div class="text-center">
                         <label class="hero-section-upload my-4 w-75 mx-auto"> Upload Back Cover
-                            <input type="file" name="back_cover" class="d-none" id="profile-img3" size="60">
+                            <input type="file" name="back_cover" class="d-none" id="profile-img3" size="60" accept="image/*" max-size="5mb">
                         </label>
                     </div>
                 </div>
@@ -406,7 +407,7 @@
             }
             return true;
         }
-
+        const maxFileSize = 2 * 1024 * 1024;
         const chooseFile = document.getElementById("profile-img");
         const imgPreview = document.getElementById("img-preview");
         chooseFile.addEventListener("change", function() {
@@ -416,6 +417,15 @@
         function getImgData() {
             const files = chooseFile.files[0];
             if (files) {
+                if (files.size > maxFileSize) {
+                    swal({
+                        title: "Image Error",
+                        text: "Uploaded file exceeds maximum file size of 2MB.",
+                        icon: "error",
+                    });
+                    chooseFile.value = '';
+                    return;
+                }
                 const fileReader = new FileReader();
                 fileReader.readAsDataURL(files);
                 fileReader.addEventListener("load", function() {
@@ -434,6 +444,16 @@
         function getImgData2() {
             const files2 = chooseFile2.files[0];
             if (files2) {
+                if (files2.size > maxFileSize) {
+                    swal({
+                        title: "Image Error",
+                        text: "Uploaded file exceeds maximum file size of 2MB.",
+                        icon: "error",
+                    });
+                    chooseFile2.value = '';
+
+                    return;
+                }
                 const fileReader2 = new FileReader();
                 fileReader2.readAsDataURL(files2);
                 fileReader2.addEventListener("load", function() {
@@ -452,6 +472,15 @@
         function getImgData3() {
             const files3 = chooseFile3.files[0];
             if (files3) {
+                if (files3.size > maxFileSize) {
+                    swal({
+                        title: "Image Error",
+                        text: "Uploaded file exceeds maximum file size of 2MB.",
+                        icon: "error",
+                    });
+                    chooseFile3.value = '';
+                    return;
+                }
                 const fileReader3 = new FileReader();
                 fileReader3.readAsDataURL(files3);
                 fileReader3.addEventListener("load", function() {

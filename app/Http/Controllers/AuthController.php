@@ -22,7 +22,6 @@ class AuthController extends Controller
             'f_name' => 'required|string',
             'l_name' => 'required|string',
             'password' => 'required|min:8|confirmed',
-            'image' => 'required|file',
             'phone' => 'required',
         ]);
         if ($validator->fails()) {
@@ -30,30 +29,29 @@ class AuthController extends Controller
             toastr()->error($messages[0][0]);
             return redirect()->back();
         }
-        $image = $request->image;
-        if ($request->has('image')) {
-            try {
-                $file = $request->file('image');
-                $name = time() . $file->getClientOriginalName();
-                $directory = public_path('/files');
-                if (!is_dir($directory)) {
-                    mkdir($directory, 777, true);
-                }
-                $file->move($directory, $name);
-                $fileNames = $name;
-            } catch (Exception $e) {
-                $message = $e->getMessage();
-                toastr()->error($message);
-                return redirect()->back();
-            }
-            $image = url('public/files') . '/' . $fileNames;
-        }
+        // $image = $request->image;
+        // if ($request->has('image')) {
+        //     try {
+        //         $file = $request->file('image');
+        //         $name = time() . $file->getClientOriginalName();
+        //         $directory = public_path('/files');
+        //         if (!is_dir($directory)) {
+        //             mkdir($directory, 777, true);
+        //         }
+        //         $file->move($directory, $name);
+        //         $fileNames = $name;
+        //     } catch (Exception $e) {
+        //         $message = $e->getMessage();
+        //         toastr()->error($message);
+        //         return redirect()->back();
+        //     }
+        //     $image = url('public/files') . '/' . $fileNames;
+        // }
 
         $UserData = [
             'name' => $request->f_name,
             'l_name' => $request->l_name,
             'email' => $request->email,
-            'image' => $image,
             'phone' => $request->phone,
             'password' => bcrypt($request->password),
         ];

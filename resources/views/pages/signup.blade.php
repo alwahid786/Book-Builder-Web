@@ -102,7 +102,7 @@
                             <label for="re-pass"><i class="fas fa-lock"></i></label>
                             <input type="password" name="password_confirmation" id="re_pass" placeholder="Repeat your password" />
                         </div>
-                        <div class="avatar-upload">
+                        <!-- <div class="avatar-upload">
                             <div class="avatar-edit">
                                 <input type='file' id="imageUpload" name="image" accept=".png, .jpg, .jpeg" />
                                 <label for="imageUpload"><i class="fa fa-cloud-upload" aria-hidden="true"></i></label>
@@ -111,7 +111,7 @@
                                 <div id="imagePreview" style="background-image: url(https://png.pngtree.com/png-vector/20190508/ourmid/pngtree-upload-cloud-vector-icon-png-image_1027251.jpg);">
                                 </div>
                             </div>
-                        </div>
+                        </div> -->
                         <!-- <div class="form-group">
                             <input type="checkbox" name="agree-term" id="agree-term" class="agree-term" />
                             <label for="agree-term" class="label-agree-term"><span><span></span></span>I agree all statements in <a href="#" class="term-service">Terms of service</a></label>
