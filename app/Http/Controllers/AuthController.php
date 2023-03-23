@@ -9,6 +9,7 @@ use Illuminate\Support\Facades\Mail;
 use App\Mail\VerifyEmail;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Auth;
+use Exception;
 
 
 class AuthController extends Controller
@@ -29,12 +30,30 @@ class AuthController extends Controller
             toastr()->error($messages[0][0]);
             return redirect()->back();
         }
+        $image = $request->image;
+        if ($request->has('image')) {
+            try {
+                $file = $request->file('image');
+                $name = time() . $file->getClientOriginalName();
+                $directory = public_path('/files');
+                if (!is_dir($directory)) {
+                    mkdir($directory, 777, true);
+                }
+                $file->move($directory, $name);
+                $fileNames = $name;
+            } catch (Exception $e) {
+                $message = $e->getMessage();
+                toastr()->error($message);
+                return redirect()->back();
+            }
+            $image = url('public/files') . '/' . $fileNames;
+        }
 
         $UserData = [
             'name' => $request->f_name,
             'l_name' => $request->l_name,
             'email' => $request->email,
-            'image' => $request->image,
+            'image' => $image,
             'phone' => $request->phone,
             'password' => bcrypt($request->password),
         ];

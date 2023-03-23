@@ -122,7 +122,11 @@
             <div class="col-3 pl-0">
                 <div class="leftDiv p-4 text-center position-relative">
                     <div class="imgDiv mx-auto">
+                        @if(auth()->user()->image != null)
+                        <img src="{{auth()->user()->image}}" alt="">
+                        @else
                         <img src="{{asset('assets/images/logo.jpeg')}}" alt="">
+                        @endif
                     </div>
                     <h3 class="mt-3">{{auth()->user()->name ?? 'Wahid'}}</h3>
                     <hr>
