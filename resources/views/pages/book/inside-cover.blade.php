@@ -288,7 +288,25 @@
                     <input type="text" value="<?php echo $bookdata['author_lname'] ?? auth()->user()->l_name ?>" name="author_lname" id="av_l_name">
                 </div>
             </div>
-
+            <div class="mt-4">
+                <h4 class="mb-0">Record Audio</h4>
+                <p>Record audio to convert to text in the editor below.</p>
+                <div id="controls" class="d-flex align-items-center justify-content-between">
+                    <div>
+                        <button id="startBtn2" data-sr_no="2" type="button" data-class="avatar" data-editor_name="editor2" class="btn-success startBtn px-3 py-1">Start Recording</button>
+                        <button id="stopBtn2" data-sr_no="2" type="button" data-class="avatar" class="btn-danger stopBtn px-3 py-1" style="display: none;">Stop Recording</button>
+                        <button id="resetBtn2" data-sr_no="2" type="button" data-class="avatar" class="btn-danger resetBtn px-3 py-1" style="display: none;">Reset Text</button>
+                    </div>
+                    <div class="d-flex align-items-center">
+                        <i class="zmdi zmdi-circle mr-2"></i>
+                        <div id="timer2">00:00:00</div>
+                    </div>
+                </div>
+                <div class="mt-3">
+                    <div id="editor2"><?php echo $bookdata['inside_cover_content'] ?? '' ?></div>
+                </div>
+            </div>
+            <input type="hidden" name="inside_cover_content" id="contentInput" data-class="avatar">
             <input type="hidden" name="user_id" data-class="avatar" value="<?php echo  $bookdata['user_id'] ?? '' ?>">
             <div class=" mx-2 mt-3 d-flex justify-content-between align-items-center">
                 <a href="{{url('/cover-art')}}">
@@ -301,9 +319,18 @@
         <button class="p-2 pdfBtn"><i class="fas fa-book"></i></button>
     </a>
 </section>
-
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+<script src="https://cdn.WebRTC-Experiment.com/RecordRTC.js"></script>
+<script src="https://cdn.ckeditor.com/4.16.1/standard-all/ckeditor.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <script type="text/javascript">
     $(document).ready(function() {
+        CKEDITOR.replace('editor', {
+            height: '400px'
+        });
+        CKEDITOR.replace('editor2', {
+            height: '400px'
+        });
         //jquery for toggle sub menus
         $('.sub-btn').click(function() {
             $(this).next('.sub-menu').slideToggle();
@@ -326,6 +353,8 @@
             e.preventDefault();
             validation = validateForm();
             if (validation) {
+                var content = CKEDITOR.instances['editor2'].getData();
+                $('#contentInput').val(content);
                 $("#frontCoverForm")[0].submit();
             } else {
                 swal({
@@ -351,6 +380,165 @@
                 return false;
             }
             return true;
+        }
+
+
+        let recognition;
+        let transcription = '';
+        let startBtn = document.getElementById('startBtn');
+        let stopBtn = document.getElementById('stopBtn');
+        let resetBtn = document.getElementById('resetBtn');
+        let editorName = 'editor';
+
+        // create a new instance of SpeechRecognition
+        if (window.SpeechRecognition || window.webkitSpeechRecognition) {
+            recognition = new(window.SpeechRecognition || window.webkitSpeechRecognition)();
+        } else {
+            console.log('Speech recognition not supported');
+        }
+
+        // set recognition properties
+        recognition.continuous = true;
+        recognition.interimResults = true;
+        recognition.lang = 'en-US';
+
+        // handle result event
+        recognition.onresult = function(event) {
+            let interimTranscription = '';
+            for (let i = event.resultIndex; i < event.results.length; i++) {
+                let transcript = event.results[i][0].transcript;
+                if (event.results[i].isFinal) {
+                    var editor = CKEDITOR.instances[editorName];
+
+                    // Get the current selection object
+                    var selection = editor.getSelection();
+
+                    // Get the current element where the cursor is blinking
+                    var element = selection.getStartElement();
+
+                    // Insert the text at the cursor position
+                    // editor.setData('', { selectionStart: element, selectionEnd: element });
+                    editor.insertText(transcript, element);
+                    // CKEDITOR.instances.transcription.insertHtml(transcript);
+                    //   transcription += transcript + ' ';
+                }
+                //    else {
+                //       interimTranscription += transcript;
+                //   }
+            }
+            //   transcriptionField.value = transcription + interimTranscription;
+
+        };
+
+        // handle error event
+        recognition.onerror = function(event) {
+            console.log('Error occurred in recognition: ' + event.error);
+        };
+
+        // handle end event
+        recognition.onend = function() {
+            console.log('Recognition ended');
+            startBtn.style.display = 'inline-block';
+            resetBtn.style.display = 'inline-block';
+            stopBtn.style.display = 'none';
+        };
+
+        // add click event listener to start button
+        $('.startBtn').click(function() {
+            let sr_id = $(this).attr('data-sr_no');
+            startBtn = document.getElementById('startBtn' + sr_id);
+            stopBtn = document.getElementById('stopBtn' + sr_id);
+            resetBtn = document.getElementById('resetBtn' + sr_id);
+            // startBtn.addEventListener('click', function() {
+            editorName = startBtn.getAttribute('data-editor_name');
+            startTimer(sr_id);
+            $(".zmdi-circle").addClass('red');
+            recognition.start();
+            console.log('Recognition started');
+            startBtn.style.display = 'none';
+            resetBtn.style.display = 'none';
+            stopBtn.style.display = 'inline-block';
+        });
+
+        // add click event listener to stop button
+        $('.stopBtn').click(function() {
+            let sr_id = $(this).attr('data-sr_no');
+            startBtn = document.getElementById('startBtn' + sr_id);
+            stopBtn = document.getElementById('stopBtn' + sr_id);
+            resetBtn = document.getElementById('resetBtn' + sr_id);
+            stopTimer();
+            $(".zmdi-circle").removeClass('red');
+            recognition.stop();
+            console.log('Recognition stopped');
+            startBtn.style.display = 'inline-block';
+            resetBtn.style.display = 'inline-block';
+            stopBtn.style.display = 'none';
+        });
+
+
+        // add click event listener to reset button
+        $('.resetBtn').click(function() {
+            let sr_id = $(this).attr('data-sr_no');
+            startBtn = document.getElementById('startBtn' + sr_id);
+            stopBtn = document.getElementById('stopBtn' + sr_id);
+            resetBtn = document.getElementById('resetBtn' + sr_id);
+            Swal.fire({
+                title: 'Are you sure?',
+                text: "You won't be able to revert this!",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Yes, reset it!'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    // Perform the action here
+                    resetTimer(sr_id);
+                    transcription = '';
+                    CKEDITOR.instances[editorName].setData('');
+                    recognition.stop();
+                    console.log('Recognition stopped');
+                    resetBtn.style.display = 'none';
+                }
+            })
+        });
+        var startTime = 0;
+        var elapsedTime = 0;
+        var timerInterval;
+
+        function startTimer(id) {
+            if (elapsedTime === 0) {
+                startTime = new Date().getTime();
+            } else {
+                startTime = new Date().getTime() - elapsedTime;
+            }
+            // timerInterval = setInterval(updateTimer, 1000);
+            timerInterval = setInterval(function() {
+                updateTimer(id);
+            }, 1000);
+        }
+
+        function stopTimer() {
+            clearInterval(timerInterval);
+            elapsedTime = new Date().getTime() - startTime;
+        }
+
+        function resetTimer(id) {
+            clearInterval(timerInterval);
+            elapsedTime = 0;
+            document.getElementById('timer' + id).innerHTML = '00:00:00';
+        }
+
+        function updateTimer(id) {
+            var elapsedTime = new Date().getTime() - startTime;
+            var seconds = Math.floor(elapsedTime / 1000) % 60;
+            var minutes = Math.floor(elapsedTime / (1000 * 60)) % 60;
+            var hours = Math.floor(elapsedTime / (1000 * 60 * 60)) % 24;
+            document.getElementById('timer' + id).innerHTML = formatTime(hours) + ':' + formatTime(minutes) + ':' + formatTime(seconds);
+        }
+
+        function formatTime(time) {
+            return (time < 10 ? '0' : '') + time;
         }
     });
 </script>
