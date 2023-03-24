@@ -164,4 +164,10 @@ class AuthController extends Controller
         Auth::logout();
         return redirect('/');
     }
+
+    public function welcome()
+    {
+        $user = User::where('id', auth()->user()->id)->first();
+        return view('pages.welcome', compact('user'));
+    }
 }

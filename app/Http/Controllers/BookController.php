@@ -335,4 +335,21 @@ class BookController extends Controller
             return redirect()->back();
         }
     }
+
+    public function updateGratitude(Request $request)
+    {
+        $book = User::where('id', auth()->user()->id)->update(['gratitude' => $request->gratitude]);
+        if ($book) {
+            return response()->json(['success', true]);
+        }
+        return response()->json(['success', false]);
+    }
+    public function updateRomance(Request $request)
+    {
+        $book = User::where('id', auth()->user()->id)->update(['romance' => $request->gratitude]);
+        if ($book) {
+            return response()->json(['success', true]);
+        }
+        return response()->json(['success', false]);
+    }
 }

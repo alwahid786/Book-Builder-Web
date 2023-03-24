@@ -307,7 +307,9 @@
                                     </div>
                                 </div>
                                 <div class="mt-3">
-                                    <div id="editor"></div>
+                                    <div id="editor"><?php if (isset($user->gratitude) && $user->gratitude != null) {
+                                                            echo $user->gratitude;
+                                                        } ?></div>
                                 </div>
                             </div>
                             <div class="col-12 mt-3">
@@ -368,17 +370,19 @@
                                     </div>
                                 </div>
                                 <div class="mt-3">
-                                    <div id="editor2"></div>
+                                    <div id="editor2"><?php if (isset($user->romance) && $user->romance != null) {
+                                                            echo $user->romance;
+                                                        } ?></div>
                                 </div>
                             </div>
                             <div class="col-12 mt-3">
                                 <div class="text-right">
-                                    <a href="{{url('/avatar')}}">
-                                        <button class="px-5 py-2">
-                                            <i class="zmdi zmdi-arrow-right mr-2"></i>
-                                            Start A Book
-                                        </button>
-                                    </a>
+                                    <!-- <a href="{{url('/avatar')}}"> -->
+                                    <button class="px-5 py-2" id="startBook">
+                                        <i class="zmdi zmdi-arrow-right mr-2"></i>
+                                        Start A Book
+                                    </button>
+                                    <!-- </a> -->
                                 </div>
                             </div>
                         </div>
@@ -396,6 +400,13 @@
 
 <script>
     $(document).ready(function() {
+        CKEDITOR.replace('editor', {
+            height: '400px'
+        });
+        CKEDITOR.replace('editor2', {
+            height: '400px'
+        });
+
         $("#storyBtn").click(function() {
             $('#welcomeDiv').fadeOut(500);
             $('#storyDiv').fadeIn(500);
@@ -405,17 +416,51 @@
             $('#gratitudeDiv').fadeIn(500);
         })
         $("#romanceBtn").click(function() {
+
+            var gratitudeContent = CKEDITOR.instances['editor'].getData();
+
+            $.ajax({
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                },
+
+                url: `{{route('updateGratitude')}}`,
+                type: "POST",
+                data: {
+                    gratitude: gratitudeContent,
+                },
+                cache: false,
+                success: function(dataResult) {
+
+                },
+            });
             resetTimer(1);
             $('#gratitudeDiv').fadeOut(500);
             $('#romanceDiv').fadeIn(500);
-        })
+        });
+        $("#startBook").click(function() {
 
-        CKEDITOR.replace('editor', {
-            height: '400px'
+            var gratitudeContent = CKEDITOR.instances['editor2'].getData();
+
+            $.ajax({
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                },
+
+                url: `{{route('updateRomance')}}`,
+                type: "POST",
+                data: {
+                    gratitude: gratitudeContent,
+                },
+                cache: false,
+                success: function(dataResult) {
+                    window.location.href = `{{url('/avatar')}}`;
+                },
+            });
+
         });
-        CKEDITOR.replace('editor2', {
-            height: '400px'
-        });
+
+
     });
 
     let recognition;
