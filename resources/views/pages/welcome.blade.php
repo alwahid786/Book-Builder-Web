@@ -143,7 +143,9 @@
                     </a>
                 </div>
             </div>
-            <div class="col-9" id="welcomeDiv">
+            <div class="col-9" id="welcomeDiv" <?php if (request()->query->has('url')) {
+                                                    echo 'style="display:none"';
+                                                } ?>>
                 <div class="rightDiv">
                     <div class="progress mt-3">
                         <div class="progressComplete"></div>
@@ -184,7 +186,11 @@
                     </div>
                 </div>
             </div>
-            <div class="col-9" id="storyDiv" style="display:none">
+            <div class="col-9" id="storyDiv" <?php if (request()->query->has('url') && request()->query('url') == 'story') {
+                                                    echo 'style="display:block"';
+                                                } else {
+                                                    echo 'style="display:none"';
+                                                } ?>>
                 <div class="rightDiv">
                     <div class="progress mt-3">
                         <div class="progressComplete"></div>
@@ -203,7 +209,7 @@
                                     <p class="mt-3 mb-0"><strong>Tip 1 -</strong> Tell your story to a specific person.</p>
                                     <p class=" mb-0"><strong>Tip 2 -</strong> Tell your story in chronological order.</p>
                                     <p class=" mb-0"><strong>Tip 3 -</strong> Tell your story from your heart.</p>
-                                    <p class=" mb-0">Tell Your Story like a Fairy Tale.</p>
+                                    <p class=" mb-0">Tell Your Story like a Fairy Tale or a Hero’s Journey or both!</p>
 
                                     <h5 class=" my-2"><strong>Cinderella</strong></h5>
                                     <p class=" mb-0">Cinderella was a beautiful and kind-hearted girl who lived with her wicked stepmother and stepsisters. They made her do all the household chores and treated her poorly.</p>
@@ -243,7 +249,11 @@
                     </div>
                 </div>
             </div>
-            <div class="col-9" id="gratitudeDiv" style="display:none">
+            <div class="col-9" id="gratitudeDiv" <?php if (request()->query->has('url') && request()->query('url') == 'gratitude') {
+                                                        echo 'style="display:block"';
+                                                    } else {
+                                                        echo 'style="display:none"';
+                                                    } ?>>
                 <div class="rightDiv">
                     <div class="progress mt-3">
                         <div class="progressComplete"></div>
@@ -324,7 +334,11 @@
                     </div>
                 </div>
             </div>
-            <div class="col-9" id="romanceDiv" style="display:none">
+            <div class="col-9" id="romanceDiv" <?php if (request()->query->has('url') && request()->query('url') == 'romance-customer') {
+                                                    echo 'style="display:block"';
+                                                } else {
+                                                    echo 'style="display:none"';
+                                                } ?>>
                 <div class="rightDiv">
                     <div class="progress mt-3">
                         <div class="progressComplete"></div>

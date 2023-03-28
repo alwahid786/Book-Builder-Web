@@ -16,7 +16,7 @@
                         @csrf
                         <div class="form-group">
                             <label for="your_name"><i class="fas fa-user"></i></label>
-                            <input type="text" name="email" id="your_name" placeholder="Your Name" />
+                            <input type="text" name="email" id="your_name" placeholder="Email" />
                         </div>
                         <div class="form-group">
                             <label for="your_pass"><i class="fas fa-lock"></i></label>

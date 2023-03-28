@@ -44,6 +44,7 @@ Route::middleware('auth')->group(function () {
     // });
     Route::get('/logout', [AuthController::class, 'logout']);
     Route::get('/welcome', [AuthController::class, 'welcome']);
+    Route::get('/release', [AuthController::class, 'release']);
 
     // Book Routes Controller 
     Route::get('/avatar', [BookController::class, 'avatar']);
@@ -78,6 +79,7 @@ Route::middleware('auth')->group(function () {
     Route::post('/aboutForm', [BookController::class, 'aboutForm'])->name('aboutDetail');
     Route::post('/gratitude', [BookController::class, 'updateGratitude'])->name('updateGratitude');
     Route::post('/romance', [BookController::class, 'updateRomance'])->name('updateRomance');
+    Route::post('/release-submission', [AuthController::class, 'releaseForm'])->name('releaseForm');
 
     // PDF Creation Routes 
     Route::get('/create-book', [PDFController::class, 'createPDF'])->name('createPDF');

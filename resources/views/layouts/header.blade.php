@@ -9,3 +9,4 @@
 <!-- <script src='https://kit.fontawesome.com/a076d05399.js' crossorigin='anonymous'></script> -->
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css">
 <script src="{{asset('assets/recorder/js/recorder.js')}}"></script>
+<link rel="preconnect" href="https://fonts.googleapis.com">

@@ -76,15 +76,14 @@
             <div class="signup-content">
                 <div class="signup-form">
                     <h2 class="form-title">Sign up</h2>
-                    <form method="POST" class="register-form" action="{{route('register')}}" id="registerForm" enctype="multipart/form-data">
-                        @csrf
+                    <form method="POST" class="register-form" id="registerForm" enctype="multipart/form-data">
                         <div class="form-group">
                             <label for="name"><i class="fas fa-user"></i></label>
-                            <input type="text" name="f_name" id="name" placeholder="First Name" />
+                            <input type="text" name="f_name" id="fname" placeholder="First Name" />
                         </div>
                         <div class="form-group">
                             <label for="name"><i class="fas fa-user"></i></label>
-                            <input type="text" name="l_name" id="name" placeholder="Last Name" />
+                            <input type="text" name="l_name" id="lname" placeholder="Last Name" />
                         </div>
                         <div class="form-group">
                             <label for="email"><i class="fas fa-envelope"></i></label>
@@ -92,7 +91,7 @@
                         </div>
                         <div class="form-group">
                             <label for="name"><i class="fas fa-phone"></i></label>
-                            <input type="text" name="phone" id="name" placeholder="Phone" />
+                            <input type="text" name="phone" id="phone" placeholder="Phone" />
                         </div>
                         <div class="form-group">
                             <label for="pass"><i class="fas fa-lock"></i></label>
@@ -151,11 +150,34 @@
 
 
     // Contact Us Form Submission Function
-    $("#registerForm").submit(function(e) {
-        e.preventDefault();
+    const form = document.getElementById('registerForm');
+    const csrfToken = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
+    let url = `{{url('register')}}`;
+    form.addEventListener('submit', (event) => {
+        event.preventDefault();
         validation = validateForm();
         if (validation) {
-            $("#registerForm")[0].submit();
+            const formData = new FormData(form);
+            formData.append('_token', csrfToken);
+            const xhr = new XMLHttpRequest();
+            xhr.open('POST', url);
+            xhr.onreadystatechange = function() {
+                if (this.readyState === XMLHttpRequest.DONE && this.status === 200) {
+                    var response = JSON.parse(this.responseText);
+
+                    if (response.success == true) {
+                        window.location.href = `{{url('/release')}}`;
+                    } else {
+                        message = response.message[0][0];
+                        swal({
+                            title: "Error",
+                            text: message,
+                            icon: "error",
+                        });
+                    }
+                }
+            };
+            xhr.send(formData);
         } else {
             swal({
                 title: "Some Fields Missing",
@@ -163,7 +185,7 @@
                 icon: "error",
             });
         }
-    })
+    });
 
     function validateForm() {
         let errorCount = 0;

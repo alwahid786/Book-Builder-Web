@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\User;
+use App\Models\Realease;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Mail;
 use App\Mail\VerifyEmail;
@@ -26,8 +27,7 @@ class AuthController extends Controller
         ]);
         if ($validator->fails()) {
             $messages = array_values($validator->errors()->messages());
-            toastr()->error($messages[0][0]);
-            return redirect()->back();
+            return response()->json(['success' => false, 'message' => $messages]);
         }
         // $image = $request->image;
         // if ($request->has('image')) {
@@ -64,11 +64,9 @@ class AuthController extends Controller
             auth()->attempt($UserData);
             $authUser = auth()->user();
             $authUser->token = $authUser->createToken('API Token')->accessToken;
-            toastr()->success('Registration Successfull!');
-            return redirect('/welcome');
+            return response()->json(['success' => true]);
         }
-        toastr()->error('An error occured. Try again');
-        return redirect('/sign-up');
+        return response()->json(['success' => false, 'message' => 'An error occured. Try again']);
     }
 
     // Login Function 
@@ -93,7 +91,11 @@ class AuthController extends Controller
         }
         $authUser = auth()->user();
         $authUser->token = $authUser->createToken('API Token')->accessToken;
-        return redirect('/welcome');
+        $releaseCheck = Realease::where('user_id', $authUser->id)->first();
+        if (empty($releaseCheck)) {
+            return redirect('/release');
+        }
+        return redirect('/avatar');
     }
 
     // Forget password Function 
@@ -169,5 +171,19 @@ class AuthController extends Controller
     {
         $user = User::where('id', auth()->user()->id)->first();
         return view('pages.welcome', compact('user'));
+    }
+    public function release()
+    {
+        $user = User::where('id', auth()->user()->id)->first();
+        return view('pages.release', compact('user'));
+    }
+
+    public function releaseForm(Request $request)
+    {
+        $release = Realease::create($request->except('_token'));
+        if ($release) {
+            return redirect('/welcome');
+        }
+        return redirect()->back();
     }
 }
