@@ -39,6 +39,15 @@
     img {
         border-radius: 0px !important;
     }
+
+    .item a i {
+        width: 8%;
+
+    }
+
+    .item a span {
+        width: 92%;
+    }
 </style>
 <?php
 $sections = bookProgress()['sections'];
@@ -50,7 +59,7 @@ $sections = bookProgress()['sections'];
         <div class="item position-relative text-white" style="cursor:default; padding: 0px 10px; ">Welcome</div>
         <div class="item position-relative text-white" style="cursor:default; font-size:18px;padding:  0px 10px; "><strong style="font-family: 'Roboto', sans-serif !important;">My Co-Author Stories</strong></div>
         <div class="item position-relative">
-            <a href="{{url('/welcome?url=story')}}"><i class="fas fa-microphone"></i>Story Telling
+            <a href="{{url('/welcome?url=story')}}"><i class="fas fa-microphone"></i><span>Story Telling</span>
             </a>
         </div>
         <div class="item position-relative">

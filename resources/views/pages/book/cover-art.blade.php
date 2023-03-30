@@ -295,9 +295,9 @@
                                     } ?>" alt="image">
                     </div>
                     <div class="text-center">
-                        <label class="hero-section-upload my-4 w-75 mx-auto"> Upload Front Cover
+                        <label class="hero-section-upload my-4 w-75 mx-auto">
+                            Upload Front Cover
                             <input type="file" name="front_cover" class="d-none" id="profile-img" size="60" accept="image/*" max-size="5mb">
-
                         </label>
                     </div>
                 </div>
@@ -311,7 +311,7 @@
                     </div>
                     <div class="text-center">
                         <label class="hero-section-upload my-4 w-75 mx-auto"> Upload Spine Cover
-                            <input type="file" name="spine_cover" class="d-none" id="profile-img2" size="60" accept="image/*" max-size="5mb">
+                            <input type="file" name="spine_cover" data-class="avatar" class="d-none" id="profile-img2" size="60" accept="image/*" max-size="5mb">
                         </label>
                     </div>
                 </div>
@@ -325,7 +325,7 @@
                     </div>
                     <div class="text-center">
                         <label class="hero-section-upload my-4 w-75 mx-auto"> Upload Back Cover
-                            <input type="file" name="back_cover" class="d-none" id="profile-img3" size="60" accept="image/*" max-size="5mb">
+                            <input type="file" name="back_cover" data-class="avatar" class="d-none" id="profile-img3" size="60" accept="image/*" max-size="5mb">
                         </label>
                     </div>
                 </div>
@@ -407,9 +407,48 @@
             }
             return true;
         }
+
         const maxFileSize = 2 * 1024 * 1024;
         const chooseFile = document.getElementById("profile-img");
         const imgPreview = document.getElementById("img-preview");
+
+        // Add drag and drop event listeners
+        imgPreview.addEventListener("dragover", function(event) {
+            event.preventDefault();
+            imgPreview.classList.add("dragover");
+        });
+
+        imgPreview.addEventListener("dragleave", function(event) {
+            event.preventDefault();
+            imgPreview.classList.remove("dragover");
+        });
+
+        imgPreview.addEventListener("drop", function(event) {
+            event.preventDefault();
+            imgPreview.classList.remove("dragover");
+            const files = event.dataTransfer.files;
+            chooseFile.files = files;
+            if (files) {
+                if (files[0].size > maxFileSize) {
+                    swal({
+                        title: "Image Error",
+                        text: "Uploaded file exceeds maximum file size of 2MB.",
+                        icon: "error",
+                    });
+                    return;
+                }
+                const fileReader = new FileReader();
+                fileReader.readAsDataURL(files[0]);
+                fileReader.addEventListener("load", function() {
+                    const img = new Image();
+                    img.src = this.result;
+                    imgPreview.innerHTML = ''
+                    imgPreview.appendChild(img);
+                });
+            }
+        });
+
+        // Add change event listener to file input
         chooseFile.addEventListener("change", function() {
             getImgData();
         });
@@ -429,14 +468,76 @@
                 const fileReader = new FileReader();
                 fileReader.readAsDataURL(files);
                 fileReader.addEventListener("load", function() {
-                    // imgPreview.style.display = "block";
-                    imgPreview.innerHTML = '<img class="cursorPointer_s objectFitCover_s" src="' + this.result +
-                        '" />';
+                    const img = new Image();
+                    img.src = this.result;
+                    imgPreview.innerHTML = ''
+                    imgPreview.appendChild(img);
                 });
             }
         }
+
+        // Make images draggable
+        imgPreview.addEventListener("mousedown", function(event) {
+            if (event.target.nodeName === "IMG") {
+                const img = event.target;
+                const startX = event.clientX - img.offsetLeft;
+                const startY = event.clientY - img.offsetTop;
+                const moveImage = function(event) {
+                    img.style.left = event.clientX - startX + "px";
+                    img.style.top = event.clientY - startY + "px";
+                };
+                const removeMoveListener = function() {
+                    document.removeEventListener("mousemove", moveImage);
+                };
+                document.addEventListener("mousemove", moveImage);
+                document.addEventListener("mouseup", removeMoveListener, {
+                    once: true
+                });
+            }
+        });
+
+        // 2nd Code Starts Here 
+        const maxFileSize2 = 2 * 1024 * 1024;
         const chooseFile2 = document.getElementById("profile-img2");
         const imgPreview2 = document.getElementById("img-preview2");
+
+        // Add drag and drop event listeners
+        imgPreview2.addEventListener("dragover", function(event) {
+            event.preventDefault();
+            imgPreview2.classList.add("dragover");
+        });
+
+        imgPreview2.addEventListener("dragleave", function(event) {
+            event.preventDefault();
+            imgPreview2.classList.remove("dragover");
+        });
+
+        imgPreview2.addEventListener("drop", function(event) {
+            event.preventDefault();
+            imgPreview2.classList.remove("dragover");
+            const files2 = event.dataTransfer.files;
+            chooseFile2.files = files2;
+            if (files2) {
+                if (files2[0].size > maxFileSize2) {
+                    swal({
+                        title: "Image Error",
+                        text: "Uploaded file exceeds maximum file size of 2MB.",
+                        icon: "error",
+                    });
+                    return;
+                }
+                const fileReader2 = new FileReader();
+                fileReader2.readAsDataURL(files2[0]);
+                fileReader2.addEventListener("load", function() {
+                    const img = new Image();
+                    img.src = this.result;
+                    imgPreview2.innerHTML = ''
+                    imgPreview2.appendChild(img);
+                });
+            }
+        });
+
+        // Add change event listener to file input
         chooseFile2.addEventListener("change", function() {
             getImgData2();
         });
@@ -444,27 +545,88 @@
         function getImgData2() {
             const files2 = chooseFile2.files[0];
             if (files2) {
-                if (files2.size > maxFileSize) {
+                if (files2.size > maxFileSize2) {
                     swal({
                         title: "Image Error",
                         text: "Uploaded file exceeds maximum file size of 2MB.",
                         icon: "error",
                     });
                     chooseFile2.value = '';
-
                     return;
                 }
                 const fileReader2 = new FileReader();
                 fileReader2.readAsDataURL(files2);
                 fileReader2.addEventListener("load", function() {
-                    // imgPreview.style.display = "block";
-                    imgPreview2.innerHTML = '<img class="cursorPointer_s objectFitCover_s" src="' + this.result +
-                        '" />';
+                    const img = new Image();
+                    img.src = this.result;
+                    imgPreview2.innerHTML = ''
+                    imgPreview2.appendChild(img);
                 });
             }
         }
+
+        // Make images draggable
+        imgPreview2.addEventListener("mousedown", function(event) {
+            if (event.target.nodeName === "IMG") {
+                const img = event.target;
+                const startX = event.clientX - img.offsetLeft;
+                const startY = event.clientY - img.offsetTop;
+                const moveImage = function(event) {
+                    img.style.left = event.clientX - startX + "px";
+                    img.style.top = event.clientY - startY + "px";
+                };
+                const removeMoveListener = function() {
+                    document.removeEventListener("mousemove", moveImage);
+                };
+                document.addEventListener("mousemove", moveImage);
+                document.addEventListener("mouseup", removeMoveListener, {
+                    once: true
+                });
+            }
+        });
+
+        // 3rd Function for Input 
+        const maxFileSize3 = 2 * 1024 * 1024;
         const chooseFile3 = document.getElementById("profile-img3");
         const imgPreview3 = document.getElementById("img-preview3");
+
+        // Add drag and drop event listeners
+        imgPreview3.addEventListener("dragover", function(event) {
+            event.preventDefault();
+            imgPreview3.classList.add("dragover");
+        });
+
+        imgPreview3.addEventListener("dragleave", function(event) {
+            event.preventDefault();
+            imgPreview3.classList.remove("dragover");
+        });
+
+        imgPreview3.addEventListener("drop", function(event) {
+            event.preventDefault();
+            imgPreview3.classList.remove("dragover");
+            const files3 = event.dataTransfer.files;
+            chooseFile3.files = files3;
+            if (files3) {
+                if (files3[0].size > maxFileSize3) {
+                    swal({
+                        title: "Image Error",
+                        text: "Uploaded file exceeds maximum file size of 2MB.",
+                        icon: "error",
+                    });
+                    return;
+                }
+                const fileReader3 = new FileReader();
+                fileReader3.readAsDataURL(files3[0]);
+                fileReader3.addEventListener("load", function() {
+                    const img = new Image();
+                    img.src = this.result;
+                    imgPreview3.innerHTML = ''
+                    imgPreview3.appendChild(img);
+                });
+            }
+        });
+
+        // Add change event listener to file input
         chooseFile3.addEventListener("change", function() {
             getImgData3();
         });
@@ -472,7 +634,7 @@
         function getImgData3() {
             const files3 = chooseFile3.files[0];
             if (files3) {
-                if (files3.size > maxFileSize) {
+                if (files3.size > maxFileSize3) {
                     swal({
                         title: "Image Error",
                         text: "Uploaded file exceeds maximum file size of 2MB.",
@@ -484,12 +646,91 @@
                 const fileReader3 = new FileReader();
                 fileReader3.readAsDataURL(files3);
                 fileReader3.addEventListener("load", function() {
-                    // imgPreview.style.display = "block";
-                    imgPreview3.innerHTML = '<img class="cursorPointer_s objectFitCover_s" src="' + this.result +
-                        '" />';
+                    const img = new Image();
+                    img.src = this.result;
+                    imgPreview3.innerHTML = ''
+                    imgPreview3.appendChild(img);
                 });
             }
         }
+
+        // Make images draggable
+        imgPreview3.addEventListener("mousedown", function(event) {
+            if (event.target.nodeName === "IMG") {
+                const img = event.target;
+                const startX = event.clientX - img.offsetLeft;
+                const startY = event.clientY - img.offsetTop;
+                const moveImage = function(event) {
+                    img.style.left = event.clientX - startX + "px";
+                    img.style.top = event.clientY - startY + "px";
+                };
+                const removeMoveListener = function() {
+                    document.removeEventListener("mousemove", moveImage);
+                };
+                document.addEventListener("mousemove", moveImage);
+                document.addEventListener("mouseup", removeMoveListener, {
+                    once: true
+                });
+            }
+        });
+
+
+
+        // const chooseFile2 = document.getElementById("profile-img2");
+        // const imgPreview2 = document.getElementById("img-preview2");
+        // chooseFile2.addEventListener("change", function() {
+        //     getImgData2();
+        // });
+
+        // function getImgData2() {
+        //     const files2 = chooseFile2.files[0];
+        //     if (files2) {
+        //         if (files2.size > maxFileSize) {
+        //             swal({
+        //                 title: "Image Error",
+        //                 text: "Uploaded file exceeds maximum file size of 2MB.",
+        //                 icon: "error",
+        //             });
+        //             chooseFile2.value = '';
+
+        //             return;
+        //         }
+        //         const fileReader2 = new FileReader();
+        //         fileReader2.readAsDataURL(files2);
+        //         fileReader2.addEventListener("load", function() {
+        //             // imgPreview.style.display = "block";
+        //             imgPreview2.innerHTML = '<img class="cursorPointer_s objectFitCover_s" src="' + this.result +
+        //                 '" />';
+        //         });
+        //     }
+        // }
+        // const chooseFile3 = document.getElementById("profile-img3");
+        // const imgPreview3 = document.getElementById("img-preview3");
+        // chooseFile3.addEventListener("change", function() {
+        //     getImgData3();
+        // });
+
+        // function getImgData3() {
+        //     const files3 = chooseFile3.files[0];
+        //     if (files3) {
+        //         if (files3.size > maxFileSize) {
+        //             swal({
+        //                 title: "Image Error",
+        //                 text: "Uploaded file exceeds maximum file size of 2MB.",
+        //                 icon: "error",
+        //             });
+        //             chooseFile3.value = '';
+        //             return;
+        //         }
+        //         const fileReader3 = new FileReader();
+        //         fileReader3.readAsDataURL(files3);
+        //         fileReader3.addEventListener("load", function() {
+        //             // imgPreview.style.display = "block";
+        //             imgPreview3.innerHTML = '<img class="cursorPointer_s objectFitCover_s" src="' + this.result +
+        //                 '" />';
+        //         });
+        //     }
+        // }
 
     });
 </script>
