@@ -252,7 +252,7 @@
 <section class="main">
     @include('layouts.book-layout.progress')
     <div class="content px-5 py-4">
-        <h3 class="av_heading text-center">Work With Us</h3>
+        <h3 class="av_heading text-center">Work With Me</h3>
         <form action="{{route('workWithUsDetail')}}" method="post" id="workWithUsForm" class="pt-3">
             @csrf
             <div class="mb-3 text-center" style="border: 1px solid lightgray;  padding: 10px;">
@@ -519,7 +519,7 @@
     });
 </script>
 <script>
-    $('.menu .item:nth-of-type(14) a').addClass('active-nav');
+    $('.menu .item:nth-of-type(20) a').addClass('active-nav');
 </script>
 
 

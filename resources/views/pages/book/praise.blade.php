@@ -256,13 +256,35 @@
         <form action="{{route('praiseDetail')}}" method="post" id="praiseForm" class="pt-3">
             @csrf
             <div class="mb-3 text-center" style="border: 1px solid lightgray;  padding: 10px;">
-                <h6 class="text-center">- Sample -</h6>
+                <h6 class="text-center">- Sample 1 -</h6>
                 <p class="m-0">“Don Williams is living proof that actively practicing gratitude can change your life.</p>
                 <p class="mt-0">Don has done an exceptional job of illustrating that the key to gratitude is disciplined practice and eloquently presents numerous stories that reinforce this message.</p>
                 <p class="m-0">Gratitude shifts you into a higher state and is the secret ingredient to living a more powerful life.</p>
                 <p class="mt-0">Buy two copies of this book and give one to a friend.”</p>
                 <p class="m-0">Gina Mollicone-Long</p>
-                <p class="m-0">International Best-Selling Author, Creator of Greatness U and the ACME Coaching Framework</p>
+                <p class="mt-0">International Best-Selling Author, Creator of Greatness U and the ACME Coaching Framework</p>
+
+                <h6 class="mt-5 text-center">- Sample 2 -</h6>
+                <p class="m-0">“Don Williams is living proof that actively practicing gratitude can change your life.</p>
+                <p class="mb-0 text-center">~ Jack Wilkie</p>
+                <p class=" mt-0 text-center">President and CEO</p>
+
+                <p class="m-0">Don Williams is a quintessential entrepreneur. Smart, insightful, driven, talented, and a creative wizard, he is genuinely interested in helping others succeed.</p>
+                <p class="mb-0 text-center">~ Leslie Hayes</p>
+                <p class=" mt-0 text-center">Leadership Committee Entrepreneurs Organization</p>
+
+                <p class="m-0">His pleasant demeanor, clear communication, and vast business experience makes Don the kind of partner you can trust with your business.</p>
+                <p class="text-center">~ Janis Stevens CEO of ITS</p>
+
+                <p class="m-0">Don Williams is the go-to-expert on relationship building and sales. Your audience will be enamored by Don's insight, strategies, and stage presence.</p>
+                <p class="text-center">~ Allison Maslan CEO at AMI</p>
+
+                <p class="m-0">Don’s ideas are cutting edge. Don listens and
+                    really thinks before he gives an answer.
+                </p>
+                <p class="mb-0 text-center">~ Chiqeeta Jameson</p>
+                <p class=" mt-0 text-center">Author, Speaker, Coach</p>
+
             </div>
             <div class="mt-4">
                 <h4 class="mb-0">Record Audio</h4>
@@ -521,7 +543,7 @@
     });
 </script>
 <script>
-    $('.menu .item:nth-of-type(8) a').addClass('active-nav');
+    $('.menu .item:nth-of-type(14) a').addClass('active-nav');
 </script>
 
 

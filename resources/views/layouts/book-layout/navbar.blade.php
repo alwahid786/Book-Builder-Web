@@ -114,10 +114,10 @@ $sections = bookProgress()['sections'];
         <div class="item"><a href="{{url('/conclusion')}}" class="@if(!$sections['conclusion']) disableTab @endif"><i class="fas fa-flag-checkered"></i>Conclusion
                 @if($sections['conclusion'])<i class="fas fa-check-circle filled-circle"></i>@endif
             </a></div>
-        <div class="item"><a href="{{url('/work-with-us')}}" class="@if(!$sections['work_with_us']) disableTab @endif"><i class="fas fa-handshake"></i>Work with Us
+        <div class="item"><a href="{{url('/work-with-us')}}" class="@if(!$sections['work_with_us']) disableTab @endif"><i class="fas fa-handshake"></i>Work with Me
                 @if($sections['work_with_us'])<i class="fas fa-check-circle filled-circle"></i>@endif
             </a></div>
-        <div class="item"><a href="{{url('/about')}}" class="@if(!$sections['about']) disableTab @endif"><i class="fas fa-user"></i>About
+        <div class="item"><a href="{{url('/about')}}" class="@if(!$sections['about']) disableTab @endif"><i class="fas fa-user"></i>About The Author
                 @if($sections['about'])<i class="fas fa-check-circle filled-circle"></i>@endif
             </a></div>
         <div class="item"><a href="{{url('/about')}}" class="@if(!$sections['about']) disableTab @endif"><i class="fas fa-award"></i>CONGRATULATIONS

@@ -266,7 +266,7 @@
 <section class="main">
     @include('layouts.book-layout.progress')
     <div class="content px-5 py-4">
-        <h3 class="av_heading text-center">About</h3>
+        <h3 class="av_heading text-center">About The Author</h3>
         <form action="{{route('aboutDetail')}}" method="post" id="aboutForm" class="pt-3">
             @csrf
             <div class="mb-3 text-center" style="border: 1px solid lightgray;  padding: 10px;">
@@ -560,7 +560,7 @@
     });
 </script>
 <script>
-    $('.menu .item:nth-of-type(9) a').addClass('active-nav');
+    $('.menu .item:nth-of-type(21) a').addClass('active-nav');
 </script>
 
 

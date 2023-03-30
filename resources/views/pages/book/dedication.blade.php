@@ -265,7 +265,7 @@
 <section class="main">
     @include('layouts.book-layout.progress')
     <div class="content px-5 py-4">
-        <h3 class="av_heading text-center">Express Dedication</h3>
+        <h3 class="av_heading text-center">Dedication</h3>
         <form action="{{route('dedicationDetail')}}" method="post" id="dedicationForm" class="pt-3">
             @csrf
             <div class="">
@@ -545,7 +545,7 @@
     });
 </script>
 <script>
-    $('.menu .item:nth-of-type(9) a').addClass('active-nav');
+    $('.menu .item:nth-of-type(15) a').addClass('active-nav');
 </script>
 
 

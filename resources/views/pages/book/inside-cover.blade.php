@@ -243,9 +243,9 @@
 <section class="main">
     @include('layouts.book-layout.progress')
     <div class="content px-5 py-4">
-        <h3 class="av_heading text-center">Front Cover Details</h3>
+        <h3 class="av_heading text-center">Inside Cover</h3>
         <div class="my-3">
-            <div class="row">
+            <!-- <div class="row">
                 <div class="col-6 text-center" style="border: 1px solid lightgray;  padding: 10px;">
                     <h6 class="text-center">Sample 01</h6>
                     <h4>GRATITUDE STORIES FROM OUR HEARTS BY</h4>
@@ -264,6 +264,21 @@
                     <p class=" m-0">Don Williams</p>
 
                 </div>
+            </div> -->
+            <div class="my-3 text-center" style="border: 1px solid lightgray;  padding: 10px;">
+                <h6 class="text-center">Sample 01</h6>
+                <h4>GRATITUDE STORIES FROM OUR HEARTS BY</h4>
+                <h5 style="color:#6dabe4;">DON WILLIAMS AND FRIENDS</h5>
+                <p class="m-0">Cover Art - “The Gratitude Heart”</p>
+                <p class="mt-0 mb-5">© 2020 Leta Farnsworth https://letafarnsworthart.com</p>
+
+                <h6 class="text-center">Sample 02</h6>
+                <h4 style="color:#6dabe4;">Romancing Your Customer</h4>
+                <h6>How to Passionately Attract, Retain, and Win-Back Customers
+                    for Unbelievable Loyalty and Profit
+                </h6>
+                <p class=" m-0">By</p>
+                <p class=" m-0">Don Williams</p>
             </div>
         </div>
         <form action="{{route('frontCoverDetail')}}" method="post" id="frontCoverForm" class="pt-3">
@@ -543,7 +558,7 @@
     });
 </script>
 <script>
-    $('.menu .item:nth-of-type(6) a').addClass('active-nav');
+    $('.menu .item:nth-of-type(12) a').addClass('active-nav');
 </script>
 
 

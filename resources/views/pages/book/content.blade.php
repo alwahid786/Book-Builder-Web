@@ -514,7 +514,7 @@
     });
 </script>
 <script>
-    $('.menu .item:nth-of-type(12) a').addClass('active-nav');
+    $('.menu .item:nth-of-type(18) a').addClass('active-nav');
     $('.sub-item').removeClass('active-nav');
     $('.sub-item').each(function() {
         let classname = $(this).attr('data-class');
