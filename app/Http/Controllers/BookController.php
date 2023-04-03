@@ -60,7 +60,7 @@ class BookController extends Controller
     public function outline()
     {
         $bookdata = Book::where('user_id', auth()->user()->id)->first();
-        $outlines = Outline::where('user_id', auth()->user()->id)->get();
+        $outlines = Outline::where('user_id', auth()->user()->id)->orderBy('order')->get();;
         $outlines = json_decode($outlines, true);
         $bookdata = json_decode($bookdata, true);
         $bookdata['outlines'] = $outlines;
@@ -70,6 +70,7 @@ class BookController extends Controller
 
     public function outlineForm(Request $request)
     {
+        dd($request->all());
         foreach ($request->outlines as $value) {
             $outline = new Outline;
             $outline->user_id = $request->user_id;

@@ -256,11 +256,17 @@
         <form action="{{route('workWithUsDetail')}}" method="post" id="workWithUsForm" class="pt-3">
             @csrf
             <div class="mb-3 text-center" style="border: 1px solid lightgray;  padding: 10px;">
-                <h6 class="text-center">- Sample -</h6>
-                <p class="m-0">Want to Work with Don? Don Speaks, Consults and Facilitates Anywhere on Earth!</p>
+                <h6 class="text-center">- Sample 1 -</h6>
+                <p class="m-0"><b>Want to Work with Don? Don Speaks, Consults and Facilitates Anywhere on Earth!</b></p>
                 <p class="m-0">Contact Don at:</p>
                 <p class="m-0">don@donwilliamsglobal.com 800 823 0403</p>
                 <p>Or Nearly Everywhere on Social Media</p>
+
+                <h6 class="text-center">- Sample 2 -</h6>
+                <p class="m-0"><b>Want to take your business to the next level?</b> </p>
+                <p class="m-0">Get equipped with proven tools for success. Educational and entertaining, Don Williams delivers cutting edge insights that help you and your team become industry leaders. </p>
+                <p class="m-0">Learn how to quickly implement exceptional customer service in your specific market to passionately attract, retain, and win back loyal customers. </p>
+                <p>Schedule Don to speak at your next event. Call the Don Williams team at 800-823-0403. Or email speaking@donwilliamsglobal.com </p>
             </div>
             <div class="mt-4">
                 <h4 class="mb-0">Record Audio</h4>
@@ -318,10 +324,12 @@
         });
 
         CKEDITOR.replace('editor', {
-            height: '400px'
+            height: '400px',
+            removePlugins: 'elementspath'
         });
         CKEDITOR.replace('editor2', {
-            height: '400px'
+            height: '400px',
+            removePlugins: 'elementspath'
         });
 
         // Contact Us Form Submission Function

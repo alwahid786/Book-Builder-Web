@@ -274,10 +274,9 @@
                         <?php $count = 0; ?>
                         @foreach($bookdata['outlines'] as $outline)
                         <?php $count++ ?>
-                        <input type="hidden" class="outlinePosition" value="{{$count}}">
                         <tr draggable='true' ondragstart='start()' ondragover='dragover()'>
-                            <td class="w-25 av_heading py-2">{{$count}}</td>
-                            <td class="w-50 text-center text-secondary outlineChapter py-2" style="cursor: all-scroll;">
+                            <td class="w-25 av_heading py-2" draggable="false">{{$count}}</td>
+                            <td class="w-50 text-center text-secondary outlineChapter py-2" style="cursor: all-scroll;" data-id="{{$outline['id']}}" data-name="{{$outline['outline_name']}}">
                                 {{$outline['outline_name']}}
                             </td>
                             <td class="w-25 text-right py-2">
@@ -285,10 +284,11 @@
                             </td>
                         </tr>
                         @endforeach
+                        <input type="hidden" class="outlinePositions" name="outlinePositions" value="">
                         @endif
-
                     </tbody>
                 </table>
+
 
             </div>
         </div>
@@ -309,11 +309,31 @@
         e.preventDefault();
 
         let children = Array.from(e.target.parentNode.parentNode.children);
-        if (children.indexOf(e.target.parentNode) > children.indexOf(row))
+        let currentIndex = children.indexOf(row);
+        let targetIndex = children.indexOf(e.target.parentNode);
+        if (targetIndex > currentIndex) {
             e.target.parentNode.after(row);
-        else
+        } else if (targetIndex < currentIndex) {
             e.target.parentNode.before(row);
+        }
+
+        // Update outline positions
+        let positions = [];
+        let outlines = document.querySelectorAll('.outlineChapter');
+        outlines.forEach(outline => {
+            let id = outline.dataset.id;
+            let name = outline.dataset.name;
+            let object = {
+                outline_name: name,
+                id: id
+            }
+            positions.push(object);
+        });
+        let positionInput = document.querySelector('.outlinePositions');
+        positionInput.value = positions.join(',');
+        console.log(positions);
     }
+
     $(document).ready(function() {
         var outlines = [];
         var index = 0;
@@ -359,7 +379,7 @@
 
                 let div = `<tr  draggable='true' ondragstart='start()' ondragover='dragover()'>
                     <td class="w-25 av_heading py-2">${count}</td>
-                    <td class="w-50 text-center text-secondary outlineChapter py-2" style="cursor: all-scroll;">
+                    <td class="w-50 text-center text-secondary outlineChapter py-2" data-id="new" data-name="${name}" style="cursor: all-scroll;">
                         ${name}
                     </td>
                     <td class="w-25 text-right py-2">
@@ -399,6 +419,19 @@
 
         // Ajax Call for Outline 
         $('#save').on('click', function(e) {
+            console.log($('.outlinePositions').val());
+            // if (positions.length > 0) {
+            //     var dataArray = {
+            //         outlines: outlines,
+            //         positions: positions,
+            //         user_id: $("#user_id").val(),
+            //     }
+            // } else {
+            //     var dataArray = {
+            //         outlines: outlines,
+            //         user_id: $("#user_id").val(),
+            //     }
+            // }
             if (outlines.length < 1) {
                 swal({
                     title: "Input Error",

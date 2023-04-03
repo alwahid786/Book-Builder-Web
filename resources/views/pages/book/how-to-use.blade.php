@@ -332,10 +332,12 @@
         });
 
         CKEDITOR.replace('editor', {
-            height: '400px'
+            height: '400px',
+            removePlugins: 'elementspath'
         });
         CKEDITOR.replace('editor2', {
-            height: '400px'
+            height: '400px',
+            removePlugins: 'elementspath'
         });
 
         // Contact Us Form Submission Function

@@ -342,11 +342,14 @@
         });
 
         CKEDITOR.replace('editor', {
-            height: '400px'
+            height: '400px',
+
         });
         CKEDITOR.replace('editor2', {
-            height: '400px'
+            height: '400px',
+            removePlugins: 'elementspath'
         });
+        // $(".cke_bottom").css('display', 'none');
 
         // Contact Us Form Submission Function
         $("#praiseForm").submit(function(e) {

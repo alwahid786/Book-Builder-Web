@@ -244,17 +244,32 @@
         color: #33363a;
     }
 
-    .sample {
-        position: absolute;
-        top: 50%;
-        left: 50%;
-        width: 100%;
-        transform: translate(-50%, -50%);
+    .imgDiv {
+        width: 200px;
+        height: 200px;
+        overflow: hidden;
     }
 
-    .sample-outer {
-        position: relative;
-        height: 170px;
+    .imgDiv img {
+        width: 100%;
+        height: 100%;
+        object-fit: contain;
+        border: none;
+        margin: 0;
+    }
+
+    .imgDiv {
+        width: 300px;
+        height: 300px;
+        overflow: hidden;
+    }
+
+    .imgDiv img {
+        width: 100%;
+        height: 100%;
+        object-fit: contain;
+        border: none;
+        margin: 0;
     }
 </style>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css">
@@ -265,60 +280,45 @@
 <section class="main">
     @include('layouts.book-layout.progress')
     <div class="content px-5 py-4">
-        <h3 class="av_heading text-center">Dedication</h3>
-        <form action="{{route('dedicationDetail')}}" method="post" id="dedicationForm" class="pt-3">
-            @csrf
-            <div class="">
-                <div class="row">
-                    <div class="col-6 text-center sample-outer" style="border: 1px solid lightgray;  padding: 10px;">
-                        <div class="sample">
-                            <h6 class="text-center">- Sample 01 -</h6>
-                            <p class="mt-0">To everyone who has shared a story of the inexplicable beauty and power of Gratitude with another person – thank you for making the world a better place.</p>
-                            <p class="m-0">This book is for you.</p>
-                        </div>
-                    </div>
-                    <div class="col-6 text-center sample-outer" style="border: 1px solid lightgray;  padding: 10px;">
-                        <div class="sample">
-                            <h6 class="text-center">- Sample 02 -</h6>
-
-                            <p class="m-0" style="height:100%;">To the brave, creative, and romantic entrepreneurs and
-                                business owners that make our lives better.
-                            </p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="mt-4">
-                <h4 class="mb-0">Record Audio</h4>
-                <p>Record audio to convert to text in the editor below.</p>
-                <div id="controls" class="d-flex align-items-center justify-content-between">
-                    <div>
-                        <button id="startBtn2" data-sr_no="2" type="button" data-class="avatar" data-editor_name="editor2" class="btn-success startBtn px-3 py-1">Start Recording</button>
-                        <button id="stopBtn2" data-sr_no="2" type="button" data-class="avatar" class="btn-danger stopBtn px-3 py-1" style="display: none;">Stop Recording</button>
-                        <button id="resetBtn2" data-sr_no="2" type="button" data-class="avatar" class="btn-danger resetBtn px-3 py-1" style="display: none;">Reset Text</button>
-                    </div>
-                    <div class="d-flex align-items-center">
-                        <i class="zmdi zmdi-circle mr-2"></i>
-                        <div id="timer2">00:00:00</div>
-                    </div>
-                </div>
-                <div class="mt-3">
-                    <div id="editor2"><?php echo $bookdata['dedication'] ?? '' ?></div>
-                </div>
-            </div>
-            <input type="hidden" name="dedication" id="contentInput" data-class="avatar">
-            <input type="hidden" name="user_id" data-class="avatar" value="<?php echo  $bookdata['user_id'] ?? '' ?>">
-            <div class=" mx-2 mt-3 d-flex justify-content-between align-items-center">
-                <a href="{{url('/praise')}}">
-                    <button type="button" data-class="avatar" class="px-3 py-1"><i class="fas fa-arrow-left mr-2"></i>Previous</button></a>
-                <button id="save" data-class="avatar" class="px-3 py-1"><i class="fas fa-save mr-2"></i>Save</button>
-            </div>
-        </form>
+        <h3 class="av_heading text-center">Congratulations {{auth()->user()->name}}</h3>
+        <div class="imgDiv mx-auto">
+            <img src="{{asset('assets/images/pngegg.png')}}" alt="Confetti Cone">
+        </div>
+        <p class="px-5 py-3 text-center" style="font-size: 18px;">WOOHOO! You made it to the finish line. You’ve written a complete book. That’s an accomplishment few people will know. I’m grateful to you for allowing me to provide a little help in your journey. If I can help you in manner, please let me know.</p>
+        <p class="px-5" style="font-size: 18px;">Gratefully,</p>
+        <h5 class="px-5" style="font-size: 18px; color:#6dabe4">Don Williams</h5>
     </div>
     <a target="_blank" href="{{route('createPDF')}}">
         <button class="p-2 pdfBtn"><i class="fas fa-book"></i></button>
     </a>
 </section>
+<!-- Button trigger modal -->
+<!-- <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModalCenter">
+    Launch demo modal
+</button> -->
+
+<!-- Modal -->
+<div class="modal fade" id="congratulationModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-body text-center">
+                <div class="imgDiv mx-auto">
+                    <img src="{{asset('assets/images/pngegg.png')}}" alt="Confetti Cone">
+                </div>
+                <h3 style="color:#6dabe4; margin-top:15px;">CONGRATULATIONS</h3>
+                <p class="mb-0 mt-2">You have completed your book with us.</p>
+                <p>We are grateful.</p>
+            </div>
+        </div>
+    </div>
+</div>
+@if (session()->has('open_modal'))
+<script>
+    $(document).ready(function() {
+        $('#congratulationModal').modal('show');
+    });
+</script>
+@endif
 <!-- inserting these scripts at the end to be able to use all the elements in the DOM -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
 <script src="https://cdn.WebRTC-Experiment.com/RecordRTC.js"></script>
@@ -326,6 +326,7 @@
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <script type="text/javascript">
     $(document).ready(function() {
+
         //jquery for toggle sub menus
         $('.sub-btn').click(function() {
             $(this).next('.sub-menu').slideToggle();
@@ -353,13 +354,13 @@
         });
 
         // Contact Us Form Submission Function
-        $("#dedicationForm").submit(function(e) {
+        $("#aboutForm").submit(function(e) {
             e.preventDefault();
             validation = validateForm();
             if (validation) {
                 var content = CKEDITOR.instances['editor2'].getData();
                 $('#contentInput').val(content);
-                $("#dedicationForm")[0].submit();
+                $("#aboutForm")[0].submit();
             } else {
                 swal({
                     title: "Some Fields Missing",
@@ -371,7 +372,7 @@
 
         function validateForm() {
             let errorCount = 0;
-            $("form#dedicationForm :input").each(function() {
+            $("form#aboutForm :input").each(function() {
                 let val = $(this).val();
                 if (val == '' && $(this).attr('data-class') !== 'avatar') {
                     errorCount++
@@ -547,7 +548,7 @@
     });
 </script>
 <script>
-    $('.menu .item:nth-of-type(15) a').addClass('active-nav');
+    $('.menu .item:nth-of-type(21) a').addClass('active-nav');
 </script>
 
 

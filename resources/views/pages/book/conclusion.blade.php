@@ -256,10 +256,41 @@
         <form action="{{route('conclusionDetail')}}" method="post" id="conclusionForm" class="pt-3">
             @csrf
             <div class="mb-3 text-center" style="border: 1px solid lightgray;  padding: 10px;">
-                <h6 class="text-center">- Sample -</h6>
+                <h6 class="text-center">- Sample 1 -</h6>
                 <p class="m-0">I hope you enjoyed your journey into your Daily Practice of Gratitude. I encourage you to stay with it. If you miss a day - it’s no big deal just start again the next day. Remember the more you practice gratitude with intention the more grateful you’ll become. And the more grateful you become, the more contentment and peace you’ll experience.</p>
-                <p class="mt-0">I’m grateful to have a small part in your progress. Thank You.</p>
-                <p>I’m grateful!</p>
+                <p class="m-0">I’m grateful to have a small part in your progress. Thank You.</p>
+                <p class="mt-0">I’m grateful!</p>
+
+                <h6 class="text-center mb-0">- Sample 2 -</h6>
+                <p class="mb-0 text-left">Shakespeare’s Romeo and Juliet is the romance between two people who felt they couldn’t, and wouldn’t, live without the other. If your company is going to have that Romeo and Juliet type of business/customer care affair, you’ll have to add romance to the mix. </p>
+                <ol class="text-left ml-4 mt-2">
+                    <li>
+                        <p class="m-0"><b>Romanceiscourageous</b> </p>
+                    </li>
+                    <li>
+                        <p class="m-0"><b>Romanceisheroic</b> </p>
+                    </li>
+                    <li>
+                        <p class="m-0"><b>Romanceincludesfeelingsofmysteryand excitement</b> </p>
+                    </li>
+                    <li>
+                        <p class="m-0"><b>Romancemeansbeingvulnerable</b> </p>
+                    </li>
+                </ol>
+                <p class="text-left">Whether you’re a</p>
+                <ul class="text-left ml-4 mt-2">
+                    <li>
+                        <p class="m-0"><b>Solopreneur </b> </p>
+                    </li>
+                    <li>
+                        <p class="m-0"><b>Entrepreneur </b> </p>
+                    </li>
+                    <li>
+                        <p class="m-0"><b>Fortune 500 CEO </b> </p>
+                    </li>
+                </ul>
+                <p class="mb-0">My hope is that you become a hopeless customer romantic. Your customers deserve it and so do you. </p>
+                <p class="m-0">Now go and romance your customer! </p>
             </div>
             <div class="mt-4">
                 <h4 class="mb-0">Record Audio</h4>
@@ -317,10 +348,12 @@
         });
 
         CKEDITOR.replace('editor', {
-            height: '400px'
+            height: '400px',
+            removePlugins: 'elementspath'
         });
         CKEDITOR.replace('editor2', {
-            height: '400px'
+            height: '400px',
+            removePlugins: 'elementspath'
         });
 
         // Contact Us Form Submission Function

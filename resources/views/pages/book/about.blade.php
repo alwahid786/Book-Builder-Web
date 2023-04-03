@@ -270,10 +270,13 @@
         <form action="{{route('aboutDetail')}}" method="post" id="aboutForm" class="pt-3">
             @csrf
             <div class="mb-3 text-center" style="border: 1px solid lightgray;  padding: 10px;">
-                <h6 class="text-center">- Sample -</h6>
+                <h6 class="text-center">- Sample 1 -</h6>
                 <p class="m-0">Don Williams is a 35-year serial entrepreneur. He lives outside Dallas-Ft. Worth, Texas with the love of his life Leta and their Labrador Retrievers Maggie and Tess.</p>
                 <p class="m-0">Don spends most of his time speaking, writing, and consulting.</p>
-                <p class="m-0">Don is a sales, service, culture, and leadership experience expert. Don helps Companies from startups to the Fortune 100 do more business and do “better” business.</p>
+                <p class="mt-0">Don is a sales, service, culture, and leadership experience expert. Don helps Companies from startups to the Fortune 100 do more business and do “better” business.</p>
+
+                <h6>- Sample 2 -</h6>
+                <p>Don Williams and his companies run campaigns and consult with businesses worldwide on how to develop and execute wow, wow, wow customer experiences. Don opened his first company in 1986 and founded a dozen other successful firms. Don’s contact center business, Alliance, has been in the professional services niche of the industry since 1999 and has hundreds of repeat clients. Don lives in the Dallas / Ft. Worth, Texas area with the love his life, Leta, and their three chocolate Labrador retrievers. </p>
             </div>
             <div class="mt-4">
                 <h4 class="mb-0">Record Audio</h4>
@@ -359,10 +362,12 @@
         });
 
         CKEDITOR.replace('editor', {
-            height: '400px'
+            height: '400px',
+            removePlugins: 'elementspath'
         });
         CKEDITOR.replace('editor2', {
-            height: '400px'
+            height: '400px',
+            removePlugins: 'elementspath'
         });
 
         // Contact Us Form Submission Function

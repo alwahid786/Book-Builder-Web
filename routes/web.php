@@ -39,9 +39,9 @@ Route::post('/forget', [AuthController::class, 'forget']);
 Route::post('/otp', [AuthController::class, 'verifyOTP']);
 Route::post('/reset', [AuthController::class, 'updatePassword']);
 Route::middleware('auth')->group(function () {
-    // Route::get('/welcome', function () {
-    //     return view('pages.welcome');
-    // });
+    Route::get('/congratulations', function () {
+        return view('pages.book.congrats');
+    });
     Route::get('/logout', [AuthController::class, 'logout']);
     Route::get('/welcome', [AuthController::class, 'welcome']);
     Route::get('/release', [AuthController::class, 'release']);
