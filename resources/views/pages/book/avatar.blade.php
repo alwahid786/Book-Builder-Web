@@ -266,9 +266,9 @@
             </div>
         </form>
     </div>
-    <a target="_blank" href="{{route('createPDF')}}">
+    <!-- <a target="_blank" href="{{route('createPDF')}}">
         <button class="p-2 pdfBtn"><i class="fas fa-book"></i></button>
-    </a>
+    </a> -->
 </section>
 
 <script type="text/javascript">
@@ -324,7 +324,7 @@
     });
 </script>
 <script>
-    $('.menu .item:nth-of-type(2) a').addClass('active-nav');
+    $('.menu .item:nth-of-type(8) a').addClass('active-nav');
 </script>
 
 

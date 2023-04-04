@@ -15,11 +15,11 @@
                     <form method="POST" class="register-form" action="{{route('signin')}}" id="loginForm">
                         @csrf
                         <div class="form-group">
-                            <label for="your_name"><i class="zmdi zmdi-account material-icons-name"></i></label>
-                            <input type="text" name="email" id="your_name" placeholder="Your Name" />
+                            <label for="your_name"><i class="fas fa-user"></i></label>
+                            <input type="text" name="email" id="your_name" placeholder="Email" />
                         </div>
                         <div class="form-group">
-                            <label for="your_pass"><i class="zmdi zmdi-lock"></i></label>
+                            <label for="your_pass"><i class="fas fa-lock"></i></label>
                             <input type="password" name="password" id="your_pass" placeholder="Password" />
                         </div>
                         <div class="form-group d-flex justify-content-end">

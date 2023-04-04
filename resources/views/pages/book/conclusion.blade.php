@@ -243,6 +243,10 @@
     .nav-item a {
         color: #33363a;
     }
+
+    .disabled {
+        background-color: #6dabe459;
+    }
 </style>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js" charset="utf-8"></script>
@@ -255,6 +259,53 @@
         <h3 class="av_heading text-center">Conclusion</h3>
         <form action="{{route('conclusionDetail')}}" method="post" id="conclusionForm" class="pt-3">
             @csrf
+            <div class="mb-3 text-center" style="border: 1px solid lightgray;  padding: 10px;">
+                <h6 class="text-center">- Sample 1 -</h6>
+                <div id="sample1">
+
+                    <p class="m-0">I hope you enjoyed your journey into your Daily Practice of Gratitude. I encourage you to stay with it. If you miss a day - it’s no big deal just start again the next day. Remember the more you practice gratitude with intention the more grateful you’ll become. And the more grateful you become, the more contentment and peace you’ll experience.</p>
+                    <p class="m-0">I’m grateful to have a small part in your progress. Thank You.</p>
+                    <p class="mt-0">I’m grateful!</p>
+                </div>
+                <button class="px-3 py-1" id="sample1Btn" type="button" data-class="avatar">Copy To Editor</button>
+
+                <hr>
+                <h6 class="text-center mb-0">- Sample 2 -</h6>
+                <div id="sample2">
+
+                    <p class="mb-0 text-left">Shakespeare’s Romeo and Juliet is the romance between two people who felt they couldn’t, and wouldn’t, live without the other. If your company is going to have that Romeo and Juliet type of business/customer care affair, you’ll have to add romance to the mix. </p>
+                    <ol class="text-left ml-4 mt-2">
+                        <li>
+                            <p class="m-0"><b>Romance is courageous</b> </p>
+                        </li>
+                        <li>
+                            <p class="m-0"><b>Romance is heroic</b> </p>
+                        </li>
+                        <li>
+                            <p class="m-0"><b>Romance includes feelings of mystery and excitement</b> </p>
+                        </li>
+                        <li>
+                            <p class="m-0"><b>Romance means being vulnerable</b> </p>
+                        </li>
+                    </ol>
+                    <p class="text-left">Whether you’re a</p>
+                    <ul class="text-left ml-4 mt-2">
+                        <li>
+                            <p class="m-0"><b>Solopreneur </b> </p>
+                        </li>
+                        <li>
+                            <p class="m-0"><b>Entrepreneur </b> </p>
+                        </li>
+                        <li>
+                            <p class="m-0"><b>Fortune 500 CEO </b> </p>
+                        </li>
+                    </ul>
+                    <p class="mb-0">My hope is that you become a hopeless customer romantic. Your customers deserve it and so do you. </p>
+                    <p class="m-0">Now go and romance your customer! </p>
+                </div>
+                <button class="px-3 py-1" id="sample2Btn" type="button" data-class="avatar">Copy To Editor</button>
+
+            </div>
             <div class="mt-4">
                 <h4 class="mb-0">Record Audio</h4>
                 <p>Record audio to convert to text in the editor below.</p>
@@ -275,10 +326,14 @@
             </div>
             <input type="hidden" name="conclusion" id="contentInput" data-class="avatar">
             <input type="hidden" name="user_id" data-class="avatar" value="<?php echo  $bookdata['user_id'] ?? '' ?>">
+            <div class="d-flex align-items-baseline justify-content-end">
+                <input type="checkbox" data-class="avatar" id="final" style="display: inline-block; width:15px;margin-top:5px">
+                <label for="final" class="position-relative ml-2" style="line-height: 1.8rem ;">FINAL ?</label>
+            </div>
             <div class=" mx-2 mt-3 d-flex justify-content-between align-items-center">
                 <a href="{{url('/forward')}}">
                     <button type="button" data-class="avatar" class="px-3 py-1"><i class="fas fa-arrow-left mr-2"></i>Previous</button></a>
-                <button id="save" data-class="avatar" class="px-3 py-1"><i class="fas fa-save mr-2"></i>Save</button>
+                <button id="save" disabled data-class="avatar" class="px-3 py-1 disabled"><i class="fas fa-save mr-2"></i>Save</button>
             </div>
         </form>
     </div>
@@ -293,6 +348,29 @@
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <script type="text/javascript">
     $(document).ready(function() {
+        $('#final').on('change', function() {
+            if ($(this).is(':checked')) {
+                $("#save").removeAttr('disabled');
+                $("#save").removeClass('disabled');
+            } else {
+                $("#save").attr('disabled', 'disabled');
+                $("#save").addClass('disabled');
+            }
+        });
+        $("#sample1Btn").click(function() {
+            copyHtmlToEditor('sample1');
+        })
+        $("#sample2Btn").click(function() {
+            copyHtmlToEditor('sample2');
+        })
+
+
+        function copyHtmlToEditor(id) {
+            // Get the HTML content from the source div
+            var sourceHtml = document.getElementById(id).innerHTML;
+            var editor = CKEDITOR.instances['editor2'];
+            editor.setData(sourceHtml);
+        }
         //jquery for toggle sub menus
         $('.sub-btn').click(function() {
             $(this).next('.sub-menu').slideToggle();
@@ -311,10 +389,12 @@
         });
 
         CKEDITOR.replace('editor', {
-            height: '400px'
+            height: '400px',
+            removePlugins: 'elementspath'
         });
         CKEDITOR.replace('editor2', {
-            height: '400px'
+            height: '400px',
+            removePlugins: 'elementspath'
         });
 
         // Contact Us Form Submission Function
@@ -512,7 +592,7 @@
     });
 </script>
 <script>
-    $('.menu .item:nth-of-type(13) a').addClass('active-nav');
+    $('.menu .item:nth-of-type(19) a').addClass('active-nav');
 </script>
 
 

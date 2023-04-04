@@ -235,6 +235,11 @@
         box-shadow: 5px 5px 5px 5px solid gray;
         margin-top: 20px;
     }
+
+    .outlineChapter {
+        font-size: 20px;
+        font-weight: 500;
+    }
 </style>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js" charset="utf-8"></script>
@@ -262,18 +267,29 @@
         <div class="outline mx-2">
             <h4 class="av_heading ">Outline</h4>
             <hr class="mt-0">
-            <div class="outline-content">
-                @if(isset($bookdata['outlines']) && !empty($bookdata['outlines']))
-                <?php $count = 0; ?>
-                @foreach($bookdata['outlines'] as $outline)
-                <?php $count++ ?>
-                <div class="d-flex justify-content-between align-items-center mb-2">
-                    <h6 class="av_heading ">{{$count}}</h6>
-                    <h5 class="text-secondary">{{$outline['outline_name']}}</h5>
-                    <button class="btn-danger px-2 removeOutlineData" data-id="{{$outline['id']}}"><i class="fas fa-trash-alt"></i></button>
-                </div>
-                @endforeach
-                @endif
+            <div class="">
+                <table class="w-100 mb-5">
+                    <tbody class="outline-content">
+                        <?php $count = 0; ?>
+                        @if(isset($bookdata['outlines']) && !empty($bookdata['outlines']))
+                        @foreach($bookdata['outlines'] as $outline)
+                        <?php $count++ ?>
+                        <tr draggable='true' ondragstart='start()' ondragover='dragover()'>
+                            <td class="w-25 av_heading py-2" draggable="false">{{$count}}</td>
+                            <td class="w-50 text-center text-secondary outlineChapter py-2" style="cursor: all-scroll;" data-id="{{$outline['id']}}" data-name="{{$outline['outline_name']}}">
+                                {{$outline['outline_name']}}
+                            </td>
+                            <td class="w-25 text-right py-2">
+                                <button class="btn-danger px-2 removeOutlineData" data-id="{{$outline['id']}}"><i class="fas fa-trash-alt"></i></button>
+                            </td>
+                        </tr>
+                        @endforeach
+                        <input type="hidden" class="outlinePositions" name="outlinePositions" value="">
+                        @endif
+                    </tbody>
+                </table>
+
+
             </div>
         </div>
     </div>
@@ -284,10 +300,44 @@
 
 
 <script type="text/javascript">
+    function start() {
+        row = event.target;
+    }
+
+    function dragover() {
+        var e = event;
+        e.preventDefault();
+
+        let children = Array.from(e.target.parentNode.parentNode.children);
+        let currentIndex = children.indexOf(row);
+        let targetIndex = children.indexOf(e.target.parentNode);
+        if (targetIndex > currentIndex) {
+            e.target.parentNode.after(row);
+        } else if (targetIndex < currentIndex) {
+            e.target.parentNode.before(row);
+        }
+
+        // Update outline positions
+        let positions = [];
+        let outlines = document.querySelectorAll('.outlineChapter');
+        outlines.forEach(outline => {
+            let id = outline.dataset.id;
+            let name = outline.dataset.name;
+            let object = {
+                outline_name: name,
+                id: id
+            }
+            positions.push(object);
+        });
+        let positionInput = document.querySelector('.outlinePositions');
+        positionInput.value = positions.join(',');
+        console.log(positions);
+    }
+
     $(document).ready(function() {
         var outlines = [];
         var index = 0;
-        var count = 1;
+        var count = @json($count);
         //jquery for toggle sub menus
         $('.sub-btn').click(function() {
             $(this).next('.sub-menu').slideToggle();
@@ -306,6 +356,15 @@
         });
 
         $('#addOutline').click(function() {
+            addOutline();
+        });
+        $("#outline_input").keyup(function(event) {
+            if (event.which === 13) {
+                addOutline();
+            }
+        });
+
+        function addOutline() {
             var name = $("#outline_input").val();
             $("#outline_input").css('border', '1px solid red');
             if ($("#outline_input").val() == '') {
@@ -316,19 +375,23 @@
                 });
             } else {
                 $("#outline_input").css('border', 'red');
+                count++;
 
-                let div = `<div class="d-flex justify-content-between align-items-center mb-2">
-                    <h6 class="av_heading ">${count}</h6>
-                    <h5 class="text-secondary">${name}</h5>
-                    <button class="btn-danger px-2 removeOutline" data-id="${index}"><i class="fas fa-trash-alt"></i></button>
-                </div>`;
+                let div = `<tr  draggable='true' ondragstart='start()' ondragover='dragover()'>
+                    <td class="w-25 av_heading py-2">${count}</td>
+                    <td class="w-50 text-center text-secondary outlineChapter py-2" data-id="new" data-name="${name}" style="cursor: all-scroll;">
+                        ${name}
+                    </td>
+                    <td class="w-25 text-right py-2">
+                        <button class="btn-danger px-2 removeOutlineData" data-id="${index}"><i class="fas fa-trash-alt"></i></button>
+                    </td>
+                </tr>`;
                 $('.outline-content').append(div);
                 outlines.push($("#outline_input").val());
                 index++;
-                count++;
                 $("#outline_input").val('');
             }
-        });
+        }
 
         $(document).on('click', '.removeOutline', function() {
             let indexNo = $(this).attr('data-id');
@@ -337,8 +400,38 @@
 
         });
 
+        var row;
+
+        function start() {
+            row = event.target;
+        }
+
+        function dragover() {
+            var e = event;
+            e.preventDefault();
+
+            let children = Array.from(e.target.parentNode.parentNode.children);
+            if (children.indexOf(e.target.parentNode) > children.indexOf(row))
+                e.target.parentNode.after(row);
+            else
+                e.target.parentNode.before(row);
+        }
+
         // Ajax Call for Outline 
         $('#save').on('click', function(e) {
+            console.log($('.outlinePositions').val());
+            // if (positions.length > 0) {
+            //     var dataArray = {
+            //         outlines: outlines,
+            //         positions: positions,
+            //         user_id: $("#user_id").val(),
+            //     }
+            // } else {
+            //     var dataArray = {
+            //         outlines: outlines,
+            //         user_id: $("#user_id").val(),
+            //     }
+            // }
             if (outlines.length < 1) {
                 swal({
                     title: "Input Error",
@@ -392,6 +485,6 @@
     });
 </script>
 <script>
-    $('.menu .item:nth-of-type(4) a').addClass('active-nav');
+    $('.menu .item:nth-of-type(10) a').addClass('active-nav');
 </script>
 @endsection

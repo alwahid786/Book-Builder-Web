@@ -317,6 +317,6 @@
     });
 </script>
 <script>
-    $('.menu .item:nth-of-type(3) a').addClass('active-nav');
+    $('.menu .item:nth-of-type(9) a').addClass('active-nav');
 </script>
 @endsection

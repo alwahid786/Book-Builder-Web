@@ -4,11 +4,13 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\User;
+use App\Models\Realease;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Mail;
 use App\Mail\VerifyEmail;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Auth;
+use Exception;
 
 
 class AuthController extends Controller
@@ -21,20 +23,35 @@ class AuthController extends Controller
             'f_name' => 'required|string',
             'l_name' => 'required|string',
             'password' => 'required|min:8|confirmed',
-            'image' => 'required|file',
             'phone' => 'required',
         ]);
         if ($validator->fails()) {
             $messages = array_values($validator->errors()->messages());
-            toastr()->error($messages[0][0]);
-            return redirect()->back();
+            return response()->json(['success' => false, 'message' => $messages]);
         }
+        // $image = $request->image;
+        // if ($request->has('image')) {
+        //     try {
+        //         $file = $request->file('image');
+        //         $name = time() . $file->getClientOriginalName();
+        //         $directory = public_path('/files');
+        //         if (!is_dir($directory)) {
+        //             mkdir($directory, 777, true);
+        //         }
+        //         $file->move($directory, $name);
+        //         $fileNames = $name;
+        //     } catch (Exception $e) {
+        //         $message = $e->getMessage();
+        //         toastr()->error($message);
+        //         return redirect()->back();
+        //     }
+        //     $image = url('public/files') . '/' . $fileNames;
+        // }
 
         $UserData = [
             'name' => $request->f_name,
             'l_name' => $request->l_name,
             'email' => $request->email,
-            'image' => $request->image,
             'phone' => $request->phone,
             'password' => bcrypt($request->password),
         ];
@@ -47,11 +64,9 @@ class AuthController extends Controller
             auth()->attempt($UserData);
             $authUser = auth()->user();
             $authUser->token = $authUser->createToken('API Token')->accessToken;
-            toastr()->success('Registration Successfull!');
-            return redirect('/welcome');
+            return response()->json(['success' => true]);
         }
-        toastr()->error('An error occured. Try again');
-        return redirect()->back();
+        return response()->json(['success' => false, 'message' => 'An error occured. Try again']);
     }
 
     // Login Function 
@@ -72,11 +87,15 @@ class AuthController extends Controller
         ];
         if (!auth()->attempt($UserData)) {
             toastr()->error('Try again. Wrong password.Try again or click forget password to reset your password.');
-            return redirect()->back();
+            return redirect('/');
         }
         $authUser = auth()->user();
         $authUser->token = $authUser->createToken('API Token')->accessToken;
-        return redirect('/welcome');
+        $releaseCheck = Realease::where('user_id', $authUser->id)->first();
+        if (empty($releaseCheck)) {
+            return redirect('/release');
+        }
+        return redirect('/avatar');
     }
 
     // Forget password Function 
@@ -146,5 +165,25 @@ class AuthController extends Controller
         Session::flush();
         Auth::logout();
         return redirect('/');
+    }
+
+    public function welcome()
+    {
+        $user = User::where('id', auth()->user()->id)->first();
+        return view('pages.welcome', compact('user'));
+    }
+    public function release()
+    {
+        $user = User::where('id', auth()->user()->id)->first();
+        return view('pages.release', compact('user'));
+    }
+
+    public function releaseForm(Request $request)
+    {
+        $release = Realease::create($request->except('_token'));
+        if ($release) {
+            return redirect('/welcome');
+        }
+        return redirect()->back();
     }
 }

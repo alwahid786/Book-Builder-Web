@@ -13,6 +13,7 @@ use App\Mail\VerifyEmail;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Auth;
 use Exception;
+use Illuminate\Support\Facades\File;
 
 
 class BookController extends Controller
@@ -59,7 +60,7 @@ class BookController extends Controller
     public function outline()
     {
         $bookdata = Book::where('user_id', auth()->user()->id)->first();
-        $outlines = Outline::where('user_id', auth()->user()->id)->get();
+        $outlines = Outline::where('user_id', auth()->user()->id)->orderBy('order')->get();;
         $outlines = json_decode($outlines, true);
         $bookdata = json_decode($bookdata, true);
         $bookdata['outlines'] = $outlines;
@@ -69,6 +70,7 @@ class BookController extends Controller
 
     public function outlineForm(Request $request)
     {
+        dd($request->all());
         foreach ($request->outlines as $value) {
             $outline = new Outline;
             $outline->user_id = $request->user_id;
@@ -98,11 +100,16 @@ class BookController extends Controller
             try {
                 $file = $request->file('front_cover');
                 $name = time() . $file->getClientOriginalName();
-                $file->move(public_path('/files'), $name);
+                $directory = public_path('/files');
+                if (!is_dir($directory)) {
+                    mkdir($directory, 777, true);
+                }
+                $file->move($directory, $name);
                 $fileNames = $name;
             } catch (Exception $e) {
                 $message = $e->getMessage();
-                return $this->failure($message);
+                toastr()->error($message);
+                return redirect()->back();
             }
             $imageFront = url('public/files') . '/' . $fileNames;
             $data['front_cover'] = $imageFront;
@@ -111,11 +118,16 @@ class BookController extends Controller
             try {
                 $file = $request->file('spine_cover');
                 $name = time() . $file->getClientOriginalName();
-                $file->move(public_path('/files'), $name);
+                $directory = public_path('/files');
+                if (!is_dir($directory)) {
+                    mkdir($directory, 777, true);
+                }
+                $file->move($directory, $name);
                 $fileNames = $name;
             } catch (Exception $e) {
                 $message = $e->getMessage();
-                return $this->failure($message);
+                toastr()->error($message);
+                return redirect()->back();
             }
             $imageSpine = url('public/files') . '/' . $fileNames;
             $data['spine_cover'] = $imageSpine;
@@ -124,11 +136,16 @@ class BookController extends Controller
             try {
                 $file = $request->file('back_cover');
                 $name = time() . $file->getClientOriginalName();
-                $file->move(public_path('/files'), $name);
+                $directory = public_path('/files');
+                if (!is_dir($directory)) {
+                    mkdir($directory, 777, true);
+                }
+                $file->move($directory, $name);
                 $fileNames = $name;
             } catch (Exception $e) {
                 $message = $e->getMessage();
-                return $this->failure($message);
+                toastr()->error($message);
+                return redirect()->back();
             }
             $imageBack = url('public/files') . '/' . $fileNames;
             $data['back_cover'] = $imageBack;
@@ -169,10 +186,9 @@ class BookController extends Controller
     {
         $data = $request->except('_token');
 
-            $data['user_id'] = auth()->user()->id;
-            Copyright::updateOrCreate(['user_id' => auth()->user()->id],$data);
-            return redirect('/praise');
-            
+        $data['user_id'] = auth()->user()->id;
+        Copyright::updateOrCreate(['user_id' => auth()->user()->id], $data);
+        return redirect('/praise');
     }
     public function praise()
     {
@@ -232,7 +248,7 @@ class BookController extends Controller
         $book = Book::where('user_id', $request->user_id)->update($data);
         if ($book) {
             $outlines = Outline::where('user_id', auth()->user()->id)->get(['id', 'outline_name']);
-            if(!sizeof($outlines)){
+            if (!sizeof($outlines)) {
                 return redirect('/outline');
             }
             return redirect('/content/%24' . $outlines[0]['id']);
@@ -316,7 +332,48 @@ class BookController extends Controller
         $data = $request->except('_token');
         $book = Book::where('user_id', $request->user_id)->update($data);
         if ($book) {
-            return redirect()->back();
+            session()->flash('open_modal', true);
+            return redirect('/congratulations');
         }
+    }
+
+    public function updateGratitude(Request $request)
+    {
+        $book = User::where('id', auth()->user()->id)->update(['gratitude' => $request->gratitude]);
+        if ($book) {
+            return response()->json(['success', true]);
+        }
+        return response()->json(['success', false]);
+    }
+    public function updateRomance(Request $request)
+    {
+        $book = User::where('id', auth()->user()->id)->update(['romance' => $request->gratitude]);
+        if ($book) {
+            return response()->json(['success', true]);
+        }
+        return response()->json(['success', false]);
+    }
+
+    public function uploadFile(Request $request)
+    {
+        // dd($request->all());
+        // Get the uploaded file.
+        $file = $request->file('upload');
+        // Define the upload directory.
+        $uploadPath = public_path('/uploads');
+        if (!is_dir($uploadPath)) {
+            mkdir($uploadPath, 777, true);
+        }
+
+        // Generate a unique filename for the uploaded file.
+        $filename = uniqid() . '-' . $file->getClientOriginalName();
+
+        // Move the uploaded file to the upload directory.
+        $file->move($uploadPath, $filename);
+
+        // Return the URL of the uploaded file to CKEditor.
+        return response()->json([
+            'url' => public_path('/uploads/' . $filename)
+        ]);
     }
 }

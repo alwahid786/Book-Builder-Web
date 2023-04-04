@@ -243,6 +243,10 @@
     .nav-item a {
         color: #33363a;
     }
+
+    .disabled {
+        background-color: #6dabe459;
+    }
 </style>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js" charset="utf-8"></script>
@@ -256,12 +260,34 @@
         <form action="{{route('howToUseDetail')}}" method="post" id="howToUseForm" class="pt-3">
             @csrf
             <div class="mb-3 text-center" style="border: 1px solid lightgray;  padding: 10px;">
-                <h6 class="text-center">- Sample -</h6>
-                <p class="m-0">These stories showed me that the spectrum of gratitude has unfathomable breadth and depth.</p>
-                <p class="m-0">This book is a compilation of such stories from family, friends, and strangers.</p>
-                <p class="mt-0">My wish is that as you go through these pages, they light a fire in your own heart to begin a daily intentional practice of gratitude.</p>
-                <p class="m-0">At the end of each story, there are a few blank pages. I encourage you to reflect on the moments of your daily life that resemble each of these accounts. Journal daily until gratitude becomes a habit.</p>
-                <p class="mt-0">If you read one story a day, then this book has twenty-five days of stories.</p>
+                <h6 class="text-center">- Sample 1 -</h6>
+                <div id="sample1">
+
+                    <p class="m-0">These stories showed me that the spectrum of gratitude has unfathomable breadth and depth.</p>
+                    <p class="m-0">This book is a compilation of such stories from family, friends, and strangers.</p>
+                    <p class="mt-0">My wish is that as you go through these pages, they light a fire in your own heart to begin a daily intentional practice of gratitude.</p>
+                    <p class="m-0">At the end of each story, there are a few blank pages. I encourage you to reflect on the moments of your daily life that resemble each of these accounts. Journal daily until gratitude becomes a habit.</p>
+                    <p class="mt-0">If you read one story a day, then this book has twenty-five days of stories.</p>
+                </div>
+                <button class="px-3 py-1" id="sample1Btn" type="button" data-class="avatar">Copy To Editor</button>
+
+                <hr>
+                <h6 class="text-center">- Sample 2 -</h6>
+                <div id="sample2">
+
+                    <p class="m-0">Day 1</p>
+                    <p class="m-0">I’m Grateful for:</p>
+                    <p class="mt-0">For my Faith, my parents, grandparents, great grandparents, and all ancestors whom I never met, Leta my sons, their spouses, and children. I’m grateful for my sister and her family and my brother and his family. I’m grateful to have been born in the US, for my dogs, to be an entrepreneur, for my team, my customers and vendors who help us make a difference in our client’s lives.</p>
+
+                    <p class="m-0">Day 2</p>
+                    <p class="m-0">I’m Grateful for:</p>
+                    <p class="mt-0">This sunrise, hot coffee, and a couple of moments of solitude.</p>
+                    <p class="m-0">Day 3</p>
+                    <p class="m-0">I’m Grateful for:</p>
+                    <p class="mt-0">Yesterdays’ meeting, a relaxing weekend, and a busy week next week.</p>
+                </div>
+                <button class="px-3 py-1" id="sample2Btn" type="button" data-class="avatar">Copy To Editor</button>
+
             </div>
             <div class="mt-4">
                 <h4 class="mb-0">Record Audio</h4>
@@ -283,10 +309,14 @@
             </div>
             <input type="hidden" name="how_to_use" id="contentInput" data-class="avatar">
             <input type="hidden" name="user_id" data-class="avatar" value="<?php echo  $bookdata['user_id'] ?? '' ?>">
+            <div class="d-flex align-items-baseline justify-content-end">
+                <input type="checkbox" data-class="avatar" id="final" style="display: inline-block; width:15px;margin-top:5px">
+                <label for="final" class="position-relative ml-2" style="line-height: 1.8rem ;">FINAL ?</label>
+            </div>
             <div class=" mx-2 mt-3 d-flex justify-content-between align-items-center">
                 <a href="{{url('/dedication')}}">
                     <button type="button" data-class="avatar" class="px-3 py-1"><i class="fas fa-arrow-left mr-2"></i>Previous</button></a>
-                <button id="save" data-class="avatar" class="px-3 py-1"><i class="fas fa-save mr-2"></i>Save</button>
+                <button id="save" disabled data-class="avatar" class="px-3 py-1 disabled"><i class="fas fa-save mr-2"></i>Save</button>
             </div>
         </form>
     </div>
@@ -301,6 +331,29 @@
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <script type="text/javascript">
     $(document).ready(function() {
+        $('#final').on('change', function() {
+            if ($(this).is(':checked')) {
+                $("#save").removeAttr('disabled');
+                $("#save").removeClass('disabled');
+            } else {
+                $("#save").attr('disabled', 'disabled');
+                $("#save").addClass('disabled');
+            }
+        });
+        $("#sample1Btn").click(function() {
+            copyHtmlToEditor('sample1');
+        })
+        $("#sample2Btn").click(function() {
+            copyHtmlToEditor('sample2');
+        })
+
+
+        function copyHtmlToEditor(id) {
+            // Get the HTML content from the source div
+            var sourceHtml = document.getElementById(id).innerHTML;
+            var editor = CKEDITOR.instances['editor2'];
+            editor.setData(sourceHtml);
+        }
         //jquery for toggle sub menus
         $('.sub-btn').click(function() {
             $(this).next('.sub-menu').slideToggle();
@@ -319,10 +372,12 @@
         });
 
         CKEDITOR.replace('editor', {
-            height: '400px'
+            height: '400px',
+            removePlugins: 'elementspath'
         });
         CKEDITOR.replace('editor2', {
-            height: '400px'
+            height: '400px',
+            removePlugins: 'elementspath'
         });
 
         // Contact Us Form Submission Function
@@ -520,7 +575,7 @@
     });
 </script>
 <script>
-    $('.menu .item:nth-of-type(10) a').addClass('active-nav');
+    $('.menu .item:nth-of-type(16) a').addClass('active-nav');
 </script>
 
 

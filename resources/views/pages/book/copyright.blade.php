@@ -243,6 +243,10 @@
     .nav-item a {
         color: #33363a;
     }
+
+    .disabled {
+        background-color: #6dabe459;
+    }
 </style>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js" charset="utf-8"></script>
@@ -253,23 +257,8 @@
     @include('layouts.book-layout.progress')
     <div class="content px-5 py-4">
         <h3 class="av_heading text-center">Copyright</h3>
-        <ul class="nav nav-tabs" role="tablist">
-            <li class="nav-item">
-                <a class="nav-link <?php if (isset($bookdata['copyright']) && $bookdata['copyright']['template_id'] == 1) {
-                                        echo "active";
-                                    }  ?>" data-toggle="tab" href="#tabs-1" role="tab">Template 01</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link <?php if (isset($bookdata['copyright']) && $bookdata['copyright']['template_id'] == 2) {
-                                        echo "active";
-                                    }  ?>" data-toggle="tab" href="#tabs-2" role="tab">Template 02</a>
-            </li>
-
-        </ul><!-- Tab panes -->
         <div class="tab-content">
-            <div class="tab-pane <?php if (isset($bookdata['copyright']) && $bookdata['copyright']['template_id'] == 1) {
-                                        echo "active";
-                                    }  ?>" id="tabs-1" role="tabpanel">
+            <div class="tab-pane active id=" tabs-1" role="tabpanel">
                 <form action="{{route('copyrightDetail')}}" method="post" id="frontCoverForm1" class="pt-3">
                     @csrf
                     <!-- <div class="d-flex justify-content-between align-items-center">
@@ -324,12 +313,34 @@
                     </div> -->
                     <div class="my-3 text-center" style="border: 1px solid lightgray;  padding: 10px;">
                         <h6 class="text-center">- Sample 01 -</h6>
-                        <p class="m-0">Copyright (Year) (First Name) (Last Name), (Company Name 1), (Company Name 2)</p>
-                        <p class="mt-0">All Rights Reserved</p>
-                        <p class="m-0">Contact the Author at:</p>
-                        <p class="mt-0">(Street Address 1), (Street Address 2), (City), (ST) (Country) (Zip Code)</p>
-                        <p class="m-0">First Edition</p>
-                        <p class="m-0">All rights reserved. No part of this publication may be reproduced, distributed, or transmitted in any form or by any means, including photocopying, recording. Or other electronic or mechanical method(s) or by any information storage and retrieval systems without the prior written permission of the publisher and author, except in the case of brief quotations embodied in reviews and certain other non-commercial uses permitted by copyright law.</p>
+                        <div id="sample1">
+
+                            <p class="m-0">Copyright (Year) (First Name) (Last Name), (Company Name 1), (Company Name 2)</p>
+                            <p class="mt-0">All Rights Reserved</p>
+                            <p class="m-0">Contact the Author at:</p>
+                            <p class="mt-0">(Street Address 1), (Street Address 2), (City), (ST) (Country) (Zip Code)</p>
+                            <p class="m-0">First Edition</p>
+                            <p class="mt-0">All rights reserved. No part of this publication may be reproduced, distributed, or transmitted in any form or by any means, including photocopying, recording. Or other electronic or mechanical method(s) or by any information storage and retrieval systems without the prior written permission of the publisher and author, except in the case of brief quotations embodied in reviews and certain other non-commercial uses permitted by copyright law.</p>
+                        </div>
+                        <button class="px-3 py-1" id="sample1Btn" type="button" data-class="avatar">Copy To Editor</button>
+
+                        <hr>
+                        <h6 class="text-center">- Sample 02 -</h6>
+                        <div id="sample2">
+
+                            <p class="m-0">COPYRIGHT © (year of publication) by (author's name)</p>
+                            <p class="m-0">All rights reserved. No part of this book may be reproduced, stored in a retrieval system, or transmitted in any form or by any means, electronic, mechanical, photocopying, recording, or otherwise, without the prior written permission of the author/publisher.</p>
+                            <p class="mt-0">This book is a work of fiction (or non-fiction) and any resemblance to persons, living or dead, or places, events or locales is purely coincidental. The characters are productions of the author's imagination and used fictitiously.</p>
+                            <p class="m-0">Cover design by (cover designer's name)</p>
+                            <p class="m-0">Edited by (editor's name)</p>
+                            <p class="m-0">Published by (publisher's name)</p>
+                            <p class="m-0">ISBN (insert ISBN here)</p>
+                            <p class="m-0">Printed in (insert country where book is printed)</p>
+                            <p class="m-0">(Insert any disclaimers or legal notices here)</p>
+                            <p class="mt-0">For permission to use material from this book, please contact the author or the publisher.</p>
+                            
+                        </div>
+                        <button class="px-3 py-1" id="sample2Btn" type="button" data-class="avatar">Copy To Editor</button>
                     </div>
                     <div class="mt-4">
                         <h4 class="mb-0">Record Audio</h4>
@@ -357,96 +368,14 @@
                     <input type="hidden" name="user_id" data-class="avatar" value="<?php echo  $bookdata['copyright']['user_id'] ?? '' ?>">
                     <input type="hidden" name="template_id" data-class="avatar" value="1">
                     <input type="hidden" name="content" id="contentInput" data-class="avatar" value="1">
+                    <div class="d-flex align-items-baseline justify-content-end">
+                        <input type="checkbox" data-class="avatar" id="final" style="display: inline-block; width:15px;margin-top:5px">
+                        <label for="final" class="position-relative ml-2" style="line-height: 1.8rem ;">FINAL ?</label>
+                    </div>
                     <div class="mx-2 mt-3 d-flex justify-content-between align-items-center">
                         <a href="{{url('/inside-cover')}}">
                             <button type="button" data-class="avatar" class="px-3 py-1"><i class="fas fa-arrow-left mr-2"></i>Previous</button></a>
-                        <button type="submit" id="save" data-class="avatar" class="px-3 py-1"><i class="fas fa-save mr-2"></i>Save</button>
-                    </div>
-                </form>
-            </div>
-            <div class="tab-pane <?php if (isset($bookdata['copyright']) && $bookdata['copyright']['template_id'] == 2) {
-                                        echo "active";
-                                    }  ?>" id="tabs-2" role="tabpanel">
-                <form action="{{route('copyrightDetail')}}" method="post" id="frontCoverForm2" class="pt-3">
-                    @csrf
-                    <!-- <div class="d-flex justify-content-between align-items-center">
-                        <div class="input-group w-100 mx-2">
-                            <span class="text-secondary mb-2">Year of publication</span>
-                            <input type="text" value="<?php echo $bookdata['copyright']['publication_year'] ?? '' ?>" name="publication_year" id="av_f_name">
-                        </div>
-                        <div class="input-group w-100 mx-2">
-                            <span class="text-secondary mb-2">Author Name</span>
-                            <input type="text" value="<?php echo $bookdata['copyright']['author_name'] ?? '' ?>" name="author_name" id="av_l_name">
-                        </div>
-                    </div>
-                    <div class="d-flex justify-content-between align-items-center mt-3">
-                        <div class="input-group w-100 mx-2">
-                            <span class="text-secondary mb-2">Cover Design By</span>
-                            <input type="text" value="<?php echo $bookdata['copyright']['cover_designer'] ?? '' ?>" name="cover_designer" id="av_f_name">
-                        </div>
-                        <div class="input-group w-100 mx-2">
-                            <span class="text-secondary mb-2">Edited By</span>
-                            <input type="text" value="<?php echo $bookdata['copyright']['editor'] ?? '' ?>" name="editor" id="av_l_name">
-                        </div>
-                    </div>
-                    <div class="d-flex justify-content-between align-items-center mt-3">
-                        <div class="input-group w-100 mx-2">
-                            <span class="text-secondary mb-2">Published By</span>
-                            <input type="text" value="<?php echo $bookdata['copyright']['publisher'] ?? '' ?>" name="publisher" id="av_f_name">
-                        </div>
-                        <div class="input-group w-100 mx-2">
-                            <span class="text-secondary mb-2">ISBN</span>
-                            <input type="text" value="<?php echo $bookdata['copyright']['isbn'] ?? '' ?>" name="isbn" id="av_l_name">
-                        </div>
-                    </div>
-                    <div class="d-flex justify-content-between align-items-center mt-3">
-                        <div class="input-group w-50 mx-2">
-                            <span class="text-secondary mb-2">Printed In Country</span>
-                            <input type="text" value="<?php echo $bookdata['copyright']['printed_country'] ?? '' ?>" name="printed_country" id="av_f_name">
-                        </div>
-                    </div> -->
-                    <div class="my-3 text-center" style="border: 1px solid lightgray;  padding: 10px;">
-                        <h6 class="text-center">- Sample 02 -</h6>
-                        <p class="m-0">COPYRIGHT © (year of publication) by (author's name)</p>
-                        <p class="m-0">All rights reserved. No part of this book may be reproduced, stored in a retrieval system, or transmitted in any form or by any means, electronic, mechanical, photocopying, recording, or otherwise, without the prior written permission of the author/publisher.</p>
-                        <p class="mt-0">This book is a work of fiction (or non-fiction) and any resemblance to persons, living or dead, or places, events or locales is purely coincidental. The characters are productions of the author's imagination and used fictitiously.</p>
-                        <p class="m-0">Cover design by (cover designer's name)</p>
-                        <p class="m-0">Edited by (editor's name)</p>
-                        <p class="m-0">Published by (publisher's name)</p>
-                        <p class="m-0">ISBN (insert ISBN here)</p>
-                        <p class="m-0">Printed in (insert country where book is printed)</p>
-                        <p class="m-0">(Insert any disclaimers or legal notices here)</p>
-                        <p class="m-0">For permission to use material from this book, please contact the author or the publisher.</p>
-                    </div>
-                    <div class="mt-4">
-                        <h4 class="mb-0">Record Audio</h4>
-                        <p>Record audio to convert to text in the editor below.</p>
-                        <div id="controls" class="d-flex align-items-center justify-content-between">
-                            <div>
-                                <button id="startBtn1" data-class="avatar" type="button" data-sr_no="1" data-editor_name="editor" class=" px-3 py-1 btn-success startBtn">Start Recording</button>
-                                <button id="stopBtn1" data-class="avatar" type="button" data-sr_no="1" class="btn-danger stopBtn px-3 py-1 " style="display: none;">Stop Recording</button>
-                                <button id="resetBtn1" data-class="avatar" type="button" data-sr_no="1" class="btn-danger resetBtn px-3 py-1 " style="display: none;">Reset Text</button>
-                            </div>
-                            <div class="d-flex align-items-center">
-                                <i class="zmdi zmdi-circle mr-2"></i>
-                                <div id="timer1">00:00:00</div>
-                            </div>
-                        </div>
-                        <div class="mt-3">
-                            <div id="editor"><?php if (isset($bookdata['copyright']) && $bookdata['copyright']['template_id'] == 2) {
-                                                    echo $bookdata['copyright']['content'];
-                                                }  ?></div>
-                        </div>
-                    </div>
-
-                    <input type="hidden" name="user_id" data-class="avatar" value="<?php echo  $bookdata['copyright']['user_id'] ?? '' ?>">
-                    <input type="hidden" name="template_id" data-class="avatar" value="2">
-                    <input type="hidden" name="content" id="contentInput2" data-class="avatar" value="1">
-
-                    <div class=" mx-2 mt-3 d-flex justify-content-between align-items-center">
-                        <a href="{{url('/inside-cover')}}">
-                            <button type="button" data-class="avatar" class="px-3 py-1"><i class="fas fa-arrow-left mr-2"></i>Previous</button></a>
-                        <button id="save" data-class="avatar" class="px-3 py-1"><i class="fas fa-save mr-2"></i>Save</button>
+                        <button type="submit" id="save" disabled data-class="avatar" class="px-3 py-1 disabled"><i class="fas fa-save mr-2"></i>Save</button>
                     </div>
                 </form>
             </div>
@@ -464,6 +393,29 @@
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <script type="text/javascript">
     $(document).ready(function() {
+        $('#final').on('change', function() {
+            if ($(this).is(':checked')) {
+                $("#save").removeAttr('disabled');
+                $("#save").removeClass('disabled');
+            } else {
+                $("#save").attr('disabled', 'disabled');
+                $("#save").addClass('disabled');
+            }
+        });
+        $("#sample1Btn").click(function() {
+            copyHtmlToEditor('sample1');
+        })
+        $("#sample2Btn").click(function() {
+            copyHtmlToEditor('sample2');
+        })
+
+
+        function copyHtmlToEditor(id) {
+            // Get the HTML content from the source div
+            var sourceHtml = document.getElementById(id).innerHTML;
+            var editor = CKEDITOR.instances['editor2'];
+            editor.setData(sourceHtml);
+        }
         //jquery for toggle sub menus
         $('.sub-btn').click(function() {
             $(this).next('.sub-menu').slideToggle();
@@ -482,10 +434,12 @@
         });
 
         CKEDITOR.replace('editor', {
-            height: '400px'
+            height: '400px',
+            removePlugins: 'elementspath'
         });
         CKEDITOR.replace('editor2', {
-            height: '400px'
+            height: '400px',
+            removePlugins: 'elementspath'
         });
 
         // Contact Us Form Submission Function
@@ -721,7 +675,7 @@
     });
 </script>
 <script>
-    $('.menu .item:nth-of-type(7) a').addClass('active-nav');
+    $('.menu .item:nth-of-type(13) a').addClass('active-nav');
 </script>
 
 

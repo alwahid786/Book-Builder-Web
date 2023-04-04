@@ -30,16 +30,27 @@ class PDFController extends Controller
 
         $data = json_decode($data, true);
         $pdf = PDF::loadView('pdf.pdf', compact('data')); // load view and pass data
-        $pdf->setPaper('a4', 'portrait');
-
+        $pdf->setPaper([0, 0, 500, 800], 'portrait');
         // Set the response content-type to PDF
         $headers = [
             'Content-Type' => 'application/pdf',
-            'Content-Disposition' => 'inline; filename="mypdf.pdf"'
+            'Content-Disposition' => 'inline; filename=' . $data['book_title'] ?? 'book' . '".pdf"'
         ];
 
         // Return the rendered PDF in a new tab
         return response($pdf->stream(), 200, $headers);
+
+        // Save the PDF to a temporary file
+        // $pdf_path = public_path('files/' . $data['book_title'] ?? 'book' . '.pdf');
+        // file_put_contents($pdf_path, $pdf->output());
+
+        // // Convert the PDF to a DOC file using Unoconv
+        // $doc_path = public_path('files/' . $data['book_title'] ?? 'book' . '.doc');
+        // exec("unoconv -f doc --stdout --charset=utf-8 $pdf_path > $doc_path");
+        // rename("$pdf_path", "$doc_path");
+
+        // // Download the converted file
+        // return response()->download("$doc_path")->deleteFileAfterSend(true);
     }
     public function pdf()
     {

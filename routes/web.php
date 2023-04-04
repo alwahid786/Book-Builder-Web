@@ -39,10 +39,12 @@ Route::post('/forget', [AuthController::class, 'forget']);
 Route::post('/otp', [AuthController::class, 'verifyOTP']);
 Route::post('/reset', [AuthController::class, 'updatePassword']);
 Route::middleware('auth')->group(function () {
-    Route::get('/welcome', function () {
-        return view('pages.welcome');
+    Route::get('/congratulations', function () {
+        return view('pages.book.congrats');
     });
     Route::get('/logout', [AuthController::class, 'logout']);
+    Route::get('/welcome', [AuthController::class, 'welcome']);
+    Route::get('/release', [AuthController::class, 'release']);
 
     // Book Routes Controller 
     Route::get('/avatar', [BookController::class, 'avatar']);
@@ -75,6 +77,10 @@ Route::middleware('auth')->group(function () {
     Route::post('/workWithUsForm', [BookController::class, 'workWithUsForm'])->name('workWithUsDetail');
     Route::get('/about', [BookController::class, 'about']);
     Route::post('/aboutForm', [BookController::class, 'aboutForm'])->name('aboutDetail');
+    Route::post('/gratitude', [BookController::class, 'updateGratitude'])->name('updateGratitude');
+    Route::post('/romance', [BookController::class, 'updateRomance'])->name('updateRomance');
+    Route::post('/release-submission', [AuthController::class, 'releaseForm'])->name('releaseForm');
+    Route::any('/uploadFile', [BookController::class, 'uploadFile'])->name('uploadFile');
 
     // PDF Creation Routes 
     Route::get('/create-book', [PDFController::class, 'createPDF'])->name('createPDF');

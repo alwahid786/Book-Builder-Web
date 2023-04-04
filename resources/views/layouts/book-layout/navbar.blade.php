@@ -1,3 +1,6 @@
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@700&display=swap" rel="stylesheet">
 <style>
     .disableTab {
         color: inherit !important;
@@ -36,6 +39,15 @@
     img {
         border-radius: 0px !important;
     }
+
+    .item a i {
+        width: 8%;
+
+    }
+
+    .item a span {
+        width: 92%;
+    }
 </style>
 <?php
 $sections = bookProgress()['sections'];
@@ -43,12 +55,26 @@ $sections = bookProgress()['sections'];
 <div class="side-bar">
 
     <div class="menu">
-        <div class=" text-center text-white" style="height: 85px; display:flex; font-size:30px; justify-content:center; align-items:center"><img class="logoImg m-0" style="border-radius:none !important;" src="{{asset('assets/images/LOGO_PNG.png')}}" alt=""></div>
+        <div class=" text-center text-white" style="height: 85px; display:flex; font-size:30px; justify-content:center; align-items:center"><img class="logoImg m-0" style="border-radius:none !important;" src="{{asset('assets/images/LOGO_SVG.svg')}}" alt=""></div>
+        <div class="item position-relative text-white" style="cursor:default; padding: 0px 10px; ">Welcome</div>
+        <div class="item position-relative text-white" style="cursor:default; font-size:18px;padding:  0px 10px; "><strong style="font-family: 'Roboto', sans-serif !important;">My Co-Author Stories</strong></div>
+        <div class="item position-relative">
+            <a href="{{url('/welcome?url=story')}}"><i class="fas fa-microphone"></i><span>Story Telling</span>
+            </a>
+        </div>
+        <div class="item position-relative">
+            <a href="{{url('/welcome?url=gratitude')}}"><i class="fas fa-comment-alt"></i>My Gratitude Story
+            </a>
+        </div>
+        <div class="item position-relative">
+            <a href="{{url('/welcome?url=romance-customer')}}" style="line-height: 25px; padding-top: 5px;padding-bottom: 5px;"><i class="fas fa-scroll"></i>My Romancing Your <span style="margin-left: 30px;">Customer Story</span>
+            </a>
+        </div>
+        <div class="item position-relative text-white" style="cursor:default; font-size:18px;padding:  0px 10px; "><strong style="font-family: 'Roboto', sans-serif !important;">My Book</strong></div>
         <div class="item position-relative">
             <a href="{{url('/avatar')}}" class="@if(!$sections['avatar']) disableTab @endif"><i class="fas fa-book"></i>Avatar
                 @if($sections['avatar'])<i class="fas fa-check-circle filled-circle"></i>@endif
             </a>
-
         </div>
         <div class="item"><a href="{{url('/book-title')}}" class="@if(!$sections['book_title']) disableTab @endif"><i class="fas fa-heading"></i>Book Title
                 @if($sections['book_title'])<i class="fas fa-check-circle filled-circle"></i>@endif
@@ -87,7 +113,7 @@ $sections = bookProgress()['sections'];
                 @foreach(outlines() as $outline)<?php
                                                 $id = $sections['sub_outline_' . $outline['id']];
                                                 ?>
-                <a href="{{route('content', ['id'=> $outline['id']] )}}" data-class="{{$outline['id']}}" class="sub-item">{{$outline['outline_name']}}
+                <a href="{{route('content', ['id'=> $outline['id']] )}}" data-class="{{$outline['id']}}" class="sub-item position-relative">{{$outline['outline_name']}}
 
                     @if($id)<i class="fas fa-check-circle filled-circle"></i>@endif
                 </a>
@@ -97,11 +123,13 @@ $sections = bookProgress()['sections'];
         <div class="item"><a href="{{url('/conclusion')}}" class="@if(!$sections['conclusion']) disableTab @endif"><i class="fas fa-flag-checkered"></i>Conclusion
                 @if($sections['conclusion'])<i class="fas fa-check-circle filled-circle"></i>@endif
             </a></div>
-        <div class="item"><a href="{{url('/work-with-us')}}" class="@if(!$sections['work_with_us']) disableTab @endif"><i class="fas fa-handshake"></i>Work with Us
+        <div class="item"><a href="{{url('/work-with-us')}}" class="@if(!$sections['work_with_us']) disableTab @endif"><i class="fas fa-handshake"></i>Work with Me
                 @if($sections['work_with_us'])<i class="fas fa-check-circle filled-circle"></i>@endif
             </a></div>
-        <div class="item"><a href="{{url('/about')}}" class="@if(!$sections['about']) disableTab @endif"><i class="fas fa-user"></i>About
+        <div class="item"><a href="{{url('/about')}}" class="@if(!$sections['about']) disableTab @endif"><i class="fas fa-user"></i>About The Author
                 @if($sections['about'])<i class="fas fa-check-circle filled-circle"></i>@endif
+            </a></div>
+        <div class="item"><a href="{{url('/congratulations')}}" class="@if(!$sections['about']) disableTab @endif"><i class="fas fa-award"></i>CONGRATULATIONS
             </a></div>
     </div>
 </div>

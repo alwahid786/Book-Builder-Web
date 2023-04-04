@@ -1,6 +1,21 @@
 <?php
 $percentage = bookProgress()['percentage'];
 ?>
+<style>
+    .imgDiv {
+        width: 200px;
+        height: 200px;
+        overflow: hidden;
+    }
+
+    .imgDiv img {
+        width: 100%;
+        height: 100%;
+        object-fit: contain;
+        border: none;
+        margin: 0;
+    }
+</style>
 <div class="navBar p-3">
     <div class="progressDiv w-100 pr-5">
         <h4 class="text-white">Your Book Progress</h4>
@@ -18,3 +33,4 @@ $percentage = bookProgress()['percentage'];
         </div>
     </div>
 </div>
+

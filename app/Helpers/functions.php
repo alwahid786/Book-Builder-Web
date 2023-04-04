@@ -102,12 +102,17 @@ function bookProgress()
                 $sections['about'] = true;
             }
         }
+        $sub_outlines_percentage = 0;
+        if (sizeof($notEmptyContentFields)) {
+            $sub_outlines_percentage = round(count($notEmptyContentFields) / count($sub_outlines) * 50);
+        }
         $sectionsWithoutContent = $sections;
         unset($sectionsWithoutContent['table_of_content']);
         $count_true = count(array_filter($sectionsWithoutContent)); // count number of true values
         // echo'<pre>';print_r($sectionsWithoutContent);exit;
         $total = count($sectionsWithoutContent); // count total elements
-        $percentage =  round($count_true / $total * 100); // calculate percentage
+        $remaining_percentage = round($count_true / $total * 50); // calculate remaining percentage
+        $percentage = $sub_outlines_percentage + $remaining_percentage;
 
 
         return [

@@ -76,33 +76,32 @@
             <div class="signup-content">
                 <div class="signup-form">
                     <h2 class="form-title">Sign up</h2>
-                    <form method="POST" class="register-form" action="{{route('register')}}" id="registerForm" enctype="multipart/form-data">
-                        @csrf
+                    <form method="POST" class="register-form" id="registerForm" enctype="multipart/form-data">
                         <div class="form-group">
-                            <label for="name"><i class="zmdi zmdi-account material-icons-name"></i></label>
-                            <input type="text" name="f_name" id="name" placeholder="First Name" />
+                            <label for="name"><i class="fas fa-user"></i></label>
+                            <input type="text" name="f_name" id="fname" placeholder="First Name" />
                         </div>
                         <div class="form-group">
-                            <label for="name"><i class="zmdi zmdi-account material-icons-name"></i></label>
-                            <input type="text" name="l_name" id="name" placeholder="Last Name" />
+                            <label for="name"><i class="fas fa-user"></i></label>
+                            <input type="text" name="l_name" id="lname" placeholder="Last Name" />
                         </div>
                         <div class="form-group">
-                            <label for="email"><i class="zmdi zmdi-email"></i></label>
+                            <label for="email"><i class="fas fa-envelope"></i></label>
                             <input type="email" name="email" id="email" placeholder="Your Email" />
                         </div>
                         <div class="form-group">
-                            <label for="name"><i class="zmdi zmdi-phone"></i></label>
-                            <input type="text" name="phone" id="name" placeholder="Phone" />
+                            <label for="name"><i class="fas fa-phone"></i></label>
+                            <input type="text" name="phone" id="phone" placeholder="Phone" />
                         </div>
                         <div class="form-group">
-                            <label for="pass"><i class="zmdi zmdi-lock"></i></label>
+                            <label for="pass"><i class="fas fa-lock"></i></label>
                             <input type="password" name="password" id="pass" placeholder="Password" />
                         </div>
                         <div class="form-group">
-                            <label for="re-pass"><i class="zmdi zmdi-lock-outline"></i></label>
+                            <label for="re-pass"><i class="fas fa-lock"></i></label>
                             <input type="password" name="password_confirmation" id="re_pass" placeholder="Repeat your password" />
                         </div>
-                        <div class="avatar-upload">
+                        <!-- <div class="avatar-upload">
                             <div class="avatar-edit">
                                 <input type='file' id="imageUpload" name="image" accept=".png, .jpg, .jpeg" />
                                 <label for="imageUpload"><i class="fa fa-cloud-upload" aria-hidden="true"></i></label>
@@ -111,7 +110,7 @@
                                 <div id="imagePreview" style="background-image: url(https://png.pngtree.com/png-vector/20190508/ourmid/pngtree-upload-cloud-vector-icon-png-image_1027251.jpg);">
                                 </div>
                             </div>
-                        </div>
+                        </div> -->
                         <!-- <div class="form-group">
                             <input type="checkbox" name="agree-term" id="agree-term" class="agree-term" />
                             <label for="agree-term" class="label-agree-term"><span><span></span></span>I agree all statements in <a href="#" class="term-service">Terms of service</a></label>
@@ -151,11 +150,34 @@
 
 
     // Contact Us Form Submission Function
-    $("#registerForm").submit(function(e) {
-        e.preventDefault();
+    const form = document.getElementById('registerForm');
+    const csrfToken = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
+    let url = `{{url('register')}}`;
+    form.addEventListener('submit', (event) => {
+        event.preventDefault();
         validation = validateForm();
         if (validation) {
-            $("#registerForm")[0].submit();
+            const formData = new FormData(form);
+            formData.append('_token', csrfToken);
+            const xhr = new XMLHttpRequest();
+            xhr.open('POST', url);
+            xhr.onreadystatechange = function() {
+                if (this.readyState === XMLHttpRequest.DONE && this.status === 200) {
+                    var response = JSON.parse(this.responseText);
+
+                    if (response.success == true) {
+                        window.location.href = `{{url('/release')}}`;
+                    } else {
+                        message = response.message[0][0];
+                        swal({
+                            title: "Error",
+                            text: message,
+                            icon: "error",
+                        });
+                    }
+                }
+            };
+            xhr.send(formData);
         } else {
             swal({
                 title: "Some Fields Missing",
@@ -163,7 +185,7 @@
                 icon: "error",
             });
         }
-    })
+    });
 
     function validateForm() {
         let errorCount = 0;

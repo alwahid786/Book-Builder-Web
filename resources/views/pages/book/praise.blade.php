@@ -243,6 +243,10 @@
     .nav-item a {
         color: #33363a;
     }
+
+    .disabled {
+        background-color: #6dabe459;
+    }
 </style>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js" charset="utf-8"></script>
@@ -256,13 +260,44 @@
         <form action="{{route('praiseDetail')}}" method="post" id="praiseForm" class="pt-3">
             @csrf
             <div class="mb-3 text-center" style="border: 1px solid lightgray;  padding: 10px;">
-                <h6 class="text-center">- Sample -</h6>
-                <p class="m-0">“Don Williams is living proof that actively practicing gratitude can change your life.</p>
-                <p class="mt-0">Don has done an exceptional job of illustrating that the key to gratitude is disciplined practice and eloquently presents numerous stories that reinforce this message.</p>
-                <p class="m-0">Gratitude shifts you into a higher state and is the secret ingredient to living a more powerful life.</p>
-                <p class="mt-0">Buy two copies of this book and give one to a friend.”</p>
-                <p class="m-0">Gina Mollicone-Long</p>
-                <p class="m-0">International Best-Selling Author, Creator of Greatness U and the ACME Coaching Framework</p>
+                <h6 class="text-center">- Sample 1 -</h6>
+                <div id="sample1">
+
+                    <p class="m-0">“Don Williams is living proof that actively practicing gratitude can change your life.</p>
+                    <p class="mt-0">Don has done an exceptional job of illustrating that the key to gratitude is disciplined practice and eloquently presents numerous stories that reinforce this message.</p>
+                    <p class="m-0">Gratitude shifts you into a higher state and is the secret ingredient to living a more powerful life.</p>
+                    <p class="mt-0">Buy two copies of this book and give one to a friend.”</p>
+                    <p class="m-0">Gina Mollicone-Long</p>
+                    <p class="mt-0">International Best-Selling Author, Creator of Greatness U and the ACME Coaching Framework</p>
+                </div>
+                <button class="px-3 py-1" id="sample1Btn" type="button" data-class="avatar">Copy To Editor</button>
+
+                <hr>
+                <h6 class="mt-5 text-center">- Sample 2 -</h6>
+                <div id="sample2">
+
+                    <p class="m-0">“Don Williams is living proof that actively practicing gratitude can change your life.</p>
+                    <p class="mb-0 text-center">~ Jack Wilkie</p>
+                    <p class=" mt-0 text-center">President and CEO</p>
+
+                    <p class="m-0">Don Williams is a quintessential entrepreneur. Smart, insightful, driven, talented, and a creative wizard, he is genuinely interested in helping others succeed.</p>
+                    <p class="mb-0 text-center">~ Leslie Hayes</p>
+                    <p class=" mt-0 text-center">Leadership Committee Entrepreneurs Organization</p>
+
+                    <p class="m-0">His pleasant demeanor, clear communication, and vast business experience makes Don the kind of partner you can trust with your business.</p>
+                    <p class="text-center">~ Janis Stevens CEO of ITS</p>
+
+                    <p class="m-0">Don Williams is the go-to-expert on relationship building and sales. Your audience will be enamored by Don's insight, strategies, and stage presence.</p>
+                    <p class="text-center">~ Allison Maslan CEO at AMI</p>
+
+                    <p class="m-0">Don’s ideas are cutting edge. Don listens and
+                        really thinks before he gives an answer.
+                    </p>
+                    <p class="mb-0 text-center">~ Chiqeeta Jameson</p>
+                    <p class=" mt-0 text-center">Author, Speaker, Coach</p>
+                </div>
+                <button class="px-3 py-1" id="sample2Btn" type="button" data-class="avatar">Copy To Editor</button>
+
             </div>
             <div class="mt-4">
                 <h4 class="mb-0">Record Audio</h4>
@@ -284,10 +319,14 @@
             </div>
             <input type="hidden" name="praise" id="contentInput" data-class="avatar">
             <input type="hidden" name="user_id" data-class="avatar" value="<?php echo  $bookdata['user_id'] ?? '' ?>">
+            <div class="d-flex align-items-baseline justify-content-end">
+                <input type="checkbox" data-class="avatar" id="final" style="display: inline-block; width:15px;margin-top:5px">
+                <label for="final" class="position-relative ml-2" style="line-height: 1.8rem ;">FINAL ?</label>
+            </div>
             <div class=" mx-2 mt-3 d-flex justify-content-between align-items-center">
                 <a href="{{url('/copyright')}}">
                     <button type="button" data-class="avatar" class="px-3 py-1"><i class="fas fa-arrow-left mr-2"></i>Previous</button></a>
-                <button id="save" data-class="avatar" class="px-3 py-1"><i class="fas fa-save mr-2"></i>Save</button>
+                <button id="save" disabled data-class="avatar" class="px-3 py-1 disabled"><i class="fas fa-save mr-2"></i>Save</button>
             </div>
         </form>
     </div>
@@ -302,6 +341,29 @@
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <script type="text/javascript">
     $(document).ready(function() {
+        $('#final').on('change', function() {
+            if ($(this).is(':checked')) {
+                $("#save").removeAttr('disabled');
+                $("#save").removeClass('disabled');
+            } else {
+                $("#save").attr('disabled', 'disabled');
+                $("#save").addClass('disabled');
+            }
+        });
+        $("#sample1Btn").click(function() {
+            copyHtmlToEditor('sample1');
+        })
+        $("#sample2Btn").click(function() {
+            copyHtmlToEditor('sample2');
+        })
+
+
+        function copyHtmlToEditor(id) {
+            // Get the HTML content from the source div
+            var sourceHtml = document.getElementById(id).innerHTML;
+            var editor = CKEDITOR.instances['editor2'];
+            editor.setData(sourceHtml);
+        }
         //jquery for toggle sub menus
         $('.sub-btn').click(function() {
             $(this).next('.sub-menu').slideToggle();
@@ -320,11 +382,14 @@
         });
 
         CKEDITOR.replace('editor', {
-            height: '400px'
+            height: '400px',
+
         });
         CKEDITOR.replace('editor2', {
-            height: '400px'
+            height: '400px',
+            removePlugins: 'elementspath'
         });
+        // $(".cke_bottom").css('display', 'none');
 
         // Contact Us Form Submission Function
         $("#praiseForm").submit(function(e) {
@@ -521,7 +586,7 @@
     });
 </script>
 <script>
-    $('.menu .item:nth-of-type(8) a').addClass('active-nav');
+    $('.menu .item:nth-of-type(14) a').addClass('active-nav');
 </script>
 
 

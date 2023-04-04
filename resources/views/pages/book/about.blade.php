@@ -243,6 +243,24 @@
     .nav-item a {
         color: #33363a;
     }
+
+    .imgDiv {
+        width: 200px;
+        height: 200px;
+        overflow: hidden;
+    }
+
+    .imgDiv img {
+        width: 100%;
+        height: 100%;
+        object-fit: contain;
+        border: none;
+        margin: 0;
+    }
+
+    .disabled {
+        background-color: #6dabe459;
+    }
 </style>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js" charset="utf-8"></script>
@@ -252,9 +270,28 @@
 <section class="main">
     @include('layouts.book-layout.progress')
     <div class="content px-5 py-4">
-        <h3 class="av_heading text-center">About</h3>
+        <h3 class="av_heading text-center">About The Author</h3>
         <form action="{{route('aboutDetail')}}" method="post" id="aboutForm" class="pt-3">
             @csrf
+            <div class="mb-3 text-center" style="border: 1px solid lightgray;  padding: 10px;">
+                <h6 class="text-center">- Sample 1 -</h6>
+                <div id="sample1">
+
+                    <p class="m-0">Don Williams is a 35-year serial entrepreneur. He lives outside Dallas-Ft. Worth, Texas with the love of his life Leta and their Labrador Retrievers Maggie and Tess.</p>
+                    <p class="m-0">Don spends most of his time speaking, writing, and consulting.</p>
+                    <p class="mt-0">Don is a sales, service, culture, and leadership experience expert. Don helps Companies from startups to the Fortune 100 do more business and do “better” business.</p>
+                </div>
+                <button class="px-3 py-1" id="sample1Btn" type="button" data-class="avatar">Copy To Editor</button>
+
+                <hr>
+                <h6>- Sample 2 -</h6>
+                <div id="sample2">
+
+                    <p>Don Williams and his companies run campaigns and consult with businesses worldwide on how to develop and execute wow, wow, wow customer experiences. Don opened his first company in 1986 and founded a dozen other successful firms. Don’s contact center business, Alliance, has been in the professional services niche of the industry since 1999 and has hundreds of repeat clients. Don lives in the Dallas / Ft. Worth, Texas area with the love his life, Leta, and their three chocolate Labrador retrievers. </p>
+                </div>
+                <button class="px-3 py-1" id="sample2Btn" type="button" data-class="avatar">Copy To Editor</button>
+
+            </div>
             <div class="mt-4">
                 <h4 class="mb-0">Record Audio</h4>
                 <p>Record audio to convert to text in the editor below.</p>
@@ -275,10 +312,14 @@
             </div>
             <input type="hidden" name="about" id="contentInput" data-class="avatar">
             <input type="hidden" name="user_id" data-class="avatar" value="<?php echo  $bookdata['user_id'] ?? '' ?>">
+            <div class="d-flex align-items-baseline justify-content-end">
+                <input type="checkbox" data-class="avatar" id="final" style="display: inline-block; width:15px;margin-top:5px">
+                <label for="final" class="position-relative ml-2" style="line-height: 1.8rem ;">FINAL ?</label>
+            </div>
             <div class=" mx-2 mt-3 d-flex justify-content-between align-items-center">
                 <a href="{{url('/work-with-us')}}">
                     <button type="button" data-class="avatar" class="px-3 py-1"><i class="fas fa-arrow-left mr-2"></i>Previous</button></a>
-                <button id="save" data-class="avatar" class="px-3 py-1"><i class="fas fa-save mr-2"></i>Save</button>
+                <button id="save" disabled data-class="avatar" class="px-3 py-1 disabled"><i class="fas fa-save mr-2"></i>Save</button>
             </div>
         </form>
     </div>
@@ -286,6 +327,33 @@
         <button class="p-2 pdfBtn"><i class="fas fa-book"></i></button>
     </a>
 </section>
+<!-- Button trigger modal -->
+<!-- <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModalCenter">
+    Launch demo modal
+</button> -->
+
+<!-- Modal -->
+<div class="modal fade" id="congratulationModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-body text-center">
+                <div class="imgDiv mx-auto">
+                    <img src="{{asset('assets/images/pngegg.png')}}" alt="Confetti Cone">
+                </div>
+                <h3 style="color:#6dabe4; margin-top:15px;">CONGRATULATIONS</h3>
+                <p class="mb-0 mt-2">You have completed your book with us.</p>
+                <p>We are grateful.</p>
+            </div>
+        </div>
+    </div>
+</div>
+@if (session()->has('open_modal'))
+<script>
+    $(document).ready(function() {
+        $('#congratulationModal').modal('show');
+    });
+</script>
+@endif
 <!-- inserting these scripts at the end to be able to use all the elements in the DOM -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
 <script src="https://cdn.WebRTC-Experiment.com/RecordRTC.js"></script>
@@ -293,6 +361,29 @@
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <script type="text/javascript">
     $(document).ready(function() {
+        $('#final').on('change', function() {
+            if ($(this).is(':checked')) {
+                $("#save").removeAttr('disabled');
+                $("#save").removeClass('disabled');
+            } else {
+                $("#save").attr('disabled', 'disabled');
+                $("#save").addClass('disabled');
+            }
+        });
+        $("#sample1Btn").click(function() {
+            copyHtmlToEditor('sample1');
+        })
+        $("#sample2Btn").click(function() {
+            copyHtmlToEditor('sample2');
+        })
+
+
+        function copyHtmlToEditor(id) {
+            // Get the HTML content from the source div
+            var sourceHtml = document.getElementById(id).innerHTML;
+            var editor = CKEDITOR.instances['editor2'];
+            editor.setData(sourceHtml);
+        }
         //jquery for toggle sub menus
         $('.sub-btn').click(function() {
             $(this).next('.sub-menu').slideToggle();
@@ -311,10 +402,12 @@
         });
 
         CKEDITOR.replace('editor', {
-            height: '400px'
+            height: '400px',
+            removePlugins: 'elementspath'
         });
         CKEDITOR.replace('editor2', {
-            height: '400px'
+            height: '400px',
+            removePlugins: 'elementspath'
         });
 
         // Contact Us Form Submission Function
@@ -512,7 +605,7 @@
     });
 </script>
 <script>
-    $('.menu .item:nth-of-type(9) a').addClass('active-nav');
+    $('.menu .item:nth-of-type(21) a').addClass('active-nav');
 </script>
 
 
