@@ -270,8 +270,8 @@
             <div class="">
                 <table class="w-100 mb-5">
                     <tbody class="outline-content">
-                        @if(isset($bookdata['outlines']) && !empty($bookdata['outlines']))
                         <?php $count = 0; ?>
+                        @if(isset($bookdata['outlines']) && !empty($bookdata['outlines']))
                         @foreach($bookdata['outlines'] as $outline)
                         <?php $count++ ?>
                         <tr draggable='true' ondragstart='start()' ondragover='dragover()'>
