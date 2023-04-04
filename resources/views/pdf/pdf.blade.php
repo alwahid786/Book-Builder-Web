@@ -52,45 +52,45 @@
     @endif
     <!-- Avatar Section  -->
     @if(isset($data['avatar_fname']) && $data['avatar_fname'] != '')
-    <div class="mt-3 text-center">
+    <div class="mt-3 text-center" style="page-break-before: always;">
         <h3>{{$data['avatar_fname']}} {{$data['avatar_lname']}}</h3>
         <p>{{$data['avatar_description']}}</p>
     </div>
     @endif
     <!-- Copyright Section  -->
     @if(isset($data['copyright']) && !empty($data['copyright']['content']))
-    <div class="copyright-content">
+    <div class="copyright-content" style="page-break-before: always;">
         <h3 class="text-center">Copyright</h3>
         {!! $data['copyright']['content'] !!}
     </div>
     @endif
     @if(isset($data['praise']) && !empty($data['praise']))
-    <div class="praise-content">
+    <div class="praise-content" style="page-break-before: always;">
         <h3 class="text-center">What Others are Saying...</h3>
         {!! $data['praise'] !!}
     </div>
     @endif
     @if(isset($data['dedication']) && !empty($data['dedication']))
-    <div class="dedication-content">
+    <div class="dedication-content" style="page-break-before: always;">
         <h3 class="text-center">Dedication</h3>
         {!! $data['dedication'] !!}
     </div>
     @endif
     @if(isset($data['how_to_use']) && !empty($data['how_to_use']))
-    <div class="how_to_use-content">
+    <div class="how_to_use-content" style="page-break-before: always;">
         <h3 class="text-center">How To Use This Book</h3>
         {!! $data['how_to_use'] !!}
     </div>
     @endif
     @if(isset($data['forward']) && !empty($data['forward']))
-    <div class="forward-content">
+    <div class="forward-content" style="page-break-before: always;">
         <h3 class="text-center">How To Use This Book</h3>
         {!! $data['forward'] !!}
     </div>
     @endif
     <!-- Outlines Section  -->
     @if(isset($data['outlines']) && !empty($data['outlines']))
-    <div class="outlineDiv mx-5">
+    <div class="outlineDiv mx-5" style="page-break-before: always;">
         <h2 class="mt-3">Table of Contents:</h2>
         <hr class="mt-0">
         <table class="w-100">
@@ -111,7 +111,7 @@
     @if(isset($data['outlines']) && !empty($data['outlines']))
     @foreach($data['outlines'] as $outlineValue)
     @if($outlineValue['content'] != null)
-    <div class="outlineDiv mx-3">
+    <div class="outlineDiv mx-3 style=" style="page-break-before: always;">
         <h2 class="my-3">{{$outlineValue['outline_name']}}</h2>
         <div class="chapter-content">
             {!! $outlineValue['content'] !!}
@@ -121,19 +121,19 @@
     @endforeach
     @endif
     @if(isset($data['conclusion']) && !empty($data['conclusion']))
-    <div class="conclusion-content">
+    <div class="conclusion-content" style="page-break-before: always;">
         <h3 class="text-center">Conclusion</h3>
         {!! $data['conclusion'] !!}
     </div>
     @endif
     @if(isset($data['work_with_us']) && !empty($data['work_with_us']))
-    <div class="work-content">
+    <div class="work-content" style="page-break-before: always;">
         <h3 class="text-center">Work With Us</h3>
         {!! $data['work_with_us'] !!}
     </div>
     @endif
     @if(isset($data['about']) && !empty($data['about']))
-    <div class="about-content">
+    <div class="about-content" style="page-break-before: always;">
         <h3 class="text-center">About Author</h3>
         {!! $data['about'] !!}
 

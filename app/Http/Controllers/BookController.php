@@ -333,7 +333,7 @@ class BookController extends Controller
         $book = Book::where('user_id', $request->user_id)->update($data);
         if ($book) {
             session()->flash('open_modal', true);
-            return redirect()->back();
+            return redirect('/congratulations');
         }
     }
 
@@ -352,5 +352,28 @@ class BookController extends Controller
             return response()->json(['success', true]);
         }
         return response()->json(['success', false]);
+    }
+
+    public function uploadFile(Request $request)
+    {
+        // dd($request->all());
+        // Get the uploaded file.
+        $file = $request->file('upload');
+        // Define the upload directory.
+        $uploadPath = public_path('/uploads');
+        if (!is_dir($uploadPath)) {
+            mkdir($uploadPath, 777, true);
+        }
+
+        // Generate a unique filename for the uploaded file.
+        $filename = uniqid() . '-' . $file->getClientOriginalName();
+
+        // Move the uploaded file to the upload directory.
+        $file->move($uploadPath, $filename);
+
+        // Return the URL of the uploaded file to CKEditor.
+        return response()->json([
+            'url' => public_path('/uploads/' . $filename)
+        ]);
     }
 }

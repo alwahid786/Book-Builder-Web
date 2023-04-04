@@ -270,7 +270,7 @@
                     </div>
                 </div>
                 <div class="mt-3">
-                    <div id="editor2"><?php echo $bookdata['outline']['content'] ?></div>
+                    <textarea id="editor2"><?php echo $bookdata['outline']['content'] ?></textarea>
                 </div>
             </div>
 
@@ -292,7 +292,8 @@
 <!-- inserting these scripts at the end to be able to use all the elements in the DOM -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
 <script src="https://cdn.WebRTC-Experiment.com/RecordRTC.js"></script>
-<script src="https://cdn.ckeditor.com/4.16.1/standard-all/ckeditor.js"></script>
+<script src="{{asset('assets/js/ckeditor/ckeditor.js')}}"></script>
+
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <script type="text/javascript">
     $(document).ready(function() {
@@ -347,13 +348,23 @@
             }
             return true;
         }
-        CKEDITOR.replace('editor', {
-            height: '400px',
-            removePlugins: 'elementspath'
-        });
+        var csrfToken = document.querySelector('meta[name="csrf-token"]').getAttribute('content')
         CKEDITOR.replace('editor2', {
             height: '400px',
-            removePlugins: 'elementspath'
+            removePlugins: 'elementspath',
+            extraPlugins: 'imageresizerowandcolumn', // Add the image plugin
+            resize_enabled: true, // Enable image resizing
+            filebrowserBrowseUrl: "{{route('uploadFile')}}",
+            filebrowserUploadUrl: "{{route('uploadFile')}}",
+            filebrowserImageBrowseUrl: "{{route('uploadFile')}}",
+            filebrowserImageUploadUrl: "{{route('uploadFile')}}",
+        });
+        var editor = CKEDITOR.instances['editor2'];
+        editor.on('fileUploadRequest', function(evt) {
+            var xhr = evt.data.fileLoader.xhr;
+
+            xhr.setRequestHeader('Cache-Control', 'no-cache');
+            xhr.setRequestHeader('X-CSRF-TOKEN', $('meta[name="csrf-token"]').attr('content'));
         });
 
         let recognition;
@@ -526,6 +537,4 @@
         }
     })
 </script>
-
-
 @endsection

@@ -312,13 +312,6 @@
         </div>
     </div>
 </div>
-@if (session()->has('open_modal'))
-<script>
-    $(document).ready(function() {
-        $('#congratulationModal').modal('show');
-    });
-</script>
-@endif
 <!-- inserting these scripts at the end to be able to use all the elements in the DOM -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
 <script src="https://cdn.WebRTC-Experiment.com/RecordRTC.js"></script>
@@ -548,7 +541,7 @@
     });
 </script>
 <script>
-    $('.menu .item:nth-of-type(21) a').addClass('active-nav');
+    $('.menu .item:nth-of-type(22) a').addClass('active-nav');
 </script>
 
 

@@ -267,18 +267,26 @@
             </div> -->
             <div class="my-3 text-center" style="border: 1px solid lightgray;  padding: 10px;">
                 <h6 class="text-center">Sample 01</h6>
-                <h4>GRATITUDE STORIES FROM OUR HEARTS BY</h4>
-                <h5 style="color:#6dabe4;">DON WILLIAMS AND FRIENDS</h5>
-                <p class="m-0">Cover Art - “The Gratitude Heart”</p>
-                <p class="mt-0 mb-5">© 2020 Leta Farnsworth https://letafarnsworthart.com</p>
+                <div id="sample1">
+                    <h4>GRATITUDE STORIES FROM OUR HEARTS BY</h4>
+                    <h5 style="color:#6dabe4;">DON WILLIAMS AND FRIENDS</h5>
+                    <p class="m-0">Cover Art - “The Gratitude Heart”</p>
+                    <p class="mt-0">© 2020 Leta Farnsworth https://letafarnsworthart.com</p>
+                </div>
+                <button class="px-3 py-1" id="sample1Btn">Insert To Editor</button>
 
+                <hr>
                 <h6 class="text-center">Sample 02</h6>
-                <h4 style="color:#6dabe4;">Romancing Your Customer</h4>
-                <h6>How to Passionately Attract, Retain, and Win-Back Customers
-                    for Unbelievable Loyalty and Profit
-                </h6>
-                <p class=" m-0">By</p>
-                <p class=" m-0">Don Williams</p>
+                <div id="sample2">
+                    <h4 style="color:#6dabe4;">Romancing Your Customer</h4>
+                    <h6>How to Passionately Attract, Retain, and Win-Back Customers
+                        for Unbelievable Loyalty and Profit
+                    </h6>
+                    <p class=" m-0">By</p>
+                    <p class=" mt-0">Don Williams</p>
+                </div>
+                <button class="px-3 py-1" id="sample2Btn">Insert To Editor</button>
+
             </div>
         </div>
         <form action="{{route('frontCoverDetail')}}" method="post" id="frontCoverForm" class="pt-3">
@@ -338,6 +346,14 @@
 <script src="https://cdn.WebRTC-Experiment.com/RecordRTC.js"></script>
 <script src="https://cdn.ckeditor.com/4.16.1/standard-all/ckeditor.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script>
+    // function copyHtmlToEditor(id) {
+    //     // Get the HTML content from the source div
+    //     var sourceHtml = document.getElementById(id).innerHTML;
+    //     var editor = CKEDITOR.instances['editor2'];
+    //     editor.setData(sourceHtml);
+    // }
+</script>
 <script type="text/javascript">
     $(document).ready(function() {
         CKEDITOR.replace('editor', {
@@ -348,6 +364,19 @@
             height: '400px',
             removePlugins: 'elementspath'
         });
+        $("#sample1Btn").click(function() {
+            copyHtmlToEditor('sample1');
+        })
+        $("#sample2Btn").click(function() {
+            copyHtmlToEditor('sample2');
+        })
+
+        function copyHtmlToEditor(id) {
+            // Get the HTML content from the source div
+            var sourceHtml = document.getElementById(id).innerHTML;
+            var editor = CKEDITOR.instances['editor2'];
+            editor.setData(sourceHtml);
+        }
         //jquery for toggle sub menus
         $('.sub-btn').click(function() {
             $(this).next('.sub-menu').slideToggle();

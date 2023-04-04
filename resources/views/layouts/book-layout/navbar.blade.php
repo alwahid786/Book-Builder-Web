@@ -55,7 +55,7 @@ $sections = bookProgress()['sections'];
 <div class="side-bar">
 
     <div class="menu">
-        <div class=" text-center text-white" style="height: 85px; display:flex; font-size:30px; justify-content:center; align-items:center"><img class="logoImg m-0" style="border-radius:none !important;" src="{{asset('assets/images/LOGO_PNG.png')}}" alt=""></div>
+        <div class=" text-center text-white" style="height: 85px; display:flex; font-size:30px; justify-content:center; align-items:center"><img class="logoImg m-0" style="border-radius:none !important;" src="{{asset('assets/images/LOGO_SVG.svg')}}" alt=""></div>
         <div class="item position-relative text-white" style="cursor:default; padding: 0px 10px; ">Welcome</div>
         <div class="item position-relative text-white" style="cursor:default; font-size:18px;padding:  0px 10px; "><strong style="font-family: 'Roboto', sans-serif !important;">My Co-Author Stories</strong></div>
         <div class="item position-relative">
@@ -129,7 +129,7 @@ $sections = bookProgress()['sections'];
         <div class="item"><a href="{{url('/about')}}" class="@if(!$sections['about']) disableTab @endif"><i class="fas fa-user"></i>About The Author
                 @if($sections['about'])<i class="fas fa-check-circle filled-circle"></i>@endif
             </a></div>
-        <div class="item"><a href="{{url('/about')}}" class="@if(!$sections['about']) disableTab @endif"><i class="fas fa-award"></i>CONGRATULATIONS
+        <div class="item"><a href="{{url('/congratulations')}}" class="@if(!$sections['about']) disableTab @endif"><i class="fas fa-award"></i>CONGRATULATIONS
             </a></div>
     </div>
 </div>

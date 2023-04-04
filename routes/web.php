@@ -80,6 +80,7 @@ Route::middleware('auth')->group(function () {
     Route::post('/gratitude', [BookController::class, 'updateGratitude'])->name('updateGratitude');
     Route::post('/romance', [BookController::class, 'updateRomance'])->name('updateRomance');
     Route::post('/release-submission', [AuthController::class, 'releaseForm'])->name('releaseForm');
+    Route::any('/uploadFile', [BookController::class, 'uploadFile'])->name('uploadFile');
 
     // PDF Creation Routes 
     Route::get('/create-book', [PDFController::class, 'createPDF'])->name('createPDF');
