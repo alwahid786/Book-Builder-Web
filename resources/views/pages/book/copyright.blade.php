@@ -345,6 +345,8 @@
                                 <div id="timer2">00:00:00</div>
                             </div>
                         </div>
+                        <div id="translated" style="border: none; padding: 10px; background-color: #f5f5f5; border-radius: 5px;"></div>
+
                         <div class="mt-3">
                             <div id="editor2"><?php if (isset($bookdata['copyright']) && $bookdata['copyright']['template_id'] == 1) {
                                                     echo $bookdata['copyright']['content'];
@@ -593,13 +595,16 @@
                     // editor.setData('', { selectionStart: element, selectionEnd: element });
                     editor.insertText(transcript, element);
                     // CKEDITOR.instances.transcription.insertHtml(transcript);
-                    //   transcription += transcript + ' ';
+                    transcription += transcript + ' ';
+                    interimTranscription = '';
+                    transcription = '';
+                    $("#translated").text('');
+                } else {
+                    interimTranscription += transcript;
+                    $("#translated").text(transcription + interimTranscription);
+
                 }
-                //    else {
-                //       interimTranscription += transcript;
-                //   }
             }
-            //   transcriptionField.value = transcription + interimTranscription;
 
         };
 
