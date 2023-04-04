@@ -256,6 +256,10 @@
         position: relative;
         height: 170px;
     }
+
+    .disabled {
+        background-color: #6dabe459;
+    }
 </style>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js" charset="utf-8"></script>
@@ -268,25 +272,24 @@
         <h3 class="av_heading text-center">Dedication</h3>
         <form action="{{route('dedicationDetail')}}" method="post" id="dedicationForm" class="pt-3">
             @csrf
-            <div class="">
-                <div class="row">
-                    <div class="col-6 text-center sample-outer" style="border: 1px solid lightgray;  padding: 10px;">
-                        <div class="sample">
-                            <h6 class="text-center">- Sample 01 -</h6>
-                            <p class="mt-0">To everyone who has shared a story of the inexplicable beauty and power of Gratitude with another person – thank you for making the world a better place.</p>
-                            <p class="m-0">This book is for you.</p>
-                        </div>
-                    </div>
-                    <div class="col-6 text-center sample-outer" style="border: 1px solid lightgray;  padding: 10px;">
-                        <div class="sample">
-                            <h6 class="text-center">- Sample 02 -</h6>
-
-                            <p class="m-0" style="height:100%;">To the brave, creative, and romantic entrepreneurs and
-                                business owners that make our lives better.
-                            </p>
-                        </div>
-                    </div>
+            <div class="mb-3 text-center" style="border: 1px solid lightgray;  padding: 10px;">
+                <h6 class="text-center">- Sample 01 -</h6>
+                <div id="sample1">
+                    <p class="mt-0">To everyone who has shared a story of the inexplicable beauty and power of Gratitude with another person – thank you for making the world a better place.</p>
+                    <p class="mt-0">This book is for you.</p>
                 </div>
+                <button class="px-3 py-1" id="sample1Btn" type="button" data-class="avatar">Copy To Editor</button>
+
+                <hr>
+                <h6 class="text-center">- Sample 02 -</h6>
+                <div id="sample2">
+
+                    <p class="mt-0" style="height:100%;">To the brave, creative, and romantic entrepreneurs and
+                        business owners that make our lives better.
+                    </p>
+                </div>
+                <button class="px-3 py-1" id="sample2Btn" type="button" data-class="avatar">Copy To Editor</button>
+
             </div>
             <div class="mt-4">
                 <h4 class="mb-0">Record Audio</h4>
@@ -308,10 +311,14 @@
             </div>
             <input type="hidden" name="dedication" id="contentInput" data-class="avatar">
             <input type="hidden" name="user_id" data-class="avatar" value="<?php echo  $bookdata['user_id'] ?? '' ?>">
+            <div class="d-flex align-items-baseline justify-content-end">
+                <input type="checkbox" data-class="avatar" id="final" style="display: inline-block; width:15px;margin-top:5px">
+                <label for="final" class="position-relative ml-2" style="line-height: 1.8rem ;">FINAL ?</label>
+            </div>
             <div class=" mx-2 mt-3 d-flex justify-content-between align-items-center">
                 <a href="{{url('/praise')}}">
                     <button type="button" data-class="avatar" class="px-3 py-1"><i class="fas fa-arrow-left mr-2"></i>Previous</button></a>
-                <button id="save" data-class="avatar" class="px-3 py-1"><i class="fas fa-save mr-2"></i>Save</button>
+                <button id="save" disabled data-class="avatar" class="px-3 py-1 disabled"><i class="fas fa-save mr-2"></i>Save</button>
             </div>
         </form>
     </div>
@@ -326,6 +333,29 @@
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <script type="text/javascript">
     $(document).ready(function() {
+        $('#final').on('change', function() {
+            if ($(this).is(':checked')) {
+                $("#save").removeAttr('disabled');
+                $("#save").removeClass('disabled');
+            } else {
+                $("#save").attr('disabled', 'disabled');
+                $("#save").addClass('disabled');
+            }
+        });
+        $("#sample1Btn").click(function() {
+            copyHtmlToEditor('sample1');
+        })
+        $("#sample2Btn").click(function() {
+            copyHtmlToEditor('sample2');
+        })
+
+
+        function copyHtmlToEditor(id) {
+            // Get the HTML content from the source div
+            var sourceHtml = document.getElementById(id).innerHTML;
+            var editor = CKEDITOR.instances['editor2'];
+            editor.setData(sourceHtml);
+        }
         //jquery for toggle sub menus
         $('.sub-btn').click(function() {
             $(this).next('.sub-menu').slideToggle();

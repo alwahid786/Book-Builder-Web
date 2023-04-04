@@ -243,6 +243,10 @@
     .nav-item a {
         color: #33363a;
     }
+
+    .disabled {
+        background-color: #6dabe459;
+    }
 </style>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js" charset="utf-8"></script>
@@ -257,16 +261,26 @@
             @csrf
             <div class="mb-3 text-center" style="border: 1px solid lightgray;  padding: 10px;">
                 <h6 class="text-center">- Sample 1 -</h6>
-                <p class="m-0"><b>Want to Work with Don? Don Speaks, Consults and Facilitates Anywhere on Earth!</b></p>
-                <p class="m-0">Contact Don at:</p>
-                <p class="m-0">don@donwilliamsglobal.com 800 823 0403</p>
-                <p>Or Nearly Everywhere on Social Media</p>
+                <div id="sample1">
 
+                    <p class="m-0"><b>Want to Work with Don? Don Speaks, Consults and Facilitates Anywhere on Earth!</b></p>
+                    <p class="m-0">Contact Don at:</p>
+                    <p class="m-0">don@donwilliamsglobal.com 800 823 0403</p>
+                    <p>Or Nearly Everywhere on Social Media</p>
+                </div>
+                <button class="px-3 py-1" id="sample1Btn" type="button" data-class="avatar">Copy To Editor</button>
+
+                <hr>
                 <h6 class="text-center">- Sample 2 -</h6>
-                <p class="m-0"><b>Want to take your business to the next level?</b> </p>
-                <p class="m-0">Get equipped with proven tools for success. Educational and entertaining, Don Williams delivers cutting edge insights that help you and your team become industry leaders. </p>
-                <p class="m-0">Learn how to quickly implement exceptional customer service in your specific market to passionately attract, retain, and win back loyal customers. </p>
-                <p>Schedule Don to speak at your next event. Call the Don Williams team at 800-823-0403. Or email speaking@donwilliamsglobal.com </p>
+                <div id="sample2">
+
+                    <p class="m-0"><b>Want to take your business to the next level?</b> </p>
+                    <p class="m-0">Get equipped with proven tools for success. Educational and entertaining, Don Williams delivers cutting edge insights that help you and your team become industry leaders. </p>
+                    <p class="m-0">Learn how to quickly implement exceptional customer service in your specific market to passionately attract, retain, and win back loyal customers. </p>
+                    <p>Schedule Don to speak at your next event. Call the Don Williams team at 800-823-0403. Or email speaking@donwilliamsglobal.com </p>
+                </div>
+                <button class="px-3 py-1" id="sample2Btn" type="button" data-class="avatar">Copy To Editor</button>
+
             </div>
             <div class="mt-4">
                 <h4 class="mb-0">Record Audio</h4>
@@ -288,10 +302,14 @@
             </div>
             <input type="hidden" name="work_with_us" id="contentInput" data-class="avatar">
             <input type="hidden" name="user_id" data-class="avatar" value="<?php echo  $bookdata['user_id'] ?? '' ?>">
+            <div class="d-flex align-items-baseline justify-content-end">
+                <input type="checkbox" data-class="avatar" id="final" style="display: inline-block; width:15px;margin-top:5px">
+                <label for="final" class="position-relative ml-2" style="line-height: 1.8rem ;">FINAL ?</label>
+            </div>
             <div class=" mx-2 mt-3 d-flex justify-content-between align-items-center">
                 <a href="{{url('/conclusion')}}">
                     <button type="button" data-class="avatar" class="px-3 py-1"><i class="fas fa-arrow-left mr-2"></i>Previous</button></a>
-                <button id="save" data-class="avatar" class="px-3 py-1"><i class="fas fa-save mr-2"></i>Save</button>
+                <button id="save" disabled data-class="avatar" class="px-3 py-1 disabled"><i class="fas fa-save mr-2"></i>Save</button>
             </div>
         </form>
     </div>
@@ -306,6 +324,29 @@
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <script type="text/javascript">
     $(document).ready(function() {
+        $('#final').on('change', function() {
+            if ($(this).is(':checked')) {
+                $("#save").removeAttr('disabled');
+                $("#save").removeClass('disabled');
+            } else {
+                $("#save").attr('disabled', 'disabled');
+                $("#save").addClass('disabled');
+            }
+        });
+        $("#sample1Btn").click(function() {
+            copyHtmlToEditor('sample1');
+        })
+        $("#sample2Btn").click(function() {
+            copyHtmlToEditor('sample2');
+        })
+
+
+        function copyHtmlToEditor(id) {
+            // Get the HTML content from the source div
+            var sourceHtml = document.getElementById(id).innerHTML;
+            var editor = CKEDITOR.instances['editor2'];
+            editor.setData(sourceHtml);
+        }
         //jquery for toggle sub menus
         $('.sub-btn').click(function() {
             $(this).next('.sub-menu').slideToggle();

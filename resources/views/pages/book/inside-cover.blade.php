@@ -234,6 +234,10 @@
         position: absolute;
         right: 0;
     }
+
+    .disabled {
+        background-color: #6dabe459;
+    }
 </style>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js" charset="utf-8"></script>
@@ -273,7 +277,7 @@
                     <p class="m-0">Cover Art - “The Gratitude Heart”</p>
                     <p class="mt-0">© 2020 Leta Farnsworth https://letafarnsworthart.com</p>
                 </div>
-                <button class="px-3 py-1" id="sample1Btn">Insert To Editor</button>
+                <button class="px-3 py-1" id="sample1Btn">Copy To Editor</button>
 
                 <hr>
                 <h6 class="text-center">Sample 02</h6>
@@ -285,7 +289,7 @@
                     <p class=" m-0">By</p>
                     <p class=" mt-0">Don Williams</p>
                 </div>
-                <button class="px-3 py-1" id="sample2Btn">Insert To Editor</button>
+                <button class="px-3 py-1" id="sample2Btn">Copy To Editor</button>
 
             </div>
         </div>
@@ -331,10 +335,17 @@
             </div>
             <input type="hidden" name="inside_cover_content" id="contentInput" data-class="avatar">
             <input type="hidden" name="user_id" data-class="avatar" value="<?php echo  $bookdata['user_id'] ?? '' ?>">
+            <div class="d-flex align-items-baseline justify-content-end">
+                <input type="checkbox" data-class="avatar" id="final" style="display: inline-block; width:15px;margin-top:5px">
+                <label for="final" class="position-relative ml-2" style="line-height: 1.8rem ;">FINAL ?</label>
+            </div>
             <div class=" mx-2 mt-3 d-flex justify-content-between align-items-center">
                 <a href="{{url('/cover-art')}}">
-                    <button type="button" data-class="avatar" class="px-3 py-1"><i class="fas fa-arrow-left mr-2"></i>Previous</button></a>
-                <button id="save" data-class="avatar" class="px-3 py-1"><i class="fas fa-save mr-2"></i>Save</button>
+                    <button type="button" data-class="avatar" class="px-3 py-1"><i class="fas fa-arrow-left mr-2"></i>Previous</button>
+                </a>
+                <div class="">
+                    <button id="save" data-class="avatar" disabled class="px-3 py-1 disabled"><i class="fas fa-save mr-2"></i>Save</button>
+                </div>
             </div>
         </form>
     </div>
@@ -356,6 +367,16 @@
 </script>
 <script type="text/javascript">
     $(document).ready(function() {
+        $('#final').on('change', function() {
+            if ($(this).is(':checked')) {
+                $("#save").removeAttr('disabled');
+                $("#save").removeClass('disabled');
+            } else {
+                $("#save").attr('disabled', 'disabled');
+                $("#save").addClass('disabled');
+            }
+        });
+
         CKEDITOR.replace('editor', {
             height: '400px',
             removePlugins: 'elementspath'
@@ -370,6 +391,7 @@
         $("#sample2Btn").click(function() {
             copyHtmlToEditor('sample2');
         })
+
 
         function copyHtmlToEditor(id) {
             // Get the HTML content from the source div

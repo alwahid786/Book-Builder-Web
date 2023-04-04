@@ -243,6 +243,10 @@
     .nav-item a {
         color: #33363a;
     }
+
+    .disabled {
+        background-color: #6dabe459;
+    }
 </style>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js" charset="utf-8"></script>
@@ -277,11 +281,14 @@
             <input type="hidden" name="user_id" data-class="avatar" value="<?php echo  $bookdata['user_id'] ?? '' ?>">
             <input type="hidden" name="outline_id" id="outline_id" data-class="avatar" value="<?php echo  $bookdata['outline']['id'] ?? '' ?>">
             <input type="hidden" name="content" id="contentInput" data-class="avatar">
-
+            <div class="d-flex align-items-baseline justify-content-start">
+                <input type="checkbox" data-class="avatar" id="final" style="display: inline-block; width:15px;margin-top:5px">
+                <label for="final" class="position-relative ml-2" style="line-height: 1.8rem ;">FINAL ?</label>
+            </div>
             <div class=" mx-2 mt-3 d-flex justify-content-between align-items-center">
                 <!-- <a href="{{url('/cover-art')}}">
                     <button type="button" data-class="avatar" class="px-3 py-1"><i class="fas fa-arrow-left mr-2"></i>Previous</button></a> -->
-                <button id="save" data-class="avatar" class="px-3 py-1"><i class="fas fa-save mr-2"></i>Save</button>
+                <button id="save" disabled data-class="avatar" class="px-3 py-1 disabled"><i class="fas fa-save mr-2"></i>Save</button>
             </div>
         </form>
     </div>
@@ -297,6 +304,15 @@
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <script type="text/javascript">
     $(document).ready(function() {
+        $('#final').on('change', function() {
+            if ($(this).is(':checked')) {
+                $("#save").removeAttr('disabled');
+                $("#save").removeClass('disabled');
+            } else {
+                $("#save").attr('disabled', 'disabled');
+                $("#save").addClass('disabled');
+            }
+        });
         //jquery for toggle sub menus
         $('.sub-menu').slideToggle();
         $('.sub-btn').click(function() {

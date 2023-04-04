@@ -243,6 +243,10 @@
     .nav-item a {
         color: #33363a;
     }
+
+    .disabled {
+        background-color: #6dabe459;
+    }
 </style>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js" charset="utf-8"></script>
@@ -254,9 +258,7 @@
     <div class="content px-5 py-4">
         <h3 class="av_heading text-center">Copyright</h3>
         <div class="tab-content">
-            <div class="tab-pane <?php if ((isset($bookdata['copyright']) && $bookdata['copyright']['template_id'] == 1) || (!isset($bookdata['copyright']))) {
-                                        echo "active";
-                                    }  ?>" id="tabs-1" role="tabpanel">
+            <div class="tab-pane active id=" tabs-1" role="tabpanel">
                 <form action="{{route('copyrightDetail')}}" method="post" id="frontCoverForm1" class="pt-3">
                     @csrf
                     <!-- <div class="d-flex justify-content-between align-items-center">
@@ -311,24 +313,34 @@
                     </div> -->
                     <div class="my-3 text-center" style="border: 1px solid lightgray;  padding: 10px;">
                         <h6 class="text-center">- Sample 01 -</h6>
-                        <p class="m-0">Copyright (Year) (First Name) (Last Name), (Company Name 1), (Company Name 2)</p>
-                        <p class="mt-0">All Rights Reserved</p>
-                        <p class="m-0">Contact the Author at:</p>
-                        <p class="mt-0">(Street Address 1), (Street Address 2), (City), (ST) (Country) (Zip Code)</p>
-                        <p class="m-0">First Edition</p>
-                        <p class="mt-0">All rights reserved. No part of this publication may be reproduced, distributed, or transmitted in any form or by any means, including photocopying, recording. Or other electronic or mechanical method(s) or by any information storage and retrieval systems without the prior written permission of the publisher and author, except in the case of brief quotations embodied in reviews and certain other non-commercial uses permitted by copyright law.</p>
+                        <div id="sample1">
 
+                            <p class="m-0">Copyright (Year) (First Name) (Last Name), (Company Name 1), (Company Name 2)</p>
+                            <p class="mt-0">All Rights Reserved</p>
+                            <p class="m-0">Contact the Author at:</p>
+                            <p class="mt-0">(Street Address 1), (Street Address 2), (City), (ST) (Country) (Zip Code)</p>
+                            <p class="m-0">First Edition</p>
+                            <p class="mt-0">All rights reserved. No part of this publication may be reproduced, distributed, or transmitted in any form or by any means, including photocopying, recording. Or other electronic or mechanical method(s) or by any information storage and retrieval systems without the prior written permission of the publisher and author, except in the case of brief quotations embodied in reviews and certain other non-commercial uses permitted by copyright law.</p>
+                        </div>
+                        <button class="px-3 py-1" id="sample1Btn" type="button" data-class="avatar">Copy To Editor</button>
+
+                        <hr>
                         <h6 class="text-center">- Sample 02 -</h6>
-                        <p class="m-0">COPYRIGHT © (year of publication) by (author's name)</p>
-                        <p class="m-0">All rights reserved. No part of this book may be reproduced, stored in a retrieval system, or transmitted in any form or by any means, electronic, mechanical, photocopying, recording, or otherwise, without the prior written permission of the author/publisher.</p>
-                        <p class="mt-0">This book is a work of fiction (or non-fiction) and any resemblance to persons, living or dead, or places, events or locales is purely coincidental. The characters are productions of the author's imagination and used fictitiously.</p>
-                        <p class="m-0">Cover design by (cover designer's name)</p>
-                        <p class="m-0">Edited by (editor's name)</p>
-                        <p class="m-0">Published by (publisher's name)</p>
-                        <p class="m-0">ISBN (insert ISBN here)</p>
-                        <p class="m-0">Printed in (insert country where book is printed)</p>
-                        <p class="m-0">(Insert any disclaimers or legal notices here)</p>
-                        <p class="m-0">For permission to use material from this book, please contact the author or the publisher.</p>
+                        <div id="sample2">
+
+                            <p class="m-0">COPYRIGHT © (year of publication) by (author's name)</p>
+                            <p class="m-0">All rights reserved. No part of this book may be reproduced, stored in a retrieval system, or transmitted in any form or by any means, electronic, mechanical, photocopying, recording, or otherwise, without the prior written permission of the author/publisher.</p>
+                            <p class="mt-0">This book is a work of fiction (or non-fiction) and any resemblance to persons, living or dead, or places, events or locales is purely coincidental. The characters are productions of the author's imagination and used fictitiously.</p>
+                            <p class="m-0">Cover design by (cover designer's name)</p>
+                            <p class="m-0">Edited by (editor's name)</p>
+                            <p class="m-0">Published by (publisher's name)</p>
+                            <p class="m-0">ISBN (insert ISBN here)</p>
+                            <p class="m-0">Printed in (insert country where book is printed)</p>
+                            <p class="m-0">(Insert any disclaimers or legal notices here)</p>
+                            <p class="mt-0">For permission to use material from this book, please contact the author or the publisher.</p>
+                            
+                        </div>
+                        <button class="px-3 py-1" id="sample2Btn" type="button" data-class="avatar">Copy To Editor</button>
                     </div>
                     <div class="mt-4">
                         <h4 class="mb-0">Record Audio</h4>
@@ -354,10 +366,14 @@
                     <input type="hidden" name="user_id" data-class="avatar" value="<?php echo  $bookdata['copyright']['user_id'] ?? '' ?>">
                     <input type="hidden" name="template_id" data-class="avatar" value="1">
                     <input type="hidden" name="content" id="contentInput" data-class="avatar" value="1">
+                    <div class="d-flex align-items-baseline justify-content-end">
+                        <input type="checkbox" data-class="avatar" id="final" style="display: inline-block; width:15px;margin-top:5px">
+                        <label for="final" class="position-relative ml-2" style="line-height: 1.8rem ;">FINAL ?</label>
+                    </div>
                     <div class="mx-2 mt-3 d-flex justify-content-between align-items-center">
                         <a href="{{url('/inside-cover')}}">
                             <button type="button" data-class="avatar" class="px-3 py-1"><i class="fas fa-arrow-left mr-2"></i>Previous</button></a>
-                        <button type="submit" id="save" data-class="avatar" class="px-3 py-1"><i class="fas fa-save mr-2"></i>Save</button>
+                        <button type="submit" id="save" disabled data-class="avatar" class="px-3 py-1 disabled"><i class="fas fa-save mr-2"></i>Save</button>
                     </div>
                 </form>
             </div>
@@ -375,6 +391,29 @@
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <script type="text/javascript">
     $(document).ready(function() {
+        $('#final').on('change', function() {
+            if ($(this).is(':checked')) {
+                $("#save").removeAttr('disabled');
+                $("#save").removeClass('disabled');
+            } else {
+                $("#save").attr('disabled', 'disabled');
+                $("#save").addClass('disabled');
+            }
+        });
+        $("#sample1Btn").click(function() {
+            copyHtmlToEditor('sample1');
+        })
+        $("#sample2Btn").click(function() {
+            copyHtmlToEditor('sample2');
+        })
+
+
+        function copyHtmlToEditor(id) {
+            // Get the HTML content from the source div
+            var sourceHtml = document.getElementById(id).innerHTML;
+            var editor = CKEDITOR.instances['editor2'];
+            editor.setData(sourceHtml);
+        }
         //jquery for toggle sub menus
         $('.sub-btn').click(function() {
             $(this).next('.sub-menu').slideToggle();
