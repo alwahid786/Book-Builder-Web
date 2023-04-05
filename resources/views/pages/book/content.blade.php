@@ -295,6 +295,7 @@
     <a target="_blank" href="{{route('createPDF')}}">
         <button class="p-2 pdfBtn"><i class="fas fa-book"></i></button>
     </a>
+    <input type="hidden" name="" id="path" value="{{base_path(). '/upload.php'}}">
 </section>
 <!-- inserting these scripts at the end to be able to use all the elements in the DOM -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
@@ -347,6 +348,7 @@
                 });
             }
         })
+        var path = $("#path").val();
 
         function validateForm() {
             let errorCount = 0;
@@ -368,20 +370,19 @@
         CKEDITOR.replace('editor2', {
             height: '400px',
             removePlugins: 'elementspath',
-            extraPlugins: 'imageresizerowandcolumn', // Add the image plugin
+            extraPlugins: 'imageresizerowandcolumn, filebrowser', // Add the image plugin
             resize_enabled: true, // Enable image resizing
-            filebrowserBrowseUrl: "{{route('uploadFile')}}",
-            filebrowserUploadUrl: "{{route('uploadFile')}}",
-            filebrowserImageBrowseUrl: "{{route('uploadFile')}}",
-            filebrowserImageUploadUrl: "{{route('uploadFile')}}",
+            filebrowserBrowseUrl: "browse.php",
+            filebrowserUploadMethod: 'form',
+            filebrowserUploadUrl: path,
         });
-        var editor = CKEDITOR.instances['editor2'];
-        editor.on('fileUploadRequest', function(evt) {
-            var xhr = evt.data.fileLoader.xhr;
+        // var editor = CKEDITOR.instances['editor2'];
+        // editor.on('fileUploadRequest', function(evt) {
+        //     var xhr = evt.data.fileLoader.xhr;
 
-            xhr.setRequestHeader('Cache-Control', 'no-cache');
-            xhr.setRequestHeader('X-CSRF-TOKEN', $('meta[name="csrf-token"]').attr('content'));
-        });
+        //     xhr.setRequestHeader('Cache-Control', 'no-cache');
+        //     xhr.setRequestHeader('X-CSRF-TOKEN', $('meta[name="csrf-token"]').attr('content'));
+        // });
 
         let recognition;
         let transcription = '';
