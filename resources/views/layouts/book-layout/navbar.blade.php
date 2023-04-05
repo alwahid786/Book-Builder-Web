@@ -111,9 +111,9 @@ $sections = bookProgress()['sections'];
             </a>
             <div class="sub-menu">
                 @foreach(outlines() as $outline)<?php
-                                                $id = $sections['sub_outline_' . $outline['id']];
+                                                $id = $sections['sub_outline_' . $outline['order']];
                                                 ?>
-                <a href="{{route('content', ['id'=> $outline['id']] )}}" data-class="{{$outline['id']}}" class="sub-item position-relative">{{$outline['outline_name']}}
+                <a href="{{route('content', ['id'=> $outline['id']] )}}" data-class="{{$outline['order']}}" class="sub-item position-relative">{{$outline['outline_name']}}
 
                     @if($id)<i class="fas fa-check-circle filled-circle"></i>@endif
                 </a>

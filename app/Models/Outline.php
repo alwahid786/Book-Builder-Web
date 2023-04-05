@@ -18,6 +18,7 @@ class Outline extends Model
     protected $fillable = [
         'user_id',
         'outline_name',
-        'content'
+        'content',
+        'order'
     ];
 }

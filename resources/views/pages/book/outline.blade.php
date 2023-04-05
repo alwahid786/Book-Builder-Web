@@ -332,6 +332,15 @@
         let positionInput = document.querySelector('.outlinePositions');
         positionInput.value = positions.join(',');
         console.log(positions);
+
+        const tableRows = document.querySelectorAll('.outline-content tr');
+        // Loop through the rows and update the count in the first td
+        tableRows.forEach((row, index) => {
+            const countCell = row.querySelector('.av_heading');
+            if (countCell) {
+                countCell.textContent = index + 1;
+            }
+        });
     }
 
     $(document).ready(function() {
@@ -432,7 +441,18 @@
             //         user_id: $("#user_id").val(),
             //     }
             // }
-            if (outlines.length < 1) {
+            var sequenceOfOutlines = [];
+            const tableRows = document.querySelectorAll('.outline-content tr');
+            // Loop through the rows and update the count in the first td
+            tableRows.forEach((row, index) => {
+                const order_no = ((row.querySelector('.av_heading')).textContent).trim();
+                const heading = ((row.querySelector('.outlineChapter')).textContent).trim();
+                sequenceOfOutlines.push({
+                    order_no: order_no,
+                    heading: heading
+                });
+            });
+            if (sequenceOfOutlines.length < 1 ) {
                 swal({
                     title: "Input Error",
                     text: "You must add atleast 1 outline name to add in book",
@@ -440,6 +460,7 @@
                 });
                 return;
             }
+
 
             $.ajax({
                 headers: {
@@ -450,6 +471,7 @@
                 data: {
                     outlines: outlines,
                     user_id: $("#user_id").val(),
+                    sequenceOfOutlines: sequenceOfOutlines
                 },
                 cache: false,
                 success: function(dataResult) {

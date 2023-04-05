@@ -17,7 +17,7 @@ class PDFController extends Controller
     {
         $id = auth()->user()->id;
         $data = Book::where('user_id', $id)->first();
-        $outlines = Outline::where('user_id', auth()->user()->id)->get();
+        $outlines = Outline::where('user_id', auth()->user()->id)->orderBy('order')->get();
         $copyright = Copyright::where('user_id', auth()->user()->id)->first();
         if (!empty($copyright)) {
             $copyright = json_decode($copyright, true);

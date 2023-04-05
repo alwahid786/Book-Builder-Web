@@ -24,7 +24,8 @@ function bookProgress()
 
     $book_details = Book::where('user_id', auth()->user()->id)
         ->with(['outlines' => function ($query) {
-            $query->select('id', 'outline_name', 'user_id', 'content');
+            $query->select('id', 'outline_name', 'user_id', 'content', 'order');
+            $query->orderBy('order');
         }, 'copyright'])
         ->first();
     if (!empty($book_details->outlines)) {
@@ -32,9 +33,9 @@ function bookProgress()
         $sub_outlines = ($book_details->outlines)->toArray();
         foreach ($sub_outlines as $sub_outline) {
             if (!empty($sub_outline['content'])) {
-                $sections['sub_outline_' . $sub_outline['id']] = true;
+                $sections['sub_outline_' . $sub_outline['order']] = true;
             } else {
-                $sections['sub_outline_' . $sub_outline['id']] = false;
+                $sections['sub_outline_' . $sub_outline['order']] = false;
             }
         }
 
@@ -128,7 +129,7 @@ function bookProgress()
 
 function outlines()
 {
-    $outlines = Outline::where('user_id', auth()->user()->id)->get();
+    $outlines = Outline::where('user_id', auth()->user()->id)->orderBy('order')->get();
     if (count($outlines) > 0) {
         return $outlines;
     }

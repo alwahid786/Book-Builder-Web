@@ -70,12 +70,19 @@ class BookController extends Controller
 
     public function outlineForm(Request $request)
     {
-        dd($request->all());
+        if(!empty($request->outlines)){
         foreach ($request->outlines as $value) {
             $outline = new Outline;
             $outline->user_id = $request->user_id;
             $outline->outline_name = $value;
             $outline->save();
+        }
+    }
+
+        $sequenceOfOutlines = $request->sequenceOfOutlines;
+
+        foreach($sequenceOfOutlines as $sequenceOfOutline){
+            Outline::where('outline_name', $sequenceOfOutline['heading'])->update(['order' => $sequenceOfOutline['order_no']]);
         }
         return response()->json(['success' => 'true', 'message' => 'Outlines Added successfully.']);
     }
@@ -247,7 +254,7 @@ class BookController extends Controller
         $data = $request->except('_token');
         $book = Book::where('user_id', $request->user_id)->update($data);
         if ($book) {
-            $outlines = Outline::where('user_id', auth()->user()->id)->get(['id', 'outline_name']);
+            $outlines = Outline::where('user_id', auth()->user()->id)->orderBy('order')->get(['id', 'outline_name']);
             if (!sizeof($outlines)) {
                 return redirect('/outline');
             }
@@ -257,7 +264,7 @@ class BookController extends Controller
     public function content($id)
     {
         $bookdata = Book::where('user_id', auth()->user()->id)->first();
-        $outline = Outline::where('id', $id)->first();
+        $outline = Outline::where('id', $id)->orderBy('order')->first();
         $outline = json_decode($outline, true);
         $bookdata = json_decode($bookdata, true);
         $bookdata['outline'] = $outline;
@@ -266,7 +273,7 @@ class BookController extends Controller
 
     public function contentForm(Request $request)
     {
-        $outlineIds = Outline::where('user_id', $request->user_id)->get('id');
+        $outlineIds = Outline::where('user_id', $request->user_id)->orderBy('order')->get('id');
         $outlineIds = json_decode($outlineIds, true);
         $next_id = $this->getNextId($outlineIds, $request->outline_id);
         $outline = Outline::where('id', $request->outline_id)->update(['content' => $request->content]);
