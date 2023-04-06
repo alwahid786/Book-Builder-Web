@@ -48,6 +48,10 @@
     .item a span {
         width: 92%;
     }
+
+    .side-bar .menu .item .sub-menu a {
+        padding-left: 65px !important;
+    }
 </style>
 <?php
 $sections = bookProgress()['sections'];
@@ -113,7 +117,7 @@ $sections = bookProgress()['sections'];
                 @foreach(outlines() as $outline)<?php
                                                 $id = $sections['sub_outline_' . $outline['order']];
                                                 ?>
-                <a href="{{route('content', ['id'=> $outline['id']] )}}" data-class="{{$outline['order']}}" class="sub-item position-relative">{{$outline['outline_name']}}
+                <a href="{{route('content', ['id'=> $outline['id']] )}}" data-class="{{$outline['order']}}" class="sub-item position-relative"><span class="d-block" style="width:82%;"> {{$outline['outline_name']}}</span>
 
                     @if($id)<i class="fas fa-check-circle filled-circle"></i>@endif
                 </a>

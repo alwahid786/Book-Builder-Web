@@ -370,11 +370,10 @@
         CKEDITOR.replace('editor2', {
             height: '400px',
             removePlugins: 'elementspath',
-            extraPlugins: 'imageresizerowandcolumn, filebrowser', // Add the image plugin
-            resize_enabled: true, // Enable image resizing
-            filebrowserBrowseUrl: "browse.php",
-            filebrowserUploadMethod: 'form',
-            filebrowserUploadUrl: path,
+            extraPlugins: 'filebrowser', // Add the image plugin
+            filebrowserBrowseUrl: "/bookbuilder/upload.php",
+            filebrowserUploadMethod: "form",
+            filebrowserUploadUrl: "/bookbuilder/upload.php",
         });
         // var editor = CKEDITOR.instances['editor2'];
         // editor.on('fileUploadRequest', function(evt) {
