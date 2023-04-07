@@ -3,8 +3,11 @@
 use App\Models\Book;
 use App\Models\Outline;
 
-function bookProgress()
+function bookProgress($id=null)
 {
+    if($id == null){
+        $id = auth()->user()->id;
+    }
     $sections = [
         'avatar' => false,
         'book_title' => false,
@@ -22,7 +25,7 @@ function bookProgress()
         'about' => false,
     ];
 
-    $book_details = Book::where('user_id', auth()->user()->id)
+    $book_details = Book::where('user_id', $id)
         ->with(['outlines' => function ($query) {
             $query->select('id', 'outline_name', 'user_id', 'content', 'order');
             $query->orderBy('order');

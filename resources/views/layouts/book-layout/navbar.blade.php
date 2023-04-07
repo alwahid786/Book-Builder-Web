@@ -74,7 +74,14 @@ $sections = bookProgress()['sections'];
             <a href="{{url('/welcome?url=romance-customer')}}" style="line-height: 25px; padding-top: 5px;padding-bottom: 5px;"><i class="fas fa-scroll"></i>My Romancing Your <span style="margin-left: 30px;">Customer Story</span>
             </a>
         </div>
-        <div class="item position-relative text-white" style="cursor:default; font-size:18px;padding:  0px 10px; "><strong style="font-family: 'Roboto', sans-serif !important;">My Book</strong></div>
+        <hr>
+        <div class="item position-relative text-white mt-2" style="cursor:default; font-size:18px;padding:  0px 10px; "><strong style="font-family: 'Roboto', sans-serif !important;">Administration</strong></div>
+        <div class="item position-relative">
+            <a href="{{url('/users')}}" style="line-height: 25px; padding-top: 5px;padding-bottom: 5px;"><i class="fas fa-users"></i>All Users
+            </a>
+        </div>
+        <hr>
+        <div class="item position-relative text-white mt-2" style="cursor:default; font-size:18px;padding:  0px 10px; "><strong style="font-family: 'Roboto', sans-serif !important;">My Book</strong></div>
         <div class="item position-relative">
             <a href="{{url('/avatar')}}" class="@if(!$sections['avatar']) disableTab @endif"><i class="fas fa-book"></i>Avatar
                 @if($sections['avatar'])<i class="fas fa-check-circle filled-circle"></i>@endif

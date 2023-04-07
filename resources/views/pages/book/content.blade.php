@@ -281,14 +281,11 @@
             <input type="hidden" name="user_id" data-class="avatar" value="<?php echo  $bookdata['user_id'] ?? '' ?>">
             <input type="hidden" name="outline_id" id="outline_id" data-class="avatar" value="<?php echo  $bookdata['outline']['id'] ?? '' ?>">
             <input type="hidden" name="content" id="contentInput" data-class="avatar">
-            <div class="d-flex align-items-baseline justify-content-start">
-                <input type="checkbox" data-class="avatar" id="final" style="display: inline-block; width:15px;margin-top:5px">
-                <label for="final" class="position-relative ml-2" style="line-height: 1.8rem ;">FINAL ?</label>
-            </div>
-            <div class=" mx-2 mt-3 d-flex justify-content-between align-items-center">
+            
+            <div class=" mx-2 mt-3 d-flex justify-content-end align-items-center">
                 <!-- <a href="{{url('/cover-art')}}">
                     <button type="button" data-class="avatar" class="px-3 py-1"><i class="fas fa-arrow-left mr-2"></i>Previous</button></a> -->
-                <button id="save" disabled data-class="avatar" class="px-3 py-1 disabled"><i class="fas fa-save mr-2"></i>Save</button>
+                <button id="save"  data-class="avatar" class="px-3 py-1 "><i class="fas fa-save mr-2"></i>Save</button>
             </div>
         </form>
     </div>

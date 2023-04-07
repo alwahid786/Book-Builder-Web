@@ -368,14 +368,11 @@
                     <input type="hidden" name="user_id" data-class="avatar" value="<?php echo  $bookdata['copyright']['user_id'] ?? '' ?>">
                     <input type="hidden" name="template_id" data-class="avatar" value="1">
                     <input type="hidden" name="content" id="contentInput" data-class="avatar" value="1">
-                    <div class="d-flex align-items-baseline justify-content-end">
-                        <input type="checkbox" data-class="avatar" id="final" style="display: inline-block; width:15px;margin-top:5px">
-                        <label for="final" class="position-relative ml-2" style="line-height: 1.8rem ;">FINAL ?</label>
-                    </div>
+                    
                     <div class="mx-2 mt-3 d-flex justify-content-between align-items-center">
                         <a href="{{url('/inside-cover')}}">
                             <button type="button" data-class="avatar" class="px-3 py-1"><i class="fas fa-arrow-left mr-2"></i>Previous</button></a>
-                        <button type="submit" id="save" disabled data-class="avatar" class="px-3 py-1 disabled"><i class="fas fa-save mr-2"></i>Save</button>
+                        <button type="submit" id="save"  data-class="avatar" class="px-3 py-1 "><i class="fas fa-save mr-2"></i>Save</button>
                     </div>
                 </form>
             </div>

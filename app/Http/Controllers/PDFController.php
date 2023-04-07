@@ -13,9 +13,13 @@ class PDFController extends Controller
 {
     //
 
-    public function createPDF()
+    public function createPDF(Request $request)
     {
-        $id = auth()->user()->id;
+        if (isset($request->id)) {
+            $id = $request->id;
+        } else {
+            $id = auth()->user()->id;
+        }
         $data = Book::where('user_id', $id)->first();
         $outlines = Outline::where('user_id', auth()->user()->id)->orderBy('order')->get();
         $copyright = Copyright::where('user_id', auth()->user()->id)->first();

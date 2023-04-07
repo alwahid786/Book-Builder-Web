@@ -5,6 +5,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\BookController;
 use App\Http\Controllers\PDFController;
+use App\Http\Controllers\UserController;
 
 /*
 |--------------------------------------------------------------------------
@@ -81,6 +82,8 @@ Route::middleware('auth')->group(function () {
     Route::post('/romance', [BookController::class, 'updateRomance'])->name('updateRomance');
     Route::post('/release-submission', [AuthController::class, 'releaseForm'])->name('releaseForm');
     Route::any('/uploadFile', [BookController::class, 'uploadFile'])->name('uploadFile');
+    Route::any('/users', [UserController::class, 'allUsers'])->name('allUsers');
+    Route::any('/user', [UserController::class, 'userDetails'])->name('userDetails');
 
     // PDF Creation Routes 
     Route::get('/create-book', [PDFController::class, 'createPDF'])->name('createPDF');
