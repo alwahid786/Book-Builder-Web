@@ -452,7 +452,7 @@
                     heading: heading
                 });
             });
-            if (sequenceOfOutlines.length < 1 ) {
+            if (sequenceOfOutlines.length < 1) {
                 swal({
                     title: "Input Error",
                     text: "You must add atleast 1 outline name to add in book",
@@ -507,6 +507,13 @@
     });
 </script>
 <script>
-    $('.menu .item:nth-of-type(12) a').addClass('active-nav');
+    <?php
+    $page = 10;
+    if (auth()->user()->type === 1) {
+        $page = 12;
+    }
+    ?>
+    var page = @json($page);
+    $('.menu .item:nth-of-type(' + page + ') a').addClass('active-nav');
 </script>
 @endsection

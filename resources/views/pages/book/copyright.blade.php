@@ -338,7 +338,7 @@
                             <p class="m-0">Printed in (insert country where book is printed)</p>
                             <p class="m-0">(Insert any disclaimers or legal notices here)</p>
                             <p class="mt-0">For permission to use material from this book, please contact the author or the publisher.</p>
-                            
+
                         </div>
                         <button class="px-3 py-1" id="sample2Btn" type="button" data-class="avatar">Copy To Editor</button>
                     </div>
@@ -368,11 +368,11 @@
                     <input type="hidden" name="user_id" data-class="avatar" value="<?php echo  $bookdata['copyright']['user_id'] ?? '' ?>">
                     <input type="hidden" name="template_id" data-class="avatar" value="1">
                     <input type="hidden" name="content" id="contentInput" data-class="avatar" value="1">
-                    
+
                     <div class="mx-2 mt-3 d-flex justify-content-between align-items-center">
                         <a href="{{url('/inside-cover')}}">
                             <button type="button" data-class="avatar" class="px-3 py-1"><i class="fas fa-arrow-left mr-2"></i>Previous</button></a>
-                        <button type="submit" id="save"  data-class="avatar" class="px-3 py-1 "><i class="fas fa-save mr-2"></i>Save</button>
+                        <button type="submit" id="save" data-class="avatar" class="px-3 py-1 "><i class="fas fa-save mr-2"></i>Save</button>
                     </div>
                 </form>
             </div>
@@ -672,7 +672,14 @@
     });
 </script>
 <script>
-    $('.menu .item:nth-of-type(15) a').addClass('active-nav');
+    <?php
+    $page = 13;
+    if (auth()->user()->type === 1) {
+        $page = 15;
+    }
+    ?>
+    var page = @json($page);
+    $('.menu .item:nth-of-type(' + page + ') a').addClass('active-nav');
 </script>
 
 

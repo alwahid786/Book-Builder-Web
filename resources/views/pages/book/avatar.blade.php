@@ -324,7 +324,14 @@
     });
 </script>
 <script>
-    $('.menu .item:nth-of-type(10) a').addClass('active-nav');
+    <?php
+    $page = 8;
+    if (auth()->user()->type === 1) {
+        $page = 10;
+    }
+    ?>
+    var page = @json($page);
+    $('.menu .item:nth-of-type(' + page + ') a').addClass('active-nav');
 </script>
 
 

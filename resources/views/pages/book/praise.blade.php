@@ -319,11 +319,11 @@
             </div>
             <input type="hidden" name="praise" id="contentInput" data-class="avatar">
             <input type="hidden" name="user_id" data-class="avatar" value="<?php echo  $bookdata['user_id'] ?? '' ?>">
-           
+
             <div class=" mx-2 mt-3 d-flex justify-content-between align-items-center">
                 <a href="{{url('/copyright')}}">
                     <button type="button" data-class="avatar" class="px-3 py-1"><i class="fas fa-arrow-left mr-2"></i>Previous</button></a>
-                <button id="save"  data-class="avatar" class="px-3 py-1 "><i class="fas fa-save mr-2"></i>Save</button>
+                <button id="save" data-class="avatar" class="px-3 py-1 "><i class="fas fa-save mr-2"></i>Save</button>
             </div>
         </form>
     </div>
@@ -583,7 +583,14 @@
     });
 </script>
 <script>
-    $('.menu .item:nth-of-type(16) a').addClass('active-nav');
+    <?php
+    $page = 14;
+    if (auth()->user()->type === 1) {
+        $page = 16;
+    }
+    ?>
+    var page = @json($page);
+    $('.menu .item:nth-of-type(' + page + ') a').addClass('active-nav');
 </script>
 
 
