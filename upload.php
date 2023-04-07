@@ -33,7 +33,7 @@ if (isset($_FILES['upload']['name'])) {
     }else{
         $url = 'Nothing Saved';
     }
-
+ 
     $function_number = $_GET['CKEditorFuncNum'];
     $message = '';
     echo "<script>window.parent.CKEDITOR.tools.callFunction('" . $function_number . "','" . $url . "','" . $message . "');</script>";
