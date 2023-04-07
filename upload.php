@@ -28,7 +28,7 @@ if (isset($_FILES['upload']['name'])) {
     $upload_file = $uploads_dir . '/' . basename($_FILES['upload']['name']);
     if (move_uploaded_file($_FILES['upload']['tmp_name'], $upload_file)) {
         // Get the URL to the uploaded file
-        $url = 'http://' . $_SERVER['HTTP_HOST'] . '/bookbuilder/public/uploads/' . basename($_FILES['upload']['name']);
+        $url = 'https://' . $_SERVER['HTTP_HOST'] . '/bookbuilder/public/uploads/' . basename($_FILES['upload']['name']);
         echo 'File uploaded successfully. URL: ' . $url;
     }else{
         $url = 'Nothing Saved';
