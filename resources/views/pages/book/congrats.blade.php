@@ -1,5 +1,6 @@
 @extends('layouts.default')
 @section('content')
+
 <style media="screen">
     @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700;800;900&display=swap');
 
@@ -541,7 +542,7 @@
     });
 </script>
 <script>
-    $('.menu .item:nth-of-type(22) a').addClass('active-nav');
+    $('.menu .item:nth-of-type(24) a').addClass('active-nav');
 </script>
 
 

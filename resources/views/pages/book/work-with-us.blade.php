@@ -565,7 +565,7 @@
     });
 </script>
 <script>
-    $('.menu .item:nth-of-type(20) a').addClass('active-nav');
+    $('.menu .item:nth-of-type(22) a').addClass('active-nav');
 </script>
 
 

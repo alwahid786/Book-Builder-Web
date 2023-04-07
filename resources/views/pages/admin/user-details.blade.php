@@ -305,7 +305,13 @@
                         {{$user['percentage']}}%
                     </div>
                 </div>
+                @if($user['percentage'] > 0)
                 <a target="_blank" href="{{route('createPDF', ['id'=>$user->id])}}" class="text">Go To {{$user->name}}'s Book</a>
+                @else
+                <div class="text-center text-danger">
+                    {{$user->name}} has not started a book Yet.
+                </div>
+                @endif
             </div>
         </div>
         <hr>

@@ -589,7 +589,7 @@
     });
 </script>
 <script>
-    $('.menu .item:nth-of-type(19) a').addClass('active-nav');
+    $('.menu .item:nth-of-type(21) a').addClass('active-nav');
 </script>
 
 
