@@ -307,7 +307,7 @@
                                 <p>Record audio to convert to text in the editor below.</p>
                                 <div id="controls" class="d-flex align-items-center justify-content-between">
                                     <div>
-                                        <button id="startBtn1" data-sr_no="1" data-editor_name="editor" class="btn-success startBtn">Start Recording</button>
+                                        <button id="startBtn1" data-sr_no="1" data-preview="preview" data-editor_name="editor" class="btn-success startBtn">Start Recording</button>
                                         <button id="stopBtn1" data-sr_no="1" class="btn-danger stopBtn" style="display: none;">Stop Recording</button>
                                         <button id="resetBtn1" data-sr_no="1" class="btn-danger resetBtn" style="display: none;">Reset Text</button>
                                     </div>
@@ -317,6 +317,7 @@
                                     </div>
                                 </div>
                                 <div class="mt-3">
+						        <div id="preview"></div>
                                     <div id="editor"><?php if (isset($user->gratitude) && $user->gratitude != null) {
                                                             echo $user->gratitude;
                                                         } ?></div>
@@ -374,7 +375,7 @@
                                 <p>Record audio to convert to text in the editor below.</p>
                                 <div id="controls" class="d-flex align-items-center justify-content-between">
                                     <div>
-                                        <button id="startBtn2" data-sr_no="2" data-editor_name="editor2" class="btn-success startBtn">Start Recording</button>
+                                        <button id="startBtn2" data-sr_no="2" data-preview="preview2" data-editor_name="editor2" class="btn-success startBtn">Start Recording</button>
                                         <button id="stopBtn2" data-sr_no="2" class="btn-danger stopBtn" style="display: none;">Stop Recording</button>
                                         <button id="resetBtn2" data-sr_no="2" class="btn-danger resetBtn" style="display: none;">Reset Text</button>
                                     </div>
@@ -384,6 +385,7 @@
                                     </div>
                                 </div>
                                 <div class="mt-3">
+						        <div id="preview2"></div>
                                     <div id="editor2"><?php if (isset($user->romance) && $user->romance != null) {
                                                             echo $user->romance;
                                                         } ?></div>
@@ -500,6 +502,7 @@
 
     // handle result event
     recognition.onresult = function(event) {
+            transcriptionField = document.getElementById(previewName);
         let interimTranscription = '';
         for (let i = event.resultIndex; i < event.results.length; i++) {
             let transcript = event.results[i][0].transcript;
@@ -518,11 +521,11 @@
                 // CKEDITOR.instances.transcription.insertHtml(transcript);
                 //   transcription += transcript + ' ';
             }
-            //    else {
-            //       interimTranscription += transcript;
-            //   }
+               else {
+                  interimTranscription += transcript;
+              }
         }
-        //   transcriptionField.value = transcription + interimTranscription;
+            transcriptionField.innerHTML = transcription + interimTranscription;
 
     };
 
@@ -547,6 +550,7 @@
         resetBtn = document.getElementById('resetBtn' + sr_id);
         // startBtn.addEventListener('click', function() {
         editorName = startBtn.getAttribute('data-editor_name');
+        previewName = startBtn.getAttribute('data-preview');
         startTimer(sr_id);
         $(".zmdi-circle").addClass('red');
         recognition.start();

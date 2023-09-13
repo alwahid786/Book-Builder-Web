@@ -274,6 +274,7 @@
                     </div>
                 </div>
                 <div class="mt-3">
+						<div id="preview"></div>
                     <textarea id="editor2"><?php echo $bookdata['outline']['content'] ?></textarea>
                 </div>
             </div>
@@ -401,6 +402,7 @@
 
         // handle result event
         recognition.onresult = function(event) {
+            transcriptionField = document.getElementById('preview');
             let interimTranscription = '';
             for (let i = event.resultIndex; i < event.results.length; i++) {
                 let transcript = event.results[i][0].transcript;
@@ -419,11 +421,11 @@
                     // CKEDITOR.instances.transcription.insertHtml(transcript);
                     //   transcription += transcript + ' ';
                 }
-                //    else {
-                //       interimTranscription += transcript;
-                //   }
+                   else {
+                      interimTranscription += transcript;
+                  }
             }
-            //   transcriptionField.value = transcription + interimTranscription;
+              transcriptionField.innerHTML = transcription + interimTranscription;
 
         };
 
